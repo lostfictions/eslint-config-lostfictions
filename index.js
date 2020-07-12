@@ -14,6 +14,8 @@ module.exports = {
   parser: "@typescript-eslint/parser",
   extends: ["eslint:recommended", "prettier", "prettier/@typescript-eslint"],
   plugins: ["node", "@typescript-eslint"],
+  // ignore jest snapshots by default
+  ignorePatterns: ["*.test.ts.snap"],
   reportUnusedDisableDirectives: true,
   rules: {
     "array-callback-return": "warn",
@@ -101,6 +103,7 @@ module.exports = {
       "warn",
       { checkCompoundAssignments: true },
     ],
+    "@typescript-eslint/switch-exhaustiveness-check": "warn",
     // regression again?
     // "@typescript-eslint/unbound-method": ["warn", { "ignoreStatic": true }],
     "@typescript-eslint/unbound-method": "off",
