@@ -95,6 +95,7 @@ module.exports = {
       },
     ],
     "@typescript-eslint/no-useless-constructor": "warn",
+    "@typescript-eslint/prefer-enum-initializers": "warn",
     "@typescript-eslint/prefer-for-of": "warn",
     "@typescript-eslint/prefer-function-type": "warn",
     "@typescript-eslint/prefer-includes": "warn",
