@@ -27,6 +27,7 @@ module.exports = {
     "no-buffer-constructor": "error",
     "no-dupe-class-members": "error",
     "no-dupe-else-if": "warn",
+    "no-duplicate-imports": "off", // has ts version
     "no-else-return": ["warn", { allowElseIf: false }],
     "no-empty": "warn",
     "no-extra-bind": "error",
@@ -35,6 +36,7 @@ module.exports = {
     "no-implied-eval": "error",
     "no-import-assign": "warn",
     "no-labels": "error",
+    "no-loop-func": "off", // has ts version
     "no-lonely-if": "warn",
     "no-multi-str": "warn",
     "no-new-func": "error",
@@ -43,7 +45,7 @@ module.exports = {
     "no-new-wrappers": "error",
     "no-param-reassign": "warn",
     "no-promise-executor-return": "warn",
-    "no-redeclare": "off",
+    "no-redeclare": "off", // has ts version
     "no-return-assign": "error",
     "no-return-await": "warn",
     "no-self-compare": "error",
@@ -57,7 +59,7 @@ module.exports = {
     "no-unreachable-loop": "warn",
     // allow tagged templates for use with graphql-codegen
     "no-unused-expressions": ["error", { allowTaggedTemplates: true }],
-    "no-unused-vars": "off",
+    "no-unused-vars": "off", // has ts version
     "no-useless-backreference": "warn",
     "no-useless-call": "warn",
     "no-useless-computed-key": "warn",
@@ -72,15 +74,19 @@ module.exports = {
     "prefer-regex-literals": "warn",
     "symbol-description": "warn",
     "valid-typeof": ["error", { requireStringLiterals: true }],
+
     "node/no-deprecated-api": "warn",
+
     "@typescript-eslint/adjacent-overload-signatures": "warn",
     "@typescript-eslint/ban-types": "warn",
     "@typescript-eslint/consistent-type-assertions": "warn",
     "@typescript-eslint/method-signature-style": "warn",
     "@typescript-eslint/no-array-constructor": "warn",
     "@typescript-eslint/no-confusing-non-null-assertion": "warn",
+    "@typescript-eslint/no-duplicate-imports": "warn",
     "@typescript-eslint/no-extra-non-null-assertion": "warn",
     "@typescript-eslint/no-floating-promises": "warn",
+    "@typescript-eslint/no-loop-func": "warn",
     "@typescript-eslint/no-misused-new": "warn",
     "@typescript-eslint/no-misused-promises": "warn",
     "@typescript-eslint/no-redeclare": "warn",
@@ -96,6 +102,7 @@ module.exports = {
         argsIgnorePattern: "^_",
       },
     ],
+    "@typescript-eslint/no-unnecessary-type-constraint": "warn",
     "@typescript-eslint/no-useless-constructor": "warn",
     "@typescript-eslint/prefer-enum-initializers": "warn",
     "@typescript-eslint/prefer-for-of": "warn",
