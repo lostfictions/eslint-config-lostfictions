@@ -43,6 +43,7 @@ module.exports = {
     "no-new-object": "warn",
     "no-new-require": "warn",
     "no-new-wrappers": "error",
+    "no-nonoctal-decimal-escape": "warn",
     "no-param-reassign": "warn",
     "no-promise-executor-return": "warn",
     "no-redeclare": "off", // has ts version
