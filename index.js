@@ -67,7 +67,9 @@ module.exports = {
     "no-useless-constructor": "warn",
     "no-useless-return": "warn",
     "no-var": "warn",
-    "no-void": "warn",
+    // void can be used to suppress some warnings, like
+    // @typescript-eslint/no-floating-promises
+    "no-void": ["warn", { allowAsStatement: true }],
     "one-var": ["warn", "never"],
     "prefer-const": "warn",
     "prefer-promise-reject-errors": "warn",
