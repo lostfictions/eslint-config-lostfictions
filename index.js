@@ -14,8 +14,8 @@ module.exports = {
   parser: "@typescript-eslint/parser",
   extends: ["eslint:recommended", "prettier", "prettier/@typescript-eslint"],
   plugins: ["node", "@typescript-eslint"],
-  // ignore jest snapshots by default
-  ignorePatterns: ["*.test.ts.snap"],
+  // ignore jest snapshots and the eslint config itself by default
+  ignorePatterns: ["*.test.ts.snap", ".eslintrc.js"],
   reportUnusedDisableDirectives: true,
   rules: {
     "array-callback-return": "warn",
@@ -52,7 +52,7 @@ module.exports = {
     "no-self-compare": "error",
     "no-sequences": "error",
     "no-setter-return": "warn",
-    "no-shadow": "warn",
+    "no-shadow": "off", // has ts version
     "no-template-curly-in-string": "warn",
     "no-throw-literal": "warn",
     "no-undef": "off",
@@ -93,6 +93,7 @@ module.exports = {
     "@typescript-eslint/no-misused-new": "warn",
     "@typescript-eslint/no-misused-promises": "warn",
     "@typescript-eslint/no-redeclare": "warn",
+    "@typescript-eslint/no-shadow": "warn",
     "@typescript-eslint/no-throw-literal": "warn",
     "@typescript-eslint/no-unnecessary-type-arguments": "warn",
     "@typescript-eslint/no-unnecessary-type-assertion": "warn",
@@ -107,6 +108,7 @@ module.exports = {
     ],
     "@typescript-eslint/no-unnecessary-type-constraint": "warn",
     "@typescript-eslint/no-useless-constructor": "warn",
+    "@typescript-eslint/non-nullable-type-assertion-style": "warn",
     "@typescript-eslint/prefer-enum-initializers": "warn",
     "@typescript-eslint/prefer-for-of": "warn",
     "@typescript-eslint/prefer-function-type": "warn",

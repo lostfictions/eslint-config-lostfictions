@@ -14,6 +14,10 @@ module.exports = {
     // ...and because we've redeclared the whole extends stack, i think we have
     // to add our rules back in. sigh
     ...base.rules,
+    //these rules can be disabled when using the new jsx transform
+    "react/react-in-jsx-scope": "off",
+    "react/jsx-uses-react": "off",
+    // normal rules
     "react/no-unescaped-entities": "warn",
     "react/prop-types": "off",
     "react-hooks/rules-of-hooks": "error",
