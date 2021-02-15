@@ -1,6 +1,6 @@
 {
   "name": "eslint-config-lostfictions",
-  "version": "1.0.0",
+  "version": "1.1.0",
   "main": "index.js",
   "license": "MIT",
   "scripts": {
@@ -24,6 +24,6 @@
     "prettier": "^2.2.1"
   },
   "peerDependencies": {
-    "eslint": ">=7.13.0"
+    "eslint": ">=7.20.0"
   }
 }
