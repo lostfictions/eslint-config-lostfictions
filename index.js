@@ -58,8 +58,7 @@ module.exports = {
     "no-undef": "off",
     "no-unmodified-loop-condition": "warn",
     "no-unreachable-loop": "warn",
-    // allow tagged templates for use with graphql-codegen
-    "no-unused-expressions": ["error", { allowTaggedTemplates: true }],
+    "no-unused-expressions": ["error", { enforceForJSX: true }],
     "no-unused-vars": "off", // has ts version
     "no-useless-backreference": "warn",
     "no-useless-call": "warn",

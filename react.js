@@ -20,6 +20,9 @@ module.exports = {
     // normal rules
     "react/no-unescaped-entities": "warn",
     "react/prop-types": "off",
+    "react/jsx-no-constructed-context-values": "warn",
+    "react/jsx-no-target-blank": "warn",
+
     "react-hooks/rules-of-hooks": "error",
     "react-hooks/exhaustive-deps": "warn",
   },
