@@ -12,7 +12,7 @@ module.exports = {
     project: "./tsconfig.json",
   },
   parser: "@typescript-eslint/parser",
-  extends: ["eslint:recommended", "prettier", "prettier/@typescript-eslint"],
+  extends: ["eslint:recommended", "prettier"],
   plugins: ["node", "@typescript-eslint"],
   // ignore jest snapshots and the eslint config itself by default
   ignorePatterns: ["*.test.ts.snap", ".eslintrc.js"],

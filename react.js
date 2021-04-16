@@ -2,12 +2,7 @@ const base = require("./index");
 
 module.exports = {
   // we have to declare the entire extends stack again, i think...
-  extends: [
-    "lostfictions",
-    "plugin:react/recommended",
-    "prettier",
-    "prettier/@typescript-eslint",
-  ],
+  extends: ["lostfictions", "plugin:react/recommended", "prettier"],
   plugins: ["node", "@typescript-eslint", "react", "react-hooks"],
   settings: { react: { version: "detect" } },
   rules: {
@@ -17,6 +12,7 @@ module.exports = {
     //these rules can be disabled when using the new jsx transform
     "react/react-in-jsx-scope": "off",
     "react/jsx-uses-react": "off",
+
     // normal rules
     "react/no-unescaped-entities": "warn",
     "react/prop-types": "off",
