@@ -89,6 +89,7 @@ module.exports = {
     "@typescript-eslint/no-extra-non-null-assertion": "warn",
     "@typescript-eslint/no-floating-promises": "warn",
     "@typescript-eslint/no-loop-func": "warn",
+    "@typescript-eslint/no-meaningless-void-operator": "warn",
     "@typescript-eslint/no-misused-new": "warn",
     "@typescript-eslint/no-misused-promises": "warn",
     "@typescript-eslint/no-redeclare": "warn",
@@ -113,6 +114,7 @@ module.exports = {
     "@typescript-eslint/prefer-function-type": "warn",
     "@typescript-eslint/prefer-includes": "warn",
     "@typescript-eslint/prefer-optional-chain": "warn",
+    "@typescript-eslint/prefer-return-this-type": "warn",
     "@typescript-eslint/restrict-plus-operands": [
       "warn",
       { checkCompoundAssignments: true },
