@@ -54,7 +54,7 @@ module.exports = {
     "no-setter-return": "warn",
     "no-shadow": "off", // has ts version
     "no-template-curly-in-string": "warn",
-    "no-throw-literal": "warn",
+    "no-throw-literal": "off", // has ts version
     "no-undef": "off",
     "no-unmodified-loop-condition": "warn",
     "no-unreachable-loop": "warn",
