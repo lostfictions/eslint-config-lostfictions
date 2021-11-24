@@ -17,6 +17,7 @@ module.exports = {
     "react/no-unescaped-entities": "warn",
     "react/prop-types": "off",
     "react/jsx-no-constructed-context-values": "warn",
+    "react/no-invalid-html-attribute": "warn",
     "react/no-namespace": "warn",
     "react/jsx-no-target-blank": "warn",
     "react/jsx-no-useless-fragment": "warn",

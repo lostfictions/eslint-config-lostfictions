@@ -59,6 +59,7 @@ module.exports = {
     "no-unmodified-loop-condition": "warn",
     "no-unreachable-loop": "warn",
     "no-unused-expressions": ["error", { enforceForJSX: true }],
+    "no-unused-private-class-members": "warn",
     "no-unused-vars": "off", // has ts version
     "no-useless-backreference": "warn",
     "no-useless-call": "warn",
