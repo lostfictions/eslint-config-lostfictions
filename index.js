@@ -73,6 +73,7 @@ module.exports = {
 
     "one-var": ["warn", "never"],
     "prefer-const": "warn",
+    // "prefer-object-has-own": "warn", // still too fresh
     "prefer-promise-reject-errors": "warn",
     "prefer-regex-literals": "warn",
     strict: "warn",
@@ -140,8 +141,7 @@ module.exports = {
       { checkCompoundAssignments: true },
     ],
     "@typescript-eslint/switch-exhaustiveness-check": "warn",
-    // regression again?
-    // "@typescript-eslint/unbound-method": ["warn", { "ignoreStatic": true }],
+    // "@typescript-eslint/unbound-method": ["warn", { "ignoreStatic": true }], // regression again?
     "@typescript-eslint/unbound-method": "off",
     "@typescript-eslint/unified-signatures": "warn",
 
