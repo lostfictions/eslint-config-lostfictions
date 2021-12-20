@@ -18,6 +18,9 @@ module.exports = {
   ignorePatterns: ["*.test.ts.snap", ".eslintrc.js"],
   reportUnusedDisableDirectives: true,
   rules: {
+    /*
+     * base eslint rules not already enabled in eslint:recommended.
+     */
     "array-callback-return": "warn",
     curly: ["warn", "multi-line", "consistent"],
     "default-case": "warn",
@@ -27,7 +30,6 @@ module.exports = {
     "no-buffer-constructor": "error",
     "no-dupe-class-members": "error",
     "no-dupe-else-if": "warn",
-    "no-duplicate-imports": "off", // has ts version
     "no-else-return": ["warn", { allowElseIf: false }],
     "no-empty": "warn",
     "no-extra-bind": "error",
@@ -36,7 +38,6 @@ module.exports = {
     "no-implied-eval": "error",
     "no-import-assign": "warn",
     "no-labels": "error",
-    "no-loop-func": "off", // has ts version
     "no-lonely-if": "warn",
     "no-multi-str": "warn",
     "no-new-func": "error",
@@ -46,21 +47,17 @@ module.exports = {
     "no-nonoctal-decimal-escape": "warn",
     "no-param-reassign": "warn",
     "no-promise-executor-return": "warn",
-    "no-redeclare": "off", // has ts version
     "no-return-assign": "error",
     "no-return-await": "warn",
     "no-self-compare": "error",
     "no-sequences": "error",
     "no-setter-return": "warn",
-    "no-shadow": "off", // has ts version
     "no-template-curly-in-string": "warn",
-    "no-throw-literal": "off", // has ts version
     "no-undef": "off",
     "no-unmodified-loop-condition": "warn",
     "no-unreachable-loop": "warn",
     "no-unused-expressions": ["error", { enforceForJSX: true }],
     "no-unused-private-class-members": "warn",
-    "no-unused-vars": "off", // has ts version
     "no-useless-backreference": "warn",
     "no-useless-call": "warn",
     "no-useless-computed-key": "warn",
@@ -68,38 +65,39 @@ module.exports = {
     "no-useless-constructor": "warn",
     "no-useless-return": "warn",
     "no-var": "warn",
-    // void can be used to suppress some warnings, like
-    // @typescript-eslint/no-floating-promises
+
+    // void-as-statement is useful to suppress warnings from
+    // @typescript-eslint/no-floating-promises. see
+    // https://github.com/typescript-eslint/typescript-eslint/blob/main/packages/eslint-plugin/docs/rules/no-floating-promises.md
     "no-void": ["warn", { allowAsStatement: true }],
+
     "one-var": ["warn", "never"],
     "prefer-const": "warn",
     "prefer-promise-reject-errors": "warn",
     "prefer-regex-literals": "warn",
+    strict: "warn",
     "symbol-description": "warn",
     "valid-typeof": ["error", { requireStringLiterals: true }],
 
-    "node/no-deprecated-api": "warn",
-
-    "@typescript-eslint/adjacent-overload-signatures": "warn",
-    "@typescript-eslint/ban-types": "warn",
-    "@typescript-eslint/consistent-type-assertions": "warn",
-    "@typescript-eslint/consistent-type-exports": "warn",
-    "@typescript-eslint/method-signature-style": "warn",
-    "@typescript-eslint/no-array-constructor": "warn",
-    "@typescript-eslint/no-confusing-non-null-assertion": "warn",
+    /*
+     * eslint rules that have a typescript-eslint equivalent.
+     */
+    "no-duplicate-imports": "off",
     "@typescript-eslint/no-duplicate-imports": "warn",
-    "@typescript-eslint/no-extra-non-null-assertion": "warn",
-    "@typescript-eslint/no-floating-promises": "warn",
+
+    "no-loop-func": "off",
     "@typescript-eslint/no-loop-func": "warn",
-    "@typescript-eslint/no-meaningless-void-operator": "warn",
-    "@typescript-eslint/no-misused-new": "warn",
-    "@typescript-eslint/no-misused-promises": "warn",
-    "@typescript-eslint/no-non-null-asserted-nullish-coalescing": "warn",
+
+    "no-redeclare": "off",
     "@typescript-eslint/no-redeclare": "warn",
+
+    "no-shadow": "off",
     "@typescript-eslint/no-shadow": "warn",
+
+    "no-throw-literal": "off",
     "@typescript-eslint/no-throw-literal": "warn",
-    "@typescript-eslint/no-unnecessary-type-arguments": "warn",
-    "@typescript-eslint/no-unnecessary-type-assertion": "warn",
+
+    "no-unused-vars": "off",
     "@typescript-eslint/no-unused-vars": [
       "warn",
       {
@@ -109,6 +107,25 @@ module.exports = {
         argsIgnorePattern: "^_",
       },
     ],
+
+    /*
+     * other typescript-eslint rules.
+     */
+    "@typescript-eslint/adjacent-overload-signatures": "warn",
+    "@typescript-eslint/ban-types": "warn",
+    "@typescript-eslint/consistent-type-assertions": "warn",
+    "@typescript-eslint/consistent-type-exports": "warn",
+    "@typescript-eslint/method-signature-style": "warn",
+    "@typescript-eslint/no-array-constructor": "warn",
+    "@typescript-eslint/no-confusing-non-null-assertion": "warn",
+    "@typescript-eslint/no-extra-non-null-assertion": "warn",
+    "@typescript-eslint/no-floating-promises": "warn",
+    "@typescript-eslint/no-meaningless-void-operator": "warn",
+    "@typescript-eslint/no-misused-new": "warn",
+    "@typescript-eslint/no-misused-promises": "warn",
+    "@typescript-eslint/no-non-null-asserted-nullish-coalescing": "warn",
+    "@typescript-eslint/no-unnecessary-type-arguments": "warn",
+    "@typescript-eslint/no-unnecessary-type-assertion": "warn",
     "@typescript-eslint/no-unnecessary-type-constraint": "warn",
     "@typescript-eslint/no-useless-constructor": "warn",
     "@typescript-eslint/non-nullable-type-assertion-style": "warn",
@@ -127,5 +144,10 @@ module.exports = {
     // "@typescript-eslint/unbound-method": ["warn", { "ignoreStatic": true }],
     "@typescript-eslint/unbound-method": "off",
     "@typescript-eslint/unified-signatures": "warn",
+
+    /*
+     * eslint-plugin-node rules.
+     */
+    "node/no-deprecated-api": "warn",
   },
 };
