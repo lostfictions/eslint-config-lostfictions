@@ -2,8 +2,21 @@
 
 `eslint-config-lostfictions` is a (gently) opinionated custom configuration for
 [eslint](https://eslint.org/) intended for use with
-[typescript](https://www.typescriptlang.org/) (or javascript). it's based on a
-few key principles:
+[typescript](https://www.typescriptlang.org/) (or javascript).
+
+typescript and eslint might seem like they're used for the exact same thing —
+catching errors in javascript — but they have different, complementary uses.
+typescript generally limits itself to typechecking, while eslint can catch
+things like [expressions that do
+nothing](https://eslint.org/docs/rules/no-unused-expressions) or [comparing a
+value to itself](https://eslint.org/docs/rules/no-self-compare). in fact, the
+typescript developers [use eslint on their own
+codebase](https://github.com/microsoft/TypeScript/blob/main/.eslintrc.json)!
+(another tool called [tslint](https://github.com/palantir/tslint) formerly
+fulfilled a similar role for typescript, but it's been deprecated for a while
+now.)
+
+`eslint-config-lostfictions` is based on a few key principles:
 
 ## linters are for linting.
 
