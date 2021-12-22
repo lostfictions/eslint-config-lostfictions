@@ -1,0 +1,19 @@
+{
+  "compilerOptions": {
+    "strict": true,
+    "esModuleInterop": true,
+    "target": "ES2015",
+    "module": "esnext",
+    "moduleResolution": "node",
+    "noEmit": true,
+    "jsx": "preserve",
+    "allowJs": true,
+    "skipLibCheck": true,
+  },
+  "include": [
+    "*.ts",
+  ],
+  "exclude": [
+    "node_modules"
+  ]
+}

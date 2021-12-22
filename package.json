@@ -4,11 +4,12 @@
   "main": "index.js",
   "license": "MIT",
   "scripts": {
-    "rules": "eslint-find-rules",
+    "unused-rules": "eslint-find-rules -un ./index.js",
     "test": "run-s -l test:*",
-    "test:eslint": "eslint '*.js'",
-    "test:prettier": "prettier -l '*.js'",
-    "prettier": "prettier --write '*.js'"
+    "test:configs": "eslint '*.js'",
+    "test:fixtures": "eslint 'test/**/*.ts' --max-warnings=0",
+    "test:prettier": "prettier -l '**/*.{js,ts}'",
+    "prettier": "prettier --write '**/*.{js,ts}'"
   },
   "dependencies": {
     "@rushstack/eslint-patch": "^1.1.0",
