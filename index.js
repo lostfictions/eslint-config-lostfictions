@@ -147,7 +147,7 @@ module.exports = {
     // given that from experience async-without-await is almost always benign
     // (especially with typechecking), it seems better to leave it off.
     "require-await": "off",
-    // "@typescript-eslint/require-await": "warn",
+    "@typescript-eslint/require-await": "off",
 
     /*
      * other typescript-eslint rules.
