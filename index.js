@@ -5,21 +5,23 @@ module.exports = {
     node: true,
     browser: true,
   },
+  parser: "@typescript-eslint/parser",
   parserOptions: {
     sourceType: "module",
+    ecmaVersion: 2021,
     ecmaFeatures: {
       modules: true,
     },
     project: "./tsconfig.json",
   },
-  parser: "@typescript-eslint/parser",
   extends: [
     "eslint:recommended",
+    "plugin:import/typescript",
     "plugin:@typescript-eslint/recommended",
     "plugin:@typescript-eslint/recommended-requiring-type-checking",
     "prettier",
   ],
-  plugins: ["node", "@typescript-eslint"],
+  plugins: ["node", "import", "@typescript-eslint"],
   // ignore jest snapshots and the eslint config itself by default
   ignorePatterns: ["*.test.ts.snap", ".eslintrc.js"],
   reportUnusedDisableDirectives: true,
@@ -254,5 +256,36 @@ module.exports = {
      * eslint-plugin-node rules.
      */
     "node/no-deprecated-api": "warn",
+
+    /*
+     * eslint-plugin-import rules.
+     */
+    "import/no-anonymous-default-export": [
+      "warn",
+      {
+        allowArray: false,
+        allowArrowFunction: false,
+        allowAnonymousClass: false,
+        allowAnonymousFunction: false,
+        // allowed by default
+        allowCallExpression: false,
+        allowLiteral: false,
+        allowObject: false,
+      },
+    ],
+    "import/no-deprecated": "warn",
+    "import/order": [
+      "warn",
+      {
+        groups: [
+          "builtin",
+          "external",
+          "internal",
+          ["parent", "sibling", "index", "unknown"],
+          "object",
+          "type",
+        ],
+      },
+    ],
   },
 };

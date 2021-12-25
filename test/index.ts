@@ -7,6 +7,10 @@
 // so let's at least disable no-unused-vars.
 /* eslint-disable @typescript-eslint/no-unused-vars */
 
+import { foo } from "./other";
+// eslint-disable-next-line import/order
+import { parseForESLint } from "@typescript-eslint/parser";
+
 // eslint-disable-next-line @typescript-eslint/ban-types
 const x: object = { dog: "woof" };
 
