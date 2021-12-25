@@ -3,7 +3,14 @@ const base = require("./index");
 module.exports = {
   // we have to declare the whole "extends" stack and all plugins again...
   extends: ["lostfictions", "plugin:react/recommended", "prettier"],
-  plugins: ["node", "import", "@typescript-eslint", "react", "react-hooks"],
+  plugins: [
+    "node",
+    "import",
+    "deprecation",
+    "@typescript-eslint",
+    "react",
+    "react-hooks",
+  ],
   settings: { react: { version: "detect" } },
   rules: {
     // ...and because we've redeclared the whole "extends" stack, we have to add

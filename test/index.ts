@@ -35,6 +35,9 @@ class MyError extends Error {}
 // eslint-disable-next-line @typescript-eslint/no-base-to-string
 const xzz = `do you think ${new MyError("anotherthing")} won't stringify?`;
 
+// eslint-disable-next-line deprecation/deprecation
+const abc = "something".substr(4);
+
 // const num = 4;
 // // eslint-disable-next-line @typescript-eslint/no-unsafe-argument
 // parseInt(num as any);

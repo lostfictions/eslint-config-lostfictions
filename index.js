@@ -21,7 +21,7 @@ module.exports = {
     "plugin:@typescript-eslint/recommended-requiring-type-checking",
     "prettier",
   ],
-  plugins: ["node", "import", "@typescript-eslint"],
+  plugins: ["node", "import", "deprecation", "@typescript-eslint"],
   // ignore jest snapshots and the eslint config itself by default
   ignorePatterns: ["*.test.ts.snap", ".eslintrc.js"],
   reportUnusedDisableDirectives: true,
@@ -277,7 +277,6 @@ module.exports = {
         allowObject: false,
       },
     ],
-    "import/no-deprecated": "warn",
     "import/order": [
       "warn",
       {
@@ -291,5 +290,10 @@ module.exports = {
         ],
       },
     ],
+
+    /*
+     * eslint-plugin-deprecation rules.
+     */
+    "deprecation/deprecation": "warn",
   },
 };
