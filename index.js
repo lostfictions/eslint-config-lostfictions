@@ -138,12 +138,12 @@ module.exports = {
     // require-await can catch some legitimate (if benign) oversights, but it
     // also forces things like async handlers that only do sync work to be
     // refactored into an awkward and more confusing form. for example,
-    // handleMessage(async (msg) => console.log(msg))
+    // handleMessage(async (msg) => console.log(msg));
     // would need to be refactored to something much more verbose, like
     // handleMessage((msg) => {
     //   console.log(msg);
     //   return Promise.resolve();
-    // })
+    // });
     // given that from experience async-without-await is almost always benign
     // (especially with typechecking), it seems better to leave it off.
     "require-await": "off",
@@ -180,10 +180,11 @@ module.exports = {
     ],
     "@typescript-eslint/no-empty-interface": "warn",
 
-    // any is occasionally necessary as a workaround. don't abuse it!
+    // `any` is occasionally necessary as a workaround. don't abuse it!
     "@typescript-eslint/no-explicit-any": "off",
     "@typescript-eslint/no-extra-non-null-assertion": "warn",
     "@typescript-eslint/no-floating-promises": "warn",
+    "@typescript-eslint/no-inferrable-types": "warn",
     "@typescript-eslint/no-meaningless-void-operator": "warn",
     "@typescript-eslint/no-misused-new": "warn",
     "@typescript-eslint/no-misused-promises": "warn",
@@ -194,7 +195,15 @@ module.exports = {
     "@typescript-eslint/no-non-null-assertion": "off",
     "@typescript-eslint/no-this-alias": "warn",
     "@typescript-eslint/no-unnecessary-boolean-literal-compare": "warn",
-    "@typescript-eslint/no-unnecessary-condition": "warn",
+
+    // `no-unnecessary-condition` is only useful in tandem with
+    // `noUncheckedIndexedAccess` in tsconfig.json. where the latter isn't
+    // enabled, this rule ends up coming up with a lot of false positives, and
+    // removing the conditional to fix the lint could actually introduce errors.
+    // on the other hand, unnecessarily checking an always-truthy condition is
+    // benign by definition. paradoxically enough, it seems safer to turn this
+    // rule off and make it opt-in.
+    "@typescript-eslint/no-unnecessary-condition": "off",
     "@typescript-eslint/no-unnecessary-qualifier": "warn",
     "@typescript-eslint/no-unnecessary-type-arguments": "warn",
     "@typescript-eslint/no-unnecessary-type-assertion": "warn",
