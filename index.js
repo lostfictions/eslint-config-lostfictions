@@ -174,7 +174,10 @@ module.exports = {
     "@typescript-eslint/consistent-type-assertions": "warn",
     "@typescript-eslint/consistent-type-exports": "warn",
     "@typescript-eslint/method-signature-style": "warn",
-    "@typescript-eslint/no-base-to-string": "warn",
+    "@typescript-eslint/no-base-to-string": [
+      "warn",
+      { ignoredTypeNames: ["Error", "RegExp"] },
+    ],
     "@typescript-eslint/no-confusing-non-null-assertion": "warn",
     "@typescript-eslint/no-confusing-void-expression": [
       "warn",

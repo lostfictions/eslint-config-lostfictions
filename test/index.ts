@@ -26,6 +26,15 @@ if (bool === false) {
   //
 }
 
+const xx = `do you think ${new Error("whatever")} won't stringify?`;
+const xy = `do you think ${/haha yeah/} won't stringify?`;
+const xz = `do you think ${new URL("https://ok.com")} won't stringify?`;
+
+// we'd prefer if this passed, actually, but apparently it doesn't look up the prototype chain
+class MyError extends Error {}
+// eslint-disable-next-line @typescript-eslint/no-base-to-string
+const xzz = `do you think ${new MyError("anotherthing")} won't stringify?`;
+
 // const num = 4;
 // // eslint-disable-next-line @typescript-eslint/no-unsafe-argument
 // parseInt(num as any);
