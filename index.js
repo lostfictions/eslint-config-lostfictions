@@ -189,7 +189,7 @@ module.exports = {
     "@typescript-eslint/no-misused-new": "warn",
     "@typescript-eslint/no-misused-promises": "warn",
     "@typescript-eslint/no-non-null-asserted-nullish-coalescing": "warn",
-    "@typescript-eslint/no-non-null-asserted-optional-chain": "warn",
+    "@typescript-eslint/no-non-null-asserted-optional-chain": "error",
 
     // non-null assertions are occasionally necessary.
     "@typescript-eslint/no-non-null-assertion": "off",
