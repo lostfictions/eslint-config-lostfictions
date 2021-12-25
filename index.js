@@ -267,8 +267,9 @@ module.exports = {
         allowArrowFunction: false,
         allowAnonymousClass: false,
         allowAnonymousFunction: false,
-        // allowed by default
-        allowCallExpression: false,
+        // allowed by default, and we allow it ourselves since it's useful in
+        // some scenarios.
+        allowCallExpression: true,
         allowLiteral: false,
         allowObject: false,
       },
