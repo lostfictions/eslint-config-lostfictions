@@ -135,8 +135,19 @@ module.exports = {
     "no-useless-constructor": "off",
     "@typescript-eslint/no-useless-constructor": "warn",
 
+    // require-await can catch some legitimate (if benign) oversights, but it
+    // also forces things like async handlers that only do sync work to be
+    // refactored into an awkward and more confusing form. for example,
+    // handleMessage(async (msg) => console.log(msg))
+    // would need to be refactored to something much more verbose, like
+    // handleMessage((msg) => {
+    //   console.log(msg);
+    //   return Promise.resolve();
+    // })
+    // given that from experience async-without-await is almost always benign
+    // (especially with typechecking), it seems better to leave it off.
     "require-await": "off",
-    "@typescript-eslint/require-await": "warn",
+    // "@typescript-eslint/require-await": "warn",
 
     /*
      * other typescript-eslint rules.
