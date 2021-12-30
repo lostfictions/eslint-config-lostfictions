@@ -156,3 +156,25 @@ see [typescript-eslint's
 documentation](https://typescript-eslint.io/docs/linting/type-linting#i-get-errors-telling-me-the-file-must-be-included-in-at-least-one-of-the-projects-provided)
 for further explanation about this warning and example configurations that fix
 it.
+
+### warnings about `Object.hasOwn()`, `Array#at()` and `String#at()`
+
+[`prefer-object-has-own`](https://eslint.org/docs/rules/prefer-object-has-own)
+and
+[`unicorn/prefer-at`](https://github.com/sindresorhus/eslint-plugin-unicorn/blob/main/docs/rules/prefer-at.md)
+are both enabled in this config. the respective functions they recommend are
+cleaner and less error-prone than their older alternatives, but they're both
+pretty fresh at the moment.
+[`Object.hasOwn()`](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Object/hasOwn)
+shipped in [node
+16.9.0](https://github.com/nodejs/node/blob/master/doc/changelogs/CHANGELOG_V16.md#2021-09-07-version-1690-current-targos)
+(2021-09-07).
+[`String#at()`](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/String/at)
+and
+[`Array#at()`](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Array/at)
+shipped in [node
+16.6.0](https://github.com/nodejs/node/blob/master/doc/changelogs/CHANGELOG_V16.md#16.6.0)
+(2021-07-29). if you're stuck on an older version of node, you may prefer to
+disable these rules. these functions have shipped in evergreen browsers and
+_should_ be polyfilled by frontend tools that incorporate core-js polyfills
+(next.js, CRA).

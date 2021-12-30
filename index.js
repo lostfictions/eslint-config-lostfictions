@@ -86,7 +86,7 @@ const config = {
 
     "one-var": ["warn", "never"],
     "prefer-const": "warn",
-    // "prefer-object-has-own": "warn", // still too fresh
+    "prefer-object-has-own": "warn",
     "prefer-promise-reject-errors": "warn",
     "prefer-regex-literals": "warn",
     strict: "warn",
@@ -333,6 +333,7 @@ const config = {
     "unicorn/prefer-array-flat-map": "warn",
     "unicorn/prefer-array-index-of": "warn",
     "unicorn/prefer-array-some": "warn",
+    "unicorn/prefer-at": "warn",
     "unicorn/prefer-code-point": "warn",
     "unicorn/prefer-date-now": "warn",
     "unicorn/prefer-dom-node-dataset": "warn",
