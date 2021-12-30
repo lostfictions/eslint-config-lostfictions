@@ -116,6 +116,15 @@ module.exports = {
 since we're `require`ing a module in the config, this obviously means you need
 to use the `.eslintrc.js` config format rather than json, yaml, etc.
 
+`eslint-config-lostfictions` also includes
+[`eslint-plugin-jest`](https://github.com/jest-community/eslint-plugin-jest) for
+linting your tests (including helpful rules like
+[`expect-expect`](https://github.com/jest-community/eslint-plugin-jest/blob/main/docs/rules/expect-expect.md),
+which ensures you haven't forgotten to make assertions in your test cases.) by
+default the extra jest rules are enabled for files with a
+`.test.{js,jsx,ts,tsx}` suffix, as well as files under a `test` folder -- which
+should match jest's default rules for finding tests.
+
 ---
 
 ## quirks
