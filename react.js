@@ -1,9 +1,14 @@
 const base = require("./index");
 
 module.exports = {
-  // we place prettier again at the end of the extends stack to ensure it turns
+  ...base,
+  // we place prettier at the end of the extends stack to ensure it turns
   // off any react rules that shouldn't be enabled.
-  extends: [...base.extends, "plugin:react/recommended", "prettier"],
+  extends: [
+    ...base.extends.filter((n) => n !== "prettier"),
+    "plugin:react/recommended",
+    "prettier",
+  ],
   plugins: [...base.plugins, "react", "react-hooks"],
   settings: { react: { version: "detect" } },
   rules: {
