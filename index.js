@@ -1,4 +1,4 @@
-module.exports = {
+const config = {
   root: true,
   env: {
     es6: true,
@@ -311,4 +311,32 @@ module.exports = {
     "node/prefer-promises/fs": "warn",
     "node/prefer-promises/dns": "warn",
   },
+  overrides: [],
 };
+
+config.overrides.push({
+  files: ["**/*.test.{js,jsx,ts,tsx}", "**/test/*.{js,jsx,ts,tsx}"],
+  plugins: [...config.plugins, "jest"],
+  rules: {
+    /*
+     * eslint-plugin-jest rules.
+     */
+    "jest/consistent-test-it": "warn",
+    "jest/expect-expect": "warn",
+    "jest/no-conditional-expect": "warn",
+    "jest/no-done-callback": "warn",
+    "jest/no-identical-title": "warn",
+    "jest/no-interpolation-in-snapshots": "warn",
+    "jest/no-mocks-import": "warn",
+    "jest/no-standalone-expect": "error",
+    "jest/prefer-to-be": "warn",
+    "jest/prefer-to-contain": "warn",
+    "jest/prefer-to-have-length": "warn",
+    "jest/valid-describe-callback": "warn",
+    "jest/valid-expect": "warn",
+    "jest/valid-expect-in-promise": "warn",
+    "jest/valid-title": "warn",
+  },
+});
+
+module.exports = config;

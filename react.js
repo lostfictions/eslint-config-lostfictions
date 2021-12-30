@@ -1,20 +1,12 @@
 const base = require("./index");
 
 module.exports = {
-  // we have to declare the whole "extends" stack and all plugins again...
-  extends: ["lostfictions", "plugin:react/recommended", "prettier"],
-  plugins: [
-    "node",
-    "import",
-    "deprecation",
-    "@typescript-eslint",
-    "react",
-    "react-hooks",
-  ],
+  // we place prettier again at the end of the extends stack to ensure it turns
+  // off any react rules that shouldn't be enabled.
+  extends: [...base.extends, "plugin:react/recommended", "prettier"],
+  plugins: [...base.plugins, "react", "react-hooks"],
   settings: { react: { version: "detect" } },
   rules: {
-    // ...and because we've redeclared the whole "extends" stack, we have to add
-    // our rules back in.
     ...base.rules,
 
     // these rules can be disabled when using the new jsx transform.

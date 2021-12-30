@@ -55,3 +55,8 @@ const s = `ha ha ${{ haha: "yeah" }}`;
 ("bark bark");
 
 const y = Math.max(3, 4)!;
+
+function expect() {
+  console.log("lol");
+}
+expect();
