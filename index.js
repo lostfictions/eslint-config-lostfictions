@@ -27,6 +27,7 @@ const config = {
     "eslint-comments",
     "import",
     "node",
+    "sonarjs",
     "unicorn",
   ],
   // ignore jest snapshots and the eslint config itself by default
@@ -315,6 +316,22 @@ const config = {
     "node/no-path-concat": "warn",
     "node/prefer-promises/fs": "warn",
     "node/prefer-promises/dns": "warn",
+
+    /*
+     * eslint-plugin-sonarjs rules.
+     */
+    "sonarjs/no-all-duplicated-branches": "error",
+    "sonarjs/no-element-overwrite": "warn",
+    "sonarjs/no-empty-collection": "error",
+    "sonarjs/no-identical-conditions": "error",
+    "sonarjs/no-identical-expressions": "error",
+    "sonarjs/no-ignored-return": "warn",
+    "sonarjs/no-one-iteration-loop": "warn",
+    "sonarjs/no-collection-size-mischeck": "warn",
+    "sonarjs/no-inverted-boolean-check": "warn",
+    "sonarjs/no-nested-switch": "warn",
+    "sonarjs/prefer-single-boolean-return": "warn",
+    "sonarjs/prefer-while": "warn",
 
     /*
      * eslint-plugin-unicorn rules.

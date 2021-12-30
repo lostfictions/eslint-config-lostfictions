@@ -78,3 +78,22 @@ if (xdd) {
 
 // eslint-disable-next-line unicorn/error-message
 new Error();
+
+// eslint-disable-next-line sonarjs/no-inverted-boolean-check
+if (!(y === 2)) {
+  console.log("ok");
+}
+
+function whatever() {
+  if (xdd) {
+    // eslint-disable-next-line no-useless-return
+    return;
+  }
+}
+
+function what2() {
+  if (xdd) {
+    return true;
+  }
+  return false;
+}
