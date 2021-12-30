@@ -258,7 +258,9 @@ module.exports = {
     /*
      * eslint-plugin-node rules.
      */
-    "node/no-deprecated-api": "warn",
+    "node/no-path-concat": "warn",
+    "node/prefer-promises/fs": "warn",
+    "node/prefer-promises/dns": "warn",
 
     /*
      * eslint-plugin-import rules.
