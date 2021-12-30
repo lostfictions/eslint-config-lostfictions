@@ -22,11 +22,11 @@ module.exports = {
     "prettier",
   ],
   plugins: [
+    "@typescript-eslint",
     "deprecation",
     "eslint-comments",
     "import",
     "node",
-    "@typescript-eslint",
   ],
   // ignore jest snapshots and the eslint config itself by default
   ignorePatterns: ["*.test.ts.snap", ".eslintrc.js"],
@@ -262,14 +262,12 @@ module.exports = {
     "@typescript-eslint/unified-signatures": "warn",
 
     /*
-     * eslint-plugin-node rules.
+     * eslint-plugin-deprecation rules.
      */
-    "node/no-path-concat": "warn",
-    "node/prefer-promises/fs": "warn",
-    "node/prefer-promises/dns": "warn",
+    "deprecation/deprecation": "warn",
 
     /*
-     * eslint-plugin-comments rules.
+     * eslint-plugin-eslint-comments rules.
      */
     "eslint-comments/disable-enable-pair": ["warn", { allowWholeFile: true }],
     "eslint-comments/no-unlimited-disable": "warn",
@@ -307,8 +305,10 @@ module.exports = {
     ],
 
     /*
-     * eslint-plugin-deprecation rules.
+     * eslint-plugin-node rules.
      */
-    "deprecation/deprecation": "warn",
+    "node/no-path-concat": "warn",
+    "node/prefer-promises/fs": "warn",
+    "node/prefer-promises/dns": "warn",
   },
 };
