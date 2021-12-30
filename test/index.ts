@@ -35,7 +35,7 @@ class MyError extends Error {}
 // eslint-disable-next-line @typescript-eslint/no-base-to-string
 const xzz = `do you think ${new MyError("anotherthing")} won't stringify?`;
 
-// eslint-disable-next-line deprecation/deprecation
+// eslint-disable-next-line deprecation/deprecation, unicorn/prefer-string-slice
 const abc = "something".substr(4);
 
 // const num = 4;
@@ -56,7 +56,25 @@ const s = `ha ha ${{ haha: "yeah" }}`;
 
 const y = Math.max(3, 4)!;
 
+// no jest warnings outside of test files
 function expect() {
   console.log("lol");
 }
 expect();
+
+// eslint-disable-next-line unicorn/no-instanceof-array
+const xdd = [0, 1, 2, 4] instanceof Array;
+
+if (xdd) {
+  if (y) {
+    console.log("this shouldn't warn, because it would modify the else");
+  }
+} else if (s) {
+  // eslint-disable-next-line unicorn/no-lonely-if
+  if (y) {
+    console.log("uhh");
+  }
+}
+
+// eslint-disable-next-line unicorn/error-message
+new Error();
