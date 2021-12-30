@@ -159,12 +159,15 @@ it.
 
 ### warnings about `Object.hasOwn()`, `Array#at()` and `String#at()`
 
-[`prefer-object-has-own`](https://eslint.org/docs/rules/prefer-object-has-own)
-and
+~~[`prefer-object-has-own`](https://eslint.org/docs/rules/prefer-object-has-own)
+and~~
 [`unicorn/prefer-at`](https://github.com/sindresorhus/eslint-plugin-unicorn/blob/main/docs/rules/prefer-at.md)
-are both enabled in this config. the respective functions they recommend are
-cleaner and less error-prone than their older alternatives, but they're both
-pretty fresh at the moment.
+are both enabled in this config. _(EDIT: `Object.hasOwn` doesn't have support yet in
+typescript's `lib.d.ts`, so we're waiting for that. see the [tracking
+issue](https://github.com/microsoft/TypeScript/issues/44253).)_
+
+the respective functions they recommend are cleaner and less error-prone than
+their older alternatives, but they're both pretty fresh at the moment.
 [`Object.hasOwn()`](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Object/hasOwn)
 shipped in [node
 16.9.0](https://github.com/nodejs/node/blob/master/doc/changelogs/CHANGELOG_V16.md#2021-09-07-version-1690-current-targos)
@@ -177,4 +180,4 @@ shipped in [node
 (2021-07-29). if you're stuck on an older version of node, you may prefer to
 disable these rules. these functions have shipped in evergreen browsers and
 _should_ be polyfilled by frontend tools that incorporate core-js polyfills
-(next.js, CRA).
+(next.js, CRA) if your browserslist config indicates that support is required.

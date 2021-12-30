@@ -86,7 +86,11 @@ const config = {
 
     "one-var": ["warn", "never"],
     "prefer-const": "warn",
-    "prefer-object-has-own": "warn",
+
+    // hasn't shipped in typescript. tracking issue:
+    // https://github.com/microsoft/TypeScript/issues/44253
+    // "prefer-object-has-own": "warn",
+
     "prefer-promise-reject-errors": "warn",
     "prefer-regex-literals": "warn",
     strict: "warn",
