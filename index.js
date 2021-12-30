@@ -246,7 +246,7 @@ const config = {
     "@typescript-eslint/prefer-nullish-coalescing": "warn",
     "@typescript-eslint/prefer-optional-chain": "warn",
     "@typescript-eslint/prefer-readonly": "warn",
-    "@typescript-eslint/prefer-regexp-exec": "warn",
+    "@typescript-eslint/prefer-regexp-exec": "off",
     "@typescript-eslint/prefer-return-this-type": "warn",
     "@typescript-eslint/prefer-string-starts-ends-with": "warn",
     "@typescript-eslint/prefer-ts-expect-error": "warn",
