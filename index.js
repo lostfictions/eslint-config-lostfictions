@@ -46,7 +46,7 @@ const config = {
     "no-await-in-loop": "warn",
     "no-buffer-constructor": "error",
     "no-dupe-class-members": "error",
-    "no-dupe-else-if": "warn",
+    "no-dupe-else-if": "error",
     "no-else-return": ["warn", { allowElseIf: false }],
     "no-empty": "warn",
     "no-extra-bind": "error",
@@ -320,11 +320,10 @@ const config = {
     /*
      * eslint-plugin-sonarjs rules.
      */
-    "sonarjs/no-all-duplicated-branches": "error",
+    "sonarjs/no-all-duplicated-branches": "warn",
     "sonarjs/no-element-overwrite": "warn",
-    "sonarjs/no-empty-collection": "error",
-    "sonarjs/no-identical-conditions": "error",
-    "sonarjs/no-identical-expressions": "error",
+    "sonarjs/no-empty-collection": "warn",
+    "sonarjs/no-identical-expressions": "warn",
     "sonarjs/no-ignored-return": "warn",
     "sonarjs/no-one-iteration-loop": "warn",
     "sonarjs/no-collection-size-mischeck": "warn",

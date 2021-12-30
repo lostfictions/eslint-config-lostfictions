@@ -97,3 +97,41 @@ function what2() {
   }
   return false;
 }
+
+// eslint-disable-next-line sonarjs/no-all-duplicated-branches
+if (xdd) {
+  console.log("ok");
+} else {
+  console.log("ok");
+}
+
+const arr: number[] = [];
+// eslint-disable-next-line sonarjs/no-empty-collection
+for (const whatev of arr) {
+  console.log(whatev);
+}
+
+// eslint-disable-next-line sonarjs/no-identical-expressions
+const z = y - y;
+
+// eslint-disable-next-line sonarjs/no-identical-expressions
+if (y && y) {
+  console.log("hmm");
+}
+
+// eslint-disable-next-line sonarjs/no-ignored-return
+"something".slice(1, 2);
+
+class Mystery {
+  slice(a: number) {
+    console.log("psyche");
+  }
+  substr(b: number) {
+    console.log("gotcha");
+  }
+}
+
+const m = new Mystery();
+m.slice(5);
+// eslint-disable-next-line unicorn/prefer-string-slice -- false positive since type info is unavailable
+m.substr(4);
