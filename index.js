@@ -21,7 +21,13 @@ module.exports = {
     "plugin:@typescript-eslint/recommended-requiring-type-checking",
     "prettier",
   ],
-  plugins: ["node", "import", "deprecation", "@typescript-eslint"],
+  plugins: [
+    "deprecation",
+    "eslint-comments",
+    "import",
+    "node",
+    "@typescript-eslint",
+  ],
   // ignore jest snapshots and the eslint config itself by default
   ignorePatterns: ["*.test.ts.snap", ".eslintrc.js"],
   reportUnusedDisableDirectives: true,
@@ -261,6 +267,13 @@ module.exports = {
     "node/no-path-concat": "warn",
     "node/prefer-promises/fs": "warn",
     "node/prefer-promises/dns": "warn",
+
+    /*
+     * eslint-plugin-comments rules.
+     */
+    "eslint-comments/disable-enable-pair": ["warn", { allowWholeFile: true }],
+    "eslint-comments/no-unlimited-disable": "warn",
+    "eslint-comments/no-unused-enable": "warn",
 
     /*
      * eslint-plugin-import rules.
