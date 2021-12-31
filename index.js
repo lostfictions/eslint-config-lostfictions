@@ -325,11 +325,11 @@ const config = {
     "sonarjs/no-empty-collection": "warn",
     "sonarjs/no-identical-expressions": "warn",
     "sonarjs/no-ignored-return": "warn",
-    "sonarjs/no-one-iteration-loop": "warn",
     "sonarjs/no-collection-size-mischeck": "warn",
     "sonarjs/no-inverted-boolean-check": "warn",
     "sonarjs/no-nested-switch": "warn",
-    "sonarjs/prefer-single-boolean-return": "warn",
+    // currently useless, all usecases already covered by built-in rule `no-else-return`.
+    // "sonarjs/prefer-single-boolean-return": "warn",
     "sonarjs/prefer-while": "warn",
 
     /*
@@ -346,6 +346,7 @@ const config = {
     "unicorn/no-lonely-if": "warn",
     "unicorn/no-useless-fallback-in-spread": "warn",
     "unicorn/no-useless-length-check": "warn",
+    // hasn't actually shipped yet
     // "unicorn/no-useless-promise-resolve-reject": "warn",
     "unicorn/no-useless-spread": "warn",
     "unicorn/prefer-array-find": "warn",

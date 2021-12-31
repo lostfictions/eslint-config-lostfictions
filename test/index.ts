@@ -92,6 +92,7 @@ function whatever() {
 }
 
 function what2() {
+  // expecting sonarjs/prefer-single-boolean-return here, but it doesn't trigger.
   if (xdd) {
     return true;
   }
@@ -135,3 +136,26 @@ const m = new Mystery();
 m.slice(5);
 // eslint-disable-next-line unicorn/prefer-string-slice -- false positive since type info is unavailable
 m.substr(4);
+
+let done = false;
+// eslint-disable-next-line sonarjs/prefer-while
+for (; !done; ) {
+  done = true;
+}
+
+// eslint-disable-next-line no-unreachable-loop
+for (let i = 0; i < 10; i++) {
+  console.log(`i is ${i}`);
+  break;
+}
+
+const cond = 3;
+// eslint-disable-next-line no-unreachable-loop
+for (let i = 0; i < 10; i++) {
+  if (i === cond) {
+    break;
+  } else {
+    console.log(`i is ${i}`);
+    break;
+  }
+}
