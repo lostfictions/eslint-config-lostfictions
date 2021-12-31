@@ -159,3 +159,8 @@ for (let i = 0; i < 10; i++) {
     break;
   }
 }
+
+async function hmm() {
+  // eslint-disable-next-line @typescript-eslint/await-thenable
+  await what2();
+}

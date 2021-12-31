@@ -168,6 +168,7 @@ const config = {
      */
 
     "@typescript-eslint/adjacent-overload-signatures": "warn",
+    "@typescript-eslint/await-thenable": "warn",
     "@typescript-eslint/ban-tslint-comment": "warn",
     "@typescript-eslint/ban-types": [
       "warn",
