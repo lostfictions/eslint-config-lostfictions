@@ -77,7 +77,7 @@ if (xdd) {
 }
 
 // eslint-disable-next-line unicorn/error-message
-new Error();
+const e = new Error();
 
 // eslint-disable-next-line sonarjs/no-inverted-boolean-check
 if (!(y === 2)) {
@@ -137,6 +137,9 @@ m.slice(5);
 // eslint-disable-next-line unicorn/prefer-string-slice -- false positive since type info is unavailable
 m.substr(4);
 
+// eslint-disable-next-line no-new
+new Mystery();
+
 let done = false;
 // eslint-disable-next-line sonarjs/prefer-while
 for (; !done; ) {
@@ -160,7 +163,50 @@ for (let i = 0; i < 10; i++) {
   }
 }
 
+(Object.prototype as any)["dog"] = "hmm";
+
 async function hmm() {
   // eslint-disable-next-line @typescript-eslint/await-thenable
   await what2();
 }
+
+// eslint-disable-next-line unicorn/expiring-todo-comments
+// TODO [2019-08-20]: haha i should fix this sometime
+console.log("oops");
+
+// eslint-disable-next-line unicorn/expiring-todo-comments
+// FIXME: [-my-cool-package]: hey you don't need this
+console.log("wow");
+
+// eslint-disable-next-line yoda
+if (5 === y) {
+  console.log("yoda");
+}
+
+// eslint-disable-next-line no-octal-escape
+const something = "what \204";
+
+// eslint-disable-next-line import/order, no-useless-rename
+import { format as format } from "path";
+
+const obj = {
+  // eslint-disable-next-line object-shorthand
+  y: y,
+};
+
+const okOctal = 0o765;
+
+// eslint-disable-next-line prefer-numeric-literals
+const bin = parseInt(`11111101`, 2);
+
+function foso() {
+  // eslint-disable-next-line prefer-rest-params
+  console.log(arguments);
+}
+
+const args = [1, 2, 3, 4];
+// eslint-disable-next-line prefer-spread
+Math.max.apply(Math, args);
+
+const someNum = "0x3847";
+parseInt(someNum, 10);

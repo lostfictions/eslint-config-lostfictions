@@ -37,71 +37,109 @@ const config = {
     /*
      * base eslint rules not already enabled in eslint:recommended.
      */
-
     "array-callback-return": "warn",
     curly: ["warn", "multi-line", "consistent"],
     "default-case": "warn",
     "default-case-last": "warn",
     eqeqeq: ["error", "always", { null: "ignore" }],
-    "no-await-in-loop": "warn",
-    "no-buffer-constructor": "error",
+    "grouped-accessor-pairs": "warn",
+
+    // occasionally useful, but typically gives more false positives than not
+    "no-await-in-loop": "off",
+
+    "no-constructor-return": "warn",
     "no-dupe-class-members": "error",
     "no-dupe-else-if": "error",
     "no-else-return": ["warn", { allowElseIf: false }],
     "no-empty": "warn",
-    "no-extra-bind": "error",
+    "no-eval": "warn",
+    "no-extend-native": "warn",
+    "no-extra-bind": "warn",
     "no-floating-decimal": "warn",
     "no-implicit-coercion": "warn",
     "no-import-assign": "warn",
     "no-labels": "error",
     "no-lonely-if": "warn",
+    "no-multi-assign": "warn",
     "no-multi-str": "warn",
+    "no-new": "warn",
     "no-new-func": "error",
     "no-new-object": "warn",
-    "no-new-require": "warn",
     "no-new-wrappers": "error",
     "no-nonoctal-decimal-escape": "warn",
+    "no-octal-escape": "warn",
     "no-param-reassign": "warn",
     "no-promise-executor-return": "warn",
     "no-return-assign": "error",
     "no-return-await": "warn",
+    "no-script-url": "warn",
     "no-self-compare": "error",
-    "no-sequences": "error",
+    "no-sequences": [
+      "error",
+      {
+        allowInParentheses: false,
+      },
+    ],
     "no-setter-return": "warn",
     "no-template-curly-in-string": "warn",
+
+    // handled by typescript.
     "no-undef": "off",
+
     "no-unmodified-loop-condition": "warn",
+    "no-unneeded-ternary": "warn",
     "no-unreachable-loop": "warn",
     "no-unused-private-class-members": "warn",
     "no-useless-backreference": "warn",
     "no-useless-call": "warn",
     "no-useless-computed-key": "warn",
     "no-useless-concat": "warn",
+    "no-useless-rename": "warn",
     "no-useless-return": "warn",
-    "no-var": "warn",
+    "no-var": "error",
 
     // void-as-statement is useful to suppress warnings from
     // @typescript-eslint/no-floating-promises. see
     // https://github.com/typescript-eslint/typescript-eslint/blob/main/packages/eslint-plugin/docs/rules/no-floating-promises.md
     "no-void": ["warn", { allowAsStatement: true }],
 
+    "object-shorthand": "warn",
     "one-var": ["warn", "never"],
+    "prefer-arrow-callback": "warn",
     "prefer-const": "warn",
+
+    // sometimes disruptive to idiomatic code, worth revitsiting later.
+    // "prefer-destructuring": "warn",
+
+    "prefer-exponentiation-operator": "warn",
+    "prefer-numeric-literals": "warn",
 
     // hasn't shipped in typescript. tracking issue:
     // https://github.com/microsoft/TypeScript/issues/44253
     // "prefer-object-has-own": "warn",
 
+    "prefer-object-spread": "warn",
     "prefer-promise-reject-errors": "warn",
     "prefer-regex-literals": "warn",
+    "prefer-rest-params": "error",
+    "prefer-spread": "warn",
+    "prefer-template": "warn",
+    radix: "warn",
+    "require-atomic-updates": "warn",
+
+    // generally good idea but can be cumbersome for existing code, revisit
+    // "require-unicode-regexp": "warn",
+
+    // strict is added by typescript or babel where necessary
     strict: "warn",
+
     "symbol-description": "warn",
     "valid-typeof": ["error", { requireStringLiterals: true }],
+    yoda: "warn",
 
     /*
      * eslint rules that have a typescript-eslint equivalent.
      */
-
     "no-array-constructor": "off",
     "@typescript-eslint/no-array-constructor": "warn",
 
@@ -166,7 +204,6 @@ const config = {
     /*
      * other typescript-eslint rules.
      */
-
     "@typescript-eslint/adjacent-overload-signatures": "warn",
     "@typescript-eslint/await-thenable": "warn",
     "@typescript-eslint/ban-tslint-comment": "warn",
@@ -314,6 +351,7 @@ const config = {
     /*
      * eslint-plugin-node rules.
      */
+    "node/no-new-require": "warn",
     "node/no-path-concat": "warn",
     "node/prefer-promises/fs": "warn",
     "node/prefer-promises/dns": "warn",
@@ -347,8 +385,7 @@ const config = {
     "unicorn/no-lonely-if": "warn",
     "unicorn/no-useless-fallback-in-spread": "warn",
     "unicorn/no-useless-length-check": "warn",
-    // hasn't actually shipped yet
-    // "unicorn/no-useless-promise-resolve-reject": "warn",
+    "unicorn/no-useless-promise-resolve-reject": "warn",
     "unicorn/no-useless-spread": "warn",
     "unicorn/prefer-array-find": "warn",
     "unicorn/prefer-array-flat": "warn",
@@ -361,6 +398,7 @@ const config = {
     "unicorn/prefer-dom-node-dataset": "warn",
     "unicorn/prefer-export-from": "warn",
     "unicorn/prefer-includes": "warn",
+    "unicorn/prefer-json-parse-buffer": "warn",
     "unicorn/prefer-negative-index": "warn",
     "unicorn/prefer-regexp-test": "warn",
     "unicorn/prefer-string-replace-all": "warn",
