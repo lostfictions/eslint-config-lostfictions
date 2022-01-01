@@ -166,13 +166,16 @@ documentation](https://typescript-eslint.io/docs/linting/type-linting#i-get-erro
 for further explanation about this warning and example configurations that fix
 it.
 
-### warnings about `Object.hasOwn()`, `Array#at()` and `String#at()`
+### warnings about `Array#at()` and `String#at()`
 
-~~[`prefer-object-has-own`](https://eslint.org/docs/rules/prefer-object-has-own)
-and~~
+<!-- ### warnings about `Object.hasOwn()`, `Array#at()` and `String#at()` -->
+
 [`unicorn/prefer-at`](https://github.com/sindresorhus/eslint-plugin-unicorn/blob/main/docs/rules/prefer-at.md)
-are both enabled in this config. _(EDIT: `Object.hasOwn` doesn't have support yet in
-typescript's `lib.d.ts`, so we're waiting for that. see the [tracking
+~~and [`prefer-object-has-own`](https://eslint.org/docs/rules/prefer-object-has-own)~~
+are both enabled in this config.
+
+_(EDIT: `Object.hasOwn` doesn't have support
+yet in typescript's `lib.d.ts`, so we're waiting for that. see the [tracking
 issue](https://github.com/microsoft/TypeScript/issues/44253).)_
 
 the respective functions they recommend are cleaner and less error-prone than
@@ -190,3 +193,56 @@ shipped in [node
 disable these rules. these functions have shipped in evergreen browsers and
 _should_ be polyfilled by frontend tools that incorporate core-js polyfills
 (next.js, CRA) if your browserslist config indicates that support is required.
+
+### the `in` operator
+
+The [`in`
+operator](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Operators/in)
+has a number of pitfalls that can make it tricky to use. _using an object with
+arbitrary string keys can be a code smell_ if there's any possibility the keys
+are user-provided -- this can be a source of [prototype
+poisoning](https://medium.com/intrinsic-blog/javascript-prototype-poisoning-vulnerabilities-in-the-wild-7bc15347c96),
+and even solutions like `Object.create(null)` aren't foolproof (and create new
+pitfalls of their own). for this reason, it's recommended to use a `Map` or
+`Set` when working with arbitrary keys.
+
+however, the `in` operator is often more ergonomic than the more "correct"
+alternatives and works as a type guard in TypeScript where other forms of
+membership checking do not. for example, given this type declaration:
+
+```ts
+type XorY = { x: string } | { y: number };
+let thing: XorY;
+```
+
+this code will typecheck correctly:
+
+```ts
+if ("x" in thing) {
+  // narrowed to { x: string } in this block
+  console.log(thing.x);
+} else {
+  // narrowed to { y: number } in this block
+  console.log(thing.y + 3);
+}
+```
+
+but this will not:
+
+```ts
+if (Object.prototype.hasOwnProperty.call(thing, "x")) {
+  // ERROR: Property 'x' does not exist on type 'XorY'.
+  // Property 'x' does not exist on type '{ y: number; }'.
+  console.log(thing.x);
+}
+```
+
+for these reasons, `eslint-config-lostfictions` warns when using the `in`
+operator, _unless the left-hand operand is a string literal_. this should catch
+a majority of code-smell cases while still permitting the relatively safer case
+of using `in` to narrow a union of TypeScript types.
+
+keep in mind that the preferred way to narrow unions is the use of a
+_discriminant property_. (for example, the `kind` property in `type Shape = { kind: 'circle'; radius: number } | { kind: 'square'; size: number }`.)
+discriminants sidestep the need to reach for something like `in` in the first
+place.

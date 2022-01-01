@@ -1,3 +1,7 @@
+const { homepage, version } = require("./package.json");
+
+const docPage = `${homepage}/tree/v${version}`;
+
 const config = {
   root: true,
   env: {
@@ -75,14 +79,14 @@ const config = {
       {
         name: "isFinite",
         message: [
-          "Prefer Number.isFinite() since it's stricter:",
+          "Prefer `Number.isFinite()` over the global `isFinite()`, since the former is stricter:",
           "https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Number/isFinite#description",
         ].join(" "),
       },
       {
         name: "isNaN",
         message: [
-          "Prefer Number.isNaN() since it's stricter:",
+          "Prefer `Number.isNaN()` over the global `isNaN()` since the former is stricter:",
           "https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Number/isNaN#description",
         ].join(" "),
       },
@@ -115,12 +119,15 @@ const config = {
       {
         selector: "ForInStatement",
         message:
-          "Prefer `Object.keys()`, `Object.values()` or `Object.entries()` for iteration.",
+          "Use a `for-of` loop with `Object.{keys,values,entries}` for object iteration.",
       },
       {
-        selector: "BinaryExpression[operator='in']",
-        message:
-          "Prefer `Object.prototype.hasOwnProperty.call()` or `Object.hasOwn` for testing membership (or use a Map or Set).",
+        selector: "BinaryExpression[left.type!='Literal'][operator='in']",
+        message: [
+          "Prefer `Object.prototype.hasOwnProperty.call()` or",
+          "`Object.hasOwn()` for testing membership (or use a Map or Set).",
+          `See ${docPage}#the-in-operator`,
+        ].join(" "),
       },
     ],
     "no-return-assign": "error",

@@ -240,6 +240,9 @@ if (addEventListener != null) {
 }
 
 // eslint-disable-next-line no-restricted-syntax
+console.log(barker in thing);
+
+// checking with a literal is allowed:
 console.log("dog" in thing);
 
 // eslint-disable-next-line no-restricted-syntax
@@ -251,3 +254,17 @@ for (const k in thing) {
 for (const v in args) {
   console.log(v);
 }
+
+type XorY = { x: string } | { y: number };
+const xory: XorY = { x: "yeah" } as XorY;
+if ("x" in xory) {
+  console.log(xory.x);
+} else {
+  console.log(xory.y);
+}
+
+// if (Object.prototype.hasOwnProperty.call(xory, "x")) {
+//   console.log(xory.x);
+// } else {
+//   console.log(xory.y);
+// }
