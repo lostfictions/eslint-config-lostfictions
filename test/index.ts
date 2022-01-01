@@ -210,3 +210,44 @@ Math.max.apply(Math, args);
 
 const someNum = "0x3847";
 parseInt(someNum, 10);
+
+// eslint-disable-next-line import/no-commonjs
+require("fs");
+
+if (y) {
+  require("fs");
+}
+
+// eslint-disable-next-line import/no-commonjs
+module.exports = { dog: "cool" };
+
+const thing = { dog: "bark", cat: "meow" };
+
+// eslint-disable-next-line prefer-destructuring
+const dog = thing.dog;
+
+const barker = thing.dog;
+const first = args[0];
+
+let cat: string;
+
+// eslint-disable-next-line prefer-const
+cat = thing.cat;
+
+// eslint-disable-next-line no-restricted-globals
+if (addEventListener != null) {
+  console.log("hmm");
+}
+
+// eslint-disable-next-line no-restricted-syntax
+console.log("dog" in thing);
+
+// eslint-disable-next-line no-restricted-syntax
+for (const k in thing) {
+  console.log(k);
+}
+
+// eslint-disable-next-line @typescript-eslint/no-for-in-array, no-restricted-syntax
+for (const v in args) {
+  console.log(v);
+}

@@ -70,6 +70,59 @@ const config = {
     "no-octal-escape": "warn",
     "no-param-reassign": "warn",
     "no-promise-executor-return": "warn",
+    "no-restricted-globals": [
+      "warn",
+      {
+        name: "isFinite",
+        message: [
+          "Prefer Number.isFinite() since it's stricter:",
+          "https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Number/isFinite#description",
+        ].join(" "),
+      },
+      {
+        name: "isNaN",
+        message: [
+          "Prefer Number.isNaN() since it's stricter:",
+          "https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Number/isNaN#description",
+        ].join(" "),
+      },
+    ].concat(
+      // sourced from here:
+      // https://github.com/facebook/create-react-app/blob/9673858a3715287c40aef9e800c431c7d45c05a2/packages/confusing-browser-globals/index.js#L10
+      // inlined directly to minimize churn and effort required to audit
+      // updates, since CRA versions its packages in lockstep even when there's
+      // no changes.
+
+      // some of these may already be covered by deprecation messages or strict
+      // mode, but it doesn't hurt to include them.
+
+      // prettier-ignore
+      [
+      'addEventListener', 'blur', 'close', 'closed', 'confirm', 'defaultStatus',
+      'defaultstatus', 'event', 'external', 'find', 'focus', 'frameElement',
+      'frames', 'history', 'innerHeight', 'innerWidth', 'length', 'location',
+      'locationbar', 'menubar', 'moveBy', 'moveTo', 'name', 'onblur', 'onerror',
+      'onfocus', 'onload', 'onresize', 'onunload', 'open', 'opener', 'opera',
+      'outerHeight', 'outerWidth', 'pageXOffset', 'pageYOffset', 'parent',
+      'print', 'removeEventListener', 'resizeBy', 'resizeTo', 'screen',
+      'screenLeft', 'screenTop', 'screenX', 'screenY', 'scroll', 'scrollbars',
+      'scrollBy', 'scrollTo', 'scrollX', 'scrollY', 'self', 'status',
+      'statusbar', 'stop', 'toolbar', 'top',
+    ]
+    ),
+    "no-restricted-syntax": [
+      "warn",
+      {
+        selector: "ForInStatement",
+        message:
+          "Prefer `Object.keys()`, `Object.values()` or `Object.entries()` for iteration.",
+      },
+      {
+        selector: "BinaryExpression[operator='in']",
+        message:
+          "Prefer `Object.prototype.hasOwnProperty.call()` or `Object.hasOwn` for testing membership (or use a Map or Set).",
+      },
+    ],
     "no-return-assign": "error",
     "no-return-await": "warn",
     "no-script-url": "warn",
@@ -107,10 +160,22 @@ const config = {
     "one-var": ["warn", "never"],
     "prefer-arrow-callback": "warn",
     "prefer-const": "warn",
-
-    // sometimes disruptive to idiomatic code, worth revitsiting later.
-    // "prefer-destructuring": "warn",
-
+    "prefer-destructuring": [
+      "warn",
+      {
+        VariableDeclarator: {
+          array: false,
+          object: true,
+        },
+        AssignmentExpression: {
+          array: false,
+          object: false,
+        },
+      },
+      {
+        enforceForRenamedProperties: false,
+      },
+    ],
     "prefer-exponentiation-operator": "warn",
     "prefer-numeric-literals": "warn",
 
@@ -274,7 +339,7 @@ const config = {
     "@typescript-eslint/no-unsafe-member-access": "off", //"warn",
     "@typescript-eslint/no-unsafe-return": "off", //"warn",
 
-    // requires cause an implicit any in ts and should be used with care, but
+    // requires cause an implicit `any` in ts and should be used with care, but
     // they're easily caught - whereas the recommended solution of `import x =
     // require('x')` doesn't work in many scenarios.
     "@typescript-eslint/no-var-requires": "off",
@@ -334,6 +399,7 @@ const config = {
         allowObject: false,
       },
     ],
+    "import/no-commonjs": "warn",
     "import/order": [
       "warn",
       {
