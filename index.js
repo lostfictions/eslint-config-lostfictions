@@ -125,7 +125,7 @@ const config = {
     "prefer-spread": "warn",
     "prefer-template": "warn",
     radix: "warn",
-    "require-atomic-updates": "warn",
+    "require-atomic-updates": ["warn", { allowProperties: true }],
 
     // generally good idea but can be cumbersome for existing code, revisit
     // "require-unicode-regexp": "warn",
@@ -398,7 +398,6 @@ const config = {
     "unicorn/prefer-dom-node-dataset": "warn",
     "unicorn/prefer-export-from": "warn",
     "unicorn/prefer-includes": "warn",
-    "unicorn/prefer-json-parse-buffer": "warn",
     "unicorn/prefer-negative-index": "warn",
     "unicorn/prefer-regexp-test": "warn",
     "unicorn/prefer-string-replace-all": "warn",
