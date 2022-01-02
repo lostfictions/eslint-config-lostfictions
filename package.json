@@ -4,6 +4,7 @@
   "main": "index.js",
   "license": "MIT",
   "homepage": "https://github.com/lostfictions/eslint-config-lostfictions",
+  "files": ["index.js", "react.js"],
   "scripts": {
     "unused": "eslint-find-rules -un ./index.js",
     "deprecated": "eslint-find-rules -dn ./index.js",
