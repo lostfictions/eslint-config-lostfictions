@@ -1,81 +1,109 @@
-# a shareable eslint config.
+# eslint-config-lostfictions
+
+<a href="https://npmjs.org/package/badges" title="View this project on NPM">
+  <img src="https://img.shields.io/npm/v/eslint-config-lostfictions.svg" alt="NPM version" />
+</a>
+
+## A shareable ESLint config.
 
 `eslint-config-lostfictions` is a (gently) opinionated custom configuration for
-[eslint](https://eslint.org/) intended for use with
-[typescript](https://www.typescriptlang.org/) (or javascript).
+[ESLint](https://eslint.org/).
 
-typescript and eslint might seem like they're used for the exact same thing —
-catching errors in javascript — but they have different, complementary uses.
-typescript generally limits itself to typechecking, while eslint can catch
+**Features**
+
+- Intended for use with [TypeScript](https://www.typescriptlang.org/) (also
+  supports JavaScript in projects with a
+  [`tsconfig.json`](https://www.typescriptlang.org/docs/handbook/migrating-from-javascript.html#writing-a-configuration-file)
+  configured).
+- Includes a React config with
+  [`eslint-plugin-react`](https://github.com/yannickcr/eslint-plugin-react/) and
+  [`eslint-plugin-react-hooks`](https://www.npmjs.com/package/eslint-plugin-react-hooks)
+  rules to catch errors and uphold best practices in React code.
+- Defers all formatting rules to [Prettier](https://prettier.io/). No more noisy
+  warnings in your editor shouting that you forgot to indent your code!
+- Includes rules for best practices when writing tests with
+  [Jest](https://jestjs.io/).
+- Batteries included: just add ESLint and this package — no need for extra
+  ESLint plugins cluttering your `package.json` that need to be audited for
+  compatibility on version bumps.
+
+Read on for the rationale, or jump to the [Usage](#Usage) section below to get
+started.
+
+## Why?
+
+TypeScript and ESLint might seem like they're used for the exact same thing —
+catching errors in JavaScript — but they have different, complementary uses.
+TypeScript generally limits itself to typechecking, while ESLint can catch
 things like [expressions that do
 nothing](https://eslint.org/docs/rules/no-unused-expressions) or [comparing a
-value to itself](https://eslint.org/docs/rules/no-self-compare). in fact, the
-typescript developers [use eslint on their own
+value to itself](https://eslint.org/docs/rules/no-self-compare). In fact, the
+TypeScript developers [use ESLint on their own
 codebase](https://github.com/microsoft/TypeScript/blob/main/.eslintrc.json)!
-(another tool called [tslint](https://github.com/palantir/tslint) formerly
-fulfilled a similar role for typescript, but it's been deprecated for a while
-now.)
+(Another tool called [TSLint](https://github.com/palantir/tslint) formerly
+fulfilled a similar role for TypeScript, but it's been deprecated for a while
+now in favour of ESLint.)
 
 `eslint-config-lostfictions` is based on a few key principles:
 
-## linters are for linting.
+### Linters are for linting.
 
-after untold thousands of code reviews nitpicking whitespace, line length, or
+After untold thousands of code reviews nitpicking whitespace, line length, or
 semicolons, programmers are finally coming around to the idea that it's usually
-easier to let the computer fix those things for you. a consistent team-wide
+easier to let the computer fix those things for you. A consistent team-wide
 code style helps speed up readability and smooths over conflicts that arise from
-minor differences in opinion. (who cares about tabs versus spaces if you can
+minor differences in opinion. (Who cares about tabs versus spaces if you can
 treat leading whitespace as tabstops on your machine but save them to disk as
 spaces?)
 
-languages like go and rust make things easy here by integrating opinionated
-formatters in their toolchain. in javascript-land, there are two main options
-for formatting: eslint and [prettier](https://prettier.io/). both are viable,
-but i've found that prettier is much easier to configure, more consistent, and
+Languages like Go and Rust make things easy here by integrating opinionated
+formatters in their toolchain. In JavaScript-land, there are two main options
+for formatting: ESLint and [Prettier](https://prettier.io/). Both are viable,
+but I've found that Prettier is much easier to configure, more consistent, and
 allows for a better separation of concerns.
 
-(for example, when saving a file in your editor you may want to automatically
+(For example, when saving a file in your editor you may want to automatically
 reformat your code, but you may _not_ want to simultaneously "auto-fix" other
 linter warnings, since these "fixes" occasionally change the semantics of your
-code or erase some intermediate work you've done. this is a lot harder when
-using eslint as both a formatter and linter. eslint also tends to give you angry
+code or erase some intermediate work you've done. This is a lot harder when
+using ESLint as both a formatter and linter. ESLint also tends to give you angry
 messages if a line of text is too long or it detects some other whitespace or
 formatting issue, which can mask other more important lints.)
 
-`eslint-config-lostfictions` assumes that you're using prettier. all eslint
+`eslint-config-lostfictions` assumes that you're using prettier. All ESLint
 whitespace and formatting rules are turned off via
 [`eslint-config-prettier`](https://github.com/prettier/eslint-config-prettier).
 
-## red is for errors.
+### Red is for errors.
 
-some [popular eslint
+Some [popular ESLint
 configs](https://github.com/airbnb/javascript/tree/master/packages/eslint-config-airbnb)
 like to scream at you at maximum volume for every possible variety of included
-lint. again, in my experience, this can result in a lot of noise that masks
+lint. Again, in my experience, this can result in a lot of noise that masks
 other more important problems, such as typechecker failures, semantic issues,
 and parsing errors.
 
-by contrast, `eslint-config-lostfictions` tries to reserve the "error" lint
+By contrast, `eslint-config-lostfictions` tries to reserve the "error" lint
 level for _genuine suspected errors_ and prefers warnings for lesser code smells
 and minor issues.
 
-for example, [`no-lonely-if`](https://eslint.org/docs/rules/no-lonely-if) is a
-_warning_. a lonely `if` may be somewhat unidiomatic javascript, but by itself
-it does not represent a semantic issue. on the other hand,
+For example, [`no-lonely-if`](https://eslint.org/docs/rules/no-lonely-if) is a
+_warning_. A lonely `if` may be somewhat unidiomatic JavaScript, but by itself
+it does not represent a semantic issue. On the other hand,
 [`no-self-compare`](https://eslint.org/docs/rules/no-self-compare) is an
-_error_. there is almost no imaginable circumstance where you would want to
+_error_. There is almost no imaginable circumstance where you would want to
 compare a value to itself, so it very likely represents an oversight that will
 lead to unintended behaviour in your code.
 
-all that said, for the same reason you should use a formatter, **it's a good
-idea to treat warnings as errors** in your ci to ensure warnings get fixed
-before a pull request can be merged. you can use the eslint cli option
+All that said, for the same reason you should use a formatter, **it's a good
+idea to treat warnings as errors** in your CI to ensure warnings get fixed
+before a pull request can be merged. You can use the ESLint CLI option
 [`--max-warnings=0`](https://eslint.org/docs/user-guide/command-line-interface#--max-warnings)
 to enforce this.
 
 ---
 
-## usage
+## Usage
 
 ```bash
 npm i -D eslint eslint-config-lostfictions
@@ -84,12 +112,12 @@ yarn add -D eslint eslint-config-lostfictions
 ```
 
 `eslint-config-lostfictions` bundles all its required plugins and parsers as
-dependencies. since eslint doesn't yet directly support bundling plugins in a
+dependencies. Since ESLint doesn't yet directly support bundling plugins in a
 config in this way (the [feature request for
 it](https://github.com/eslint/eslint/issues/3458) is by far the most upvoted
-open issue in the eslint repo), `eslint-config-lostfictions` also includes
+open issue in the ESLint repo), `eslint-config-lostfictions` also includes
 [`@rushstack/eslint-patch`](https://github.com/microsoft/rushstack/tree/master/eslint/eslint-patch).
-you'll need to `require` the latter in your eslint config like this:
+You'll need to `require` the latter in your ESLint config like this:
 
 #### `.eslintrc.js`
 
@@ -101,8 +129,8 @@ module.exports = {
 };
 ```
 
-for react projects, use the `lostfictions/react` config, which adds additional
-react-specific plugins and rules:
+For React projects, use the `lostfictions/react` config, which adds additional
+React-specific plugins and rules:
 
 ```diff
 require("@rushstack/eslint-patch/modern-module-resolution");
@@ -113,100 +141,100 @@ module.exports = {
 };
 ```
 
-since we're `require`ing a module in the config, this obviously means you need
-to use the `.eslintrc.js` config format rather than json, yaml, etc.
+Since we're `require`ing a module in the config, this obviously means you need
+to use the `.eslintrc.js` config format rather than JSON, YAML, etc.
 
 `eslint-config-lostfictions` also includes
 [`eslint-plugin-jest`](https://github.com/jest-community/eslint-plugin-jest) for
 linting your tests (including helpful rules like
 [`expect-expect`](https://github.com/jest-community/eslint-plugin-jest/blob/main/docs/rules/expect-expect.md),
-which ensures you haven't forgotten to make assertions in your test cases.) by
+which ensures you haven't forgotten to make assertions in your test cases). By
 default the extra jest rules are enabled for files with a
-`.test.{js,jsx,ts,tsx}` suffix, as well as files under a `test` folder -- which
-should match jest's default rules for finding tests.
+`.test.{js,jsx,ts,tsx}` suffix, as well as files under a `test` folder — which
+should match Jest's default rules for finding tests.
 
 ---
 
-## quirks
+## Quirks
 
-### ide warnings about unlintable files
+### IDE warnings about unlintable files
 
-if you're using an editor integration like
+If you're using an editor integration like
 [vscode-eslint](https://github.com/Microsoft/vscode-eslint), `typescript-eslint`
 may complain about any files not listed in your `tsconfig.json` being unlintable
-(including `.config.js` files, etc). this is not the fault of
+(including `.config.js` files, etc). This is not the fault of
 `eslint-config-lostfictions`; it's a quirk of `typescript-eslint`'s type-aware
 linting. there are a few solutions to this:
 
-- you can safely ignore these warnings and (at least in vscode) they'll go away
-  when you close the file. often you don't care too much about linting a config
+- You can safely ignore these warnings and (at least in VS Code) they'll go away
+  when you close the file. Often you don't care too much about linting a config
   file in your project root.
-- if you don't want to lint the files in question but are annoyed by the
+- If you don't want to lint the files in question but are annoyed by the
   warning, add them to a `.eslintignore` file, to an `ignorePatterns` field in
-  `.eslintrc.js`, or via [any other method eslint offers for ignoring
+  `.eslintrc.js`, or via [any other method ESLint offers for ignoring
   code](https://eslint.org/docs/user-guide/configuring/ignoring-code).
   (`eslint-config-lostfictions` already excludes `.eslintrc.js` itself from
   linting.)
-- if you _do_ want to lint these files, add them to your `tsconfig.json` via the
-  `include` or `files` field. if you do this, note that **typescript may include
-  these files for transpilation** if you're using typescript as a transpiler
-  rather than purely as a typechecker (as is typical in babel/swc/esbuild-based
-  setups). if transpiling them isn't what you want, you may need to introduce an
-  additional _typecheck-only_ `tsconfig.json` to your project. it can be named
+- If you _do_ want to lint these files, add them to your `tsconfig.json` via the
+  `include` or `files` field. If you do this, note that **TypeScript may include
+  these files for transpilation** if you're using TypeScript as a transpiler
+  rather than purely as a typechecker (as is typical in Babel/SWC/esbuild-based
+  setups). If transpiling them isn't what you want, you may need to introduce an
+  additional _typecheck-only_ `tsconfig.json` to your project. It can be named
   something like `tsconfig.eslint.json` and can
   [inherit](https://www.typescriptlang.org/tsconfig#extends) from your existing
-  `tsconfig.json`. you only need to additionally specify [`noEmit: true`](https://www.typescriptlang.org/tsconfig#noEmit) (and the extra files to
-  lint). you can then point the `typescript-eslint` parser at the new tsconfig
+  `tsconfig.json`. You only need to additionally specify [`noEmit: true`](https://www.typescriptlang.org/tsconfig#noEmit) (and the extra files to
+  lint). You can then point the `typescript-eslint` parser at the new tsconfig
   file via the [`project`
   field](https://github.com/typescript-eslint/typescript-eslint/tree/main/packages/parser#parseroptionsproject)
   under `parserOptions` in your `.eslintrc.js`.
 
-see [typescript-eslint's
+See [typescript-eslint's
 documentation](https://typescript-eslint.io/docs/linting/type-linting#i-get-errors-telling-me-the-file-must-be-included-in-at-least-one-of-the-projects-provided)
 for further explanation about this warning and example configurations that fix
 it.
 
-### warnings about `Array#at()` and `String#at()`
+### Warnings about `Array#at()` and `String#at()`
 
-<!-- ### warnings about `Object.hasOwn()`, `Array#at()` and `String#at()` -->
+<!-- ### Warnings about `Object.hasOwn()`, `Array#at()` and `String#at()` -->
 
 [`unicorn/prefer-at`](https://github.com/sindresorhus/eslint-plugin-unicorn/blob/main/docs/rules/prefer-at.md)
 ~~and [`prefer-object-has-own`](https://eslint.org/docs/rules/prefer-object-has-own)~~
 are both enabled in this config.
 
 _(EDIT: `Object.hasOwn` doesn't have support
-yet in typescript's `lib.d.ts`, so we're waiting for that. see the [tracking
+yet in TypeScript's `lib.d.ts`, so we're waiting for that. See the [tracking
 issue](https://github.com/microsoft/TypeScript/issues/44253).)_
 
-the respective functions they recommend are cleaner and less error-prone than
+The respective functions they recommend are cleaner and less error-prone than
 their older alternatives, but they're both pretty fresh at the moment.
 [`Object.hasOwn()`](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Object/hasOwn)
-shipped in [node
+shipped in [Node
 16.9.0](https://github.com/nodejs/node/blob/master/doc/changelogs/CHANGELOG_V16.md#2021-09-07-version-1690-current-targos)
 (2021-09-07).
 [`String#at()`](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/String/at)
 and
 [`Array#at()`](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Array/at)
-shipped in [node
+shipped in [Node
 16.6.0](https://github.com/nodejs/node/blob/master/doc/changelogs/CHANGELOG_V16.md#16.6.0)
-(2021-07-29). if you're stuck on an older version of node, you may prefer to
-disable these rules. these functions have shipped in evergreen browsers and
+(2021-07-29). If you're stuck on an older version of Node, you may prefer to
+disable these rules. These functions have shipped in all evergreen browsers and
 _should_ be polyfilled by frontend tools that incorporate core-js polyfills
-(next.js, CRA) if your browserslist config indicates that support is required.
+(Next.js, CRA) if your browserslist config indicates that support is required.
 
-### the `in` operator
+### The `in` operator
 
 The [`in`
 operator](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Operators/in)
-has a number of pitfalls that can make it tricky to use. _using an object with
+has a number of pitfalls that can make it tricky to use. _Using an object with
 arbitrary string keys can be a code smell_ if there's any possibility the keys
-are user-provided -- this can be a source of [prototype
+are user-provided — this can be a source of [prototype
 poisoning](https://medium.com/intrinsic-blog/javascript-prototype-poisoning-vulnerabilities-in-the-wild-7bc15347c96),
 and even solutions like `Object.create(null)` aren't foolproof (and create new
 pitfalls of their own). for this reason, it's recommended to use a `Map` or
 `Set` when working with arbitrary keys.
 
-however, the `in` operator is often more ergonomic than the more "correct"
+However, the `in` operator is often more ergonomic than the more "correct"
 alternatives and works as a type guard in TypeScript where other forms of
 membership checking do not. for example, given this type declaration:
 
@@ -215,7 +243,7 @@ type XorY = { x: string } | { y: number };
 let thing: XorY;
 ```
 
-this code will typecheck correctly:
+This code will typecheck correctly:
 
 ```ts
 if ("x" in thing) {
@@ -227,7 +255,7 @@ if ("x" in thing) {
 }
 ```
 
-but this will not:
+But this will not:
 
 ```ts
 if (Object.prototype.hasOwnProperty.call(thing, "x")) {
@@ -237,12 +265,12 @@ if (Object.prototype.hasOwnProperty.call(thing, "x")) {
 }
 ```
 
-for these reasons, `eslint-config-lostfictions` warns when using the `in`
-operator, _unless the left-hand operand is a string literal_. this should catch
+For these reasons, `eslint-config-lostfictions` warns when using the `in`
+operator, _unless the left-hand operand is a string literal_. This should catch
 a majority of code-smell cases while still permitting the relatively safer case
 of using `in` to narrow a union of TypeScript types.
 
-keep in mind that the preferred way to narrow unions is the use of a
-_discriminant property_. (for example, the `kind` property in `type Shape = { kind: 'circle'; radius: number } | { kind: 'square'; size: number }`.)
+Keep in mind that the preferred way to narrow union types is the use of a
+_discriminant property_. (For example, the `kind` property in `type Shape = { kind: 'circle'; radius: number } | { kind: 'square'; size: number }`.)
 discriminants sidestep the need to reach for something like `in` in the first
 place.
