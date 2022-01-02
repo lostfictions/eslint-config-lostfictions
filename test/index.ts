@@ -231,6 +231,7 @@ const first = args[0];
 
 let cat: string;
 
+// assignment to an existing var doesn't require destructuring.
 // eslint-disable-next-line prefer-const
 cat = thing.cat;
 
@@ -238,11 +239,14 @@ cat = thing.cat;
 if (addEventListener != null) {
   console.log("hmm");
 }
+window.addEventListener("boop", () => {
+  console.log("this is fine");
+});
 
 // eslint-disable-next-line no-restricted-syntax
 console.log(barker in thing);
 
-// checking with a literal is allowed:
+// using `in` with a string literal is allowed:
 console.log("dog" in thing);
 
 // eslint-disable-next-line no-restricted-syntax

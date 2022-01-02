@@ -48,7 +48,9 @@ const config = {
     eqeqeq: ["error", "always", { null: "ignore" }],
     "grouped-accessor-pairs": "warn",
 
-    // occasionally useful, but typically gives more false positives than not
+    // occasionally useful, but in my experience async code is often serial for
+    // good reason (for example, you don't want interleaved disk access). in the
+    // end i've found it gives more false positives far more often than not.
     "no-await-in-loop": "off",
 
     "no-constructor-return": "warn",
@@ -91,14 +93,20 @@ const config = {
         ].join(" "),
       },
     ].concat(
-      // sourced from here:
+      // the following globals are sourced from here:
       // https://github.com/facebook/create-react-app/blob/9673858a3715287c40aef9e800c431c7d45c05a2/packages/confusing-browser-globals/index.js#L10
-      // inlined directly to minimize churn and effort required to audit
-      // updates, since CRA versions its packages in lockstep even when there's
-      // no changes.
+      // inlined directly to minimize dependency churn and effort required to
+      // audit updates, especially since create-react-app versions its packages
+      // in lockstep (creating tons of bumps to this package even when there's
+      // no changes).
 
-      // some of these may already be covered by deprecation messages or strict
-      // mode, but it doesn't hurt to include them.
+      // the idea (borrowed from eslint-config-airbnb but extended with more
+      // descriptive error messages) is that it's too easy to introduce an error
+      // by accidentally referring to these globals when writing things like
+      // event handlers. if you really mean to refer to the global, use
+      // `window`, eg. `window.addEventListener`. some of these may already be
+      // covered by deprecation messages or strict mode, but typescript still
+      // allows many of them. it doesn't hurt to include them all.
 
       // prettier-ignore
       [
@@ -112,7 +120,10 @@ const config = {
       'screenLeft', 'screenTop', 'screenX', 'screenY', 'scroll', 'scrollbars',
       'scrollBy', 'scrollTo', 'scrollX', 'scrollY', 'self', 'status',
       'statusbar', 'stop', 'toolbar', 'top',
-    ]
+    ].map(name => ({
+      name,
+      message: `Use \`window.${name}\` if you really meant to refer to the global.`
+    }))
     ),
     "no-restricted-syntax": [
       "warn",
@@ -158,8 +169,11 @@ const config = {
     "no-useless-return": "warn",
     "no-var": "error",
 
-    // void-as-statement is useful to suppress warnings from
-    // @typescript-eslint/no-floating-promises. see
+    // the `void` keyword in js (distinct from the `void` type in typescript)
+    // should generally be avoided. however, the `void` keyword in statement
+    // position is useful to express that the return value of a
+    // promise-returning function should be discarded ("fire-and-forget"). see
+    // the @typescript-eslint/no-floating-promises rule, which enforces this:
     // https://github.com/typescript-eslint/typescript-eslint/blob/main/packages/eslint-plugin/docs/rules/no-floating-promises.md
     "no-void": ["warn", { allowAsStatement: true }],
 
@@ -186,7 +200,7 @@ const config = {
     "prefer-exponentiation-operator": "warn",
     "prefer-numeric-literals": "warn",
 
-    // hasn't shipped in typescript. tracking issue:
+    // Object.hasOwn() hasn't shipped in typescript. tracking issue:
     // https://github.com/microsoft/TypeScript/issues/44253
     // "prefer-object-has-own": "warn",
 
@@ -199,10 +213,11 @@ const config = {
     radix: "warn",
     "require-atomic-updates": ["warn", { allowProperties: true }],
 
-    // generally good idea but can be cumbersome for existing code, revisit
+    // generally good idea, but the performance implications are unclear and it
+    // can be cumbersome for existing code. to be revisited.
     // "require-unicode-regexp": "warn",
 
-    // strict is added by typescript or babel where necessary
+    // strict is already added by typescript or babel where necessary.
     strict: "warn",
 
     "symbol-description": "warn",
@@ -218,7 +233,10 @@ const config = {
     "no-duplicate-imports": "off",
     "@typescript-eslint/no-duplicate-imports": "warn",
 
-    // enabled in recommended set but not that useful
+    // no-empty-function is enabled in the typescript-eslint recommended set...
+    // but empty functions are useful to express no-ops and typescript itself
+    // arguably catches all other interesting cases.
+    "no-empty-function": "off",
     "@typescript-eslint/no-empty-function": "off",
 
     "no-implied-eval": "off",
@@ -268,7 +286,7 @@ const config = {
     //   console.log(msg);
     //   return Promise.resolve();
     // });
-    // given that from experience async-without-await is almost always benign
+    // given that in my experience async-without-await is almost always benign
     // (especially with typechecking), it seems better to leave it off.
     "require-await": "off",
     "@typescript-eslint/require-await": "off",
@@ -307,8 +325,11 @@ const config = {
     ],
     "@typescript-eslint/no-empty-interface": "warn",
 
-    // `any` is occasionally necessary as a workaround. don't abuse it!
+    // `any` is occasionally necessary as a workaround. don't abuse it! a more
+    // useful alternative is the @typescript-eslint/no-unsafe-* family of rules,
+    // though these are also currently disabled in this ruleset.
     "@typescript-eslint/no-explicit-any": "off",
+
     "@typescript-eslint/no-extra-non-null-assertion": "warn",
     "@typescript-eslint/no-floating-promises": "warn",
     "@typescript-eslint/no-inferrable-types": "warn",
@@ -326,11 +347,13 @@ const config = {
     // `no-unnecessary-condition` is only useful in tandem with
     // `noUncheckedIndexedAccess` in tsconfig.json. where the latter isn't
     // enabled, this rule ends up coming up with a lot of false positives, and
-    // removing the conditional to fix the lint could actually introduce errors.
-    // on the other hand, unnecessarily checking an always-truthy condition is
-    // benign by definition. paradoxically enough, it seems safer to turn this
-    // rule off and make it opt-in.
+    // removing a condition that checks a field's existence as the lint suggests
+    // could actually introduce errors. on the other hand, unnecessarily
+    // checking an always-truthy condition is by definition benign. so, while it
+    // might seem paradoxical, it's far safer to turn this rule off and make it
+    // opt-in.
     "@typescript-eslint/no-unnecessary-condition": "off",
+
     "@typescript-eslint/no-unnecessary-qualifier": "warn",
     "@typescript-eslint/no-unnecessary-type-arguments": "warn",
     "@typescript-eslint/no-unnecessary-type-assertion": "warn",
@@ -340,11 +363,11 @@ const config = {
     // their use could be revisited alongside documentation on how to deal with
     // the lints when they show up, since they'll appear very often in some
     // scenarios.
-    "@typescript-eslint/no-unsafe-argument": "off", //"warn",
-    "@typescript-eslint/no-unsafe-assignment": "off", //"warn",
-    "@typescript-eslint/no-unsafe-call": "off", //"warn",
-    "@typescript-eslint/no-unsafe-member-access": "off", //"warn",
-    "@typescript-eslint/no-unsafe-return": "off", //"warn",
+    "@typescript-eslint/no-unsafe-argument": "off",
+    "@typescript-eslint/no-unsafe-assignment": "off",
+    "@typescript-eslint/no-unsafe-call": "off",
+    "@typescript-eslint/no-unsafe-member-access": "off",
+    "@typescript-eslint/no-unsafe-return": "off",
 
     // requires cause an implicit `any` in ts and should be used with care, but
     // they're easily caught - whereas the recommended solution of `import x =
@@ -357,11 +380,20 @@ const config = {
     "@typescript-eslint/prefer-for-of": "warn",
     "@typescript-eslint/prefer-function-type": "warn",
     "@typescript-eslint/prefer-includes": "warn",
+
+    // neither the `namespace` nor the `module` keyword should be used for code,
+    // but both can be useful for writing typedefs of an untyped npm module.
     "@typescript-eslint/prefer-namespace-keyword": "off",
+
     "@typescript-eslint/prefer-nullish-coalescing": "warn",
     "@typescript-eslint/prefer-optional-chain": "warn",
     "@typescript-eslint/prefer-readonly": "warn",
+
+    // i would prefer to warn against string.match entirely (using regexp.exec
+    // for non-global and string.matchall for global matching). as it stands
+    // this rule just makes things more confusing.
     "@typescript-eslint/prefer-regexp-exec": "off",
+
     "@typescript-eslint/prefer-return-this-type": "warn",
     "@typescript-eslint/prefer-string-starts-ends-with": "warn",
     "@typescript-eslint/prefer-ts-expect-error": "warn",
@@ -373,6 +405,7 @@ const config = {
 
     // desirable cases should be handled already by "@typescript-eslint/no-base-to-string".
     "@typescript-eslint/restrict-template-expressions": "off",
+
     "@typescript-eslint/switch-exhaustiveness-check": "warn",
     "@typescript-eslint/unbound-method": ["warn", { ignoreStatic: true }],
     "@typescript-eslint/unified-signatures": "warn",
@@ -440,8 +473,12 @@ const config = {
     "sonarjs/no-collection-size-mischeck": "warn",
     "sonarjs/no-inverted-boolean-check": "warn",
     "sonarjs/no-nested-switch": "warn",
-    // currently useless, all usecases already covered by built-in rule `no-else-return`.
+
+    // currently useless, as all usecases are already covered by the built-in
+    // rule `no-else-return`. tracking issue:
+    // https://github.com/SonarSource/eslint-plugin-sonarjs/issues/316
     // "sonarjs/prefer-single-boolean-return": "warn",
+
     "sonarjs/prefer-while": "warn",
 
     /*
