@@ -8,31 +8,45 @@
 <a href="https://www.npmjs.com/package/eslint-config-lostfictions"><img src="https://img.shields.io/npm/v/eslint-config-lostfictions.svg?logo=npm" alt="NPM version" /></a>
 </p>
 
-## A shareable ESLint config.
-
-`eslint-config-lostfictions` is a (gently) opinionated custom configuration for
+`eslint-config-lostfictions` is a (gently) opinionated shareable configuration for
 [ESLint](https://eslint.org/).
 
 **Features**
 
-- Intended for use with [TypeScript](https://www.typescriptlang.org/) (also
-  supports JavaScript in projects with a
+- Intended for use with [TypeScript](https://www.typescriptlang.org/), using
+  [typescript-eslint](https://typescript-eslint.io/)'s parser and type-aware
+  rules. (Also supports JavaScript in projects with a
   [`tsconfig.json`](https://www.typescriptlang.org/docs/handbook/migrating-from-javascript.html#writing-a-configuration-file)
-  configured).
+  configured.)
 - Includes an alternate React config that adds additional rules from
   [`eslint-plugin-react`](https://github.com/yannickcr/eslint-plugin-react/) and
   [`eslint-plugin-react-hooks`](https://www.npmjs.com/package/eslint-plugin-react-hooks)
   to catch errors and uphold best practices in React code.
-- Defers all formatting rules to [Prettier](https://prettier.io/). No more noisy
+- Delegates all formatting to [Prettier](https://prettier.io/). No more noisy
   warnings in your editor shouting that you forgot to indent your code!
 - Includes rules for best practices when writing tests with
   [Jest](https://jestjs.io/). (But use of Jest is not required to use this
   config!)
-- Batteries included: just add ESLint and this package — no need for extra
-  ESLint plugins cluttering your `package.json` that need to be audited for
-  compatibility on version bumps.
+- Prefers warnings to errors for most lints, which helps distinguish between
+  genuine problems (like TypeScript typechecking errors) and lesser code smells.
+  ([Read more](#red-is-for-errors).)
+- Deviations and disabled rules relative to base ESLint, React and Typescript
+  recommended configs are documented and include a rationale.
+- Adds [warnings about deprecated
+  code](https://github.com/gund/eslint-plugin-deprecation) from any library (via
+  JSDoc annotations), [best practices around
+  imports](https://github.com/import-js/eslint-plugin-import/),
+  [Node.js-specific lints](https://github.com/mysticatea/eslint-plugin-node/),
+  and select additional rules from the wonderful
+  [`eslint-plugin-unicorn`](https://github.com/sindresorhus/eslint-plugin-unicorn/).
+- Batteries included: just add ESLint and this package to your existing project
+  and start linting! Unlike many other shareable configs,
+  `eslint-config-lostfictions` doesn't declare any `peerDependencies` besides
+  ESLint and TypeScript, so there's no extra ESLint plugins and parsers
+  cluttering your `package.json` that need to be audited for compatibility on
+  version bumps. (See [below](#usage) for why this is now possible.)
 
-Read on for the rationale, or jump to the [Usage](#Usage) section below to get
+Read on for the rationale, or jump to the [Usage](#usage) section below to get
 started.
 
 ## Why?
@@ -42,8 +56,12 @@ catching errors in JavaScript — but they have different, complementary uses.
 TypeScript generally limits itself to typechecking, while ESLint can catch
 things like [expressions that do
 nothing](https://eslint.org/docs/rules/no-unused-expressions) or [comparing a
-value to itself](https://eslint.org/docs/rules/no-self-compare). In fact, the
-TypeScript developers [use ESLint on their own
+value to itself](https://eslint.org/docs/rules/no-self-compare). The
+[typescript-eslint](https://typescript-eslint.io/) project not only enables
+ESLint to parse and validate TypeScript code directly, it adds support for a
+wide range of TypeScript-specific lints and error-checking not covered by the
+TypeScript compiler. In fact, the TypeScript developers [use ESLint and
+typescript-eslint on their own
 codebase](https://github.com/microsoft/TypeScript/blob/main/.eslintrc.json)!
 (Another tool called [TSLint](https://github.com/palantir/tslint) formerly
 fulfilled a similar role for TypeScript, but it's been deprecated for a while
@@ -161,7 +179,7 @@ should match Jest's default rules for finding tests.
 
 ---
 
-## Quirks
+## FAQ and additional info
 
 ### IDE warnings about unlintable files
 
