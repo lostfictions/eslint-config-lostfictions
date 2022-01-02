@@ -5,7 +5,9 @@
 </p>
 
 <p align="center">
-<a href="https://www.npmjs.com/package/eslint-config-lostfictions"><img src="https://img.shields.io/npm/v/eslint-config-lostfictions.svg?logo=npm" alt="NPM version" /></a>
+<a href="https://www.npmjs.com/package/eslint-config-lostfictions">
+<img src="https://img.shields.io/npm/v/eslint-config-lostfictions.svg?logo=npm" alt="NPM version" />
+</a>
 </p>
 
 `eslint-config-lostfictions` is a (gently) opinionated shareable configuration for
@@ -71,13 +73,13 @@ now in favour of ESLint.)
 
 ### Linters are for linting.
 
-After untold thousands of code reviews nitpicking whitespace, line length, or
-semicolons, programmers are finally coming around to the idea that it's usually
-easier to let the computer fix those things for you. A consistent team-wide code
-style helps improve readability and smooths over conflicts that arise from minor
+After untold numbers of code reviews nitpicking whitespace or semicolons,
+programmers are finally coming around to the idea that it's usually easier to
+let the computer fix those things for you. A consistent team-wide code style
+helps to improve readability and avoid bikeshedding that arises from minor
 differences in opinion, but time and experience have shown that the ideal way to
-enforce style is via editor tooling and runnning continuous integration on pull
-requests. (Who cares about "tabs versus spaces" if you can treat leading
+enforce style is via editor tooling and runnning checks in continuous
+integration. (Who cares about "tabs versus spaces" if you can treat leading
 whitespace as tabstops on your machine but save them to disk as spaces?)
 
 Languages like Go and Rust make things easy here by integrating opinionated
@@ -202,16 +204,17 @@ linting. There are a few solutions to this:
 - If you _do_ want to lint these files, add them to your `tsconfig.json` via the
   `include` or `files` field. If you do this, note that **TypeScript may include
   these files for transpilation** if you're using TypeScript as a transpiler
-  rather than purely as a typechecker (as is typical in Babel/SWC/esbuild-based
-  setups).
+  rather than purely as a typechecker (typecheck-only mode is typical for
+  Babel/SWC/esbuild-based setups, including create-react-app and Next.js).
 
   If transpiling them isn't what you want, you may need to introduce an
-  additional _typecheck-only_ `tsconfig.json` to your project. It can be named
+  additional _ESLint-specific_ `tsconfig.json` to your project. It can be named
   something like `tsconfig.eslint.json` and can
   [inherit](https://www.typescriptlang.org/tsconfig#extends) from your existing
-  `tsconfig.json`. You only need to additionally specify [`noEmit: true`](https://www.typescriptlang.org/tsconfig#noEmit) (and the extra files to
-  lint). You can then point the `typescript-eslint` parser at the new tsconfig
-  file via the [`project`
+  `tsconfig.json`. You should only need to additionally specify
+  [`noEmit: true`](https://www.typescriptlang.org/tsconfig#noEmit) and the extra
+  files to lint. You can then point the `typescript-eslint` parser at the new
+  tsconfig file via the [`project`
   field](https://github.com/typescript-eslint/typescript-eslint/tree/main/packages/parser#parseroptionsproject)
   under `parserOptions` in your `.eslintrc.js`.
 

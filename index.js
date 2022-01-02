@@ -174,7 +174,7 @@ const config = {
     // position is useful to express that the return value of a
     // promise-returning function should be discarded ("fire-and-forget"). see
     // the @typescript-eslint/no-floating-promises rule, which enforces this:
-    // https://github.com/typescript-eslint/typescript-eslint/blob/main/packages/eslint-plugin/docs/rules/no-floating-promises.md
+    // https://typescript-eslint.io/rules/no-floating-promises
     "no-void": ["warn", { allowAsStatement: true }],
 
     "object-shorthand": "warn",
