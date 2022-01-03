@@ -34,10 +34,10 @@
   ([Read more](#red-is-for-errors).)
 - Deviations and disabled rules relative to base ESLint, React and Typescript
   recommended configs are documented and include a rationale.
-- Adds [warnings about deprecated
-  code](https://github.com/gund/eslint-plugin-deprecation) from any library (via
-  JSDoc annotations), [best practices around
-  imports](https://github.com/import-js/eslint-plugin-import/),
+- Adds [warnings about
+  deprecations](https://github.com/gund/eslint-plugin-deprecation) for both
+  internal and external code (by checking JSDoc annotations), [best practices
+  around imports](https://github.com/import-js/eslint-plugin-import/),
   [Node.js-specific lints](https://github.com/mysticatea/eslint-plugin-node/),
   and select additional rules from the wonderful
   [`eslint-plugin-unicorn`](https://github.com/sindresorhus/eslint-plugin-unicorn/).
@@ -55,10 +55,14 @@ started.
 
 TypeScript and ESLint might seem like they're used for the exact same thing —
 catching errors in JavaScript — but they have different, complementary uses.
-TypeScript generally limits itself to typechecking, while ESLint can catch
-things like [expressions that do
+TypeScript generally limits itself to typechecking, while ESLint can catch a
+broad variety of other errors, from simple oversights like [expressions that do
 nothing](https://eslint.org/docs/rules/no-unused-expressions) or [comparing a
-value to itself](https://eslint.org/docs/rules/no-self-compare). The
+value to itself](https://eslint.org/docs/rules/no-self-compare), to [technically
+legal but dangerous
+syntax](https://typescript-eslint.io/rules/no-non-null-asserted-optional-chain),
+to analysis of [possible race
+conditions](https://eslint.org/docs/rules/require-atomic-updates). The
 [typescript-eslint](https://typescript-eslint.io/) project not only enables
 ESLint to parse and validate TypeScript code directly, it adds support for a
 wide range of TypeScript-specific lints and error-checking not covered by the
