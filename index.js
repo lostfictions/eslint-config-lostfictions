@@ -472,12 +472,18 @@ const config = {
     "sonarjs/no-ignored-return": "warn",
     "sonarjs/no-collection-size-mischeck": "warn",
     "sonarjs/no-inverted-boolean-check": "warn",
-    "sonarjs/no-nested-switch": "warn",
 
-    // currently useless, as all usecases are already covered by the built-in
-    // rule `no-else-return`. tracking issue:
+    // not hugely useful when using a formatter -- small nested switches haven't
+    // been a problem for readability in my experience. hopefully you can notice
+    // when a nested switch is becoming cumbersome enough to refactor out
+    // without needing a warning.
+    "sonarjs/no-nested-switch": "off",
+
+    // this could be good in the future but currently seems to be useless, as
+    // all usecases are already covered by the built-in rule `no-else-return`.
+    // tracking issue:
     // https://github.com/SonarSource/eslint-plugin-sonarjs/issues/316
-    // "sonarjs/prefer-single-boolean-return": "warn",
+    "sonarjs/prefer-single-boolean-return": "off",
 
     "sonarjs/prefer-while": "warn",
 
