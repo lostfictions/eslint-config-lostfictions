@@ -303,8 +303,8 @@ operator, _unless the left-hand operand is a string literal_. This should catch
 a majority of code-smell cases while still permitting the relatively safer case
 of using `in` to narrow a union of TypeScript types.
 
-Keep in mind that the preferred way to narrow union types is the use of a
-_discriminant property_. (For example, the **`kind`** property in
-`type Shape = { kind: 'circle'; radius: number } | { kind: 'square'; size: number }`)
-Discriminants sidestep the need to reach for something like `in` in the first
-place.
+Keep in mind that the preferred way to narrow non-literal union types is the use
+of a _discriminant property_. (For example, the **`kind`** property in
+`type Shape = { kind: 'circle'; radius: number } | { kind: 'square'; size: number }`
+is a discriminant.) Discriminants sidestep the need to reach for something like
+`in` in the first place.
