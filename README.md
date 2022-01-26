@@ -185,9 +185,7 @@ should match Jest's default rules for finding tests.
 
 ---
 
-## FAQ and additional info
-
-### IDE warnings about unlintable files
+## IDE warnings about unlintable files
 
 If you're using an editor integration like
 [vscode-eslint](https://github.com/Microsoft/vscode-eslint), `typescript-eslint`
@@ -227,6 +225,8 @@ documentation](https://typescript-eslint.io/docs/linting/type-linting#i-get-erro
 for further explanation about this warning and example configurations that fix
 it.
 
+## Additional info about specific rules
+
 ### Warnings about `Array#at()` and `String#at()`
 
 <!-- ### Warnings about `Object.hasOwn()`, `Array#at()` and `String#at()` -->
@@ -255,7 +255,7 @@ disable these rules. These functions have shipped in all evergreen browsers and
 _should_ be polyfilled by frontend tools that incorporate core-js polyfills
 (Next.js, CRA) if your browserslist config indicates that support is required.
 
-### Warnings about the `in` operator
+### The `in` operator
 
 The [`in`
 operator](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Operators/in)
@@ -327,3 +327,28 @@ disable it in the file that handles your app configuration. This might be a bit
 noisy for brownfield projects that don't already follow the
 single-point-of-declaration convention, but in my experience it's worth it to
 clean up those stray uses of `process.env`.
+
+### `for-of` vs. `forEach()`
+
+`forEach()` methods — mainly `Array#forEach()`, though it also exists for Maps,
+Sets, TypedArrays, and some "array-like" DOM entities — are a holdover from an
+earlier age of JavaScript. Before the block-scoped declarations `let` and
+`const` became widely supported, iteration blocks were either clunky or risky to
+use. Even a simple `for(var i = 0; i < x; i++)` often needs its body wrapped in
+an [IIFE](https://developer.mozilla.org/en-US/docs/Glossary/IIFE). In these dire
+circumstances, `forEach()` emerged as a more elegant and humane alternative for
+iteration.
+
+Fortunately, things are better for JavaScript these days, and `for-of` loops are
+generally a simpler and more readable construct. Every built-in with a
+`forEach()` method also supports iteration via `for-of`.
+
+Digging a bit deeper, `forEach()` has some issues in that it's imperative but
+_looks functional_, and it can sometimes be tempting to add it at the end of a
+chain of array `.map()` and `.filter()` calls. Unfortunately, the resulting code
+is generally the worst of both worlds, with none of the benefits of functional
+code but all of the costs. In this config, the rule comes by way of
+[eslint-plugin-unicorn](https://github.com/sindresorhus/eslint-plugin-unicorn/blob/main/docs/rules/no-array-for-each.md),
+but [Github's ESLint docs about
+`forEach()`](https://github.com/github/eslint-plugin-github/blob/main/docs/rules/array-foreach.md)
+go into more detail and outline some further compelling reasons to avoid it.

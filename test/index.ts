@@ -264,6 +264,20 @@ if (process.env["NODE_ENV"] === "development") {
   console.log("phew, no pressure to get everything right here.");
 }
 
+const myThings = ["a", "b", "c"];
+
+// eslint-disable-next-line unicorn/no-array-for-each
+myThings.forEach((letter) => {
+  console.log(letter);
+});
+
+const uniqueThings = new Set(myThings);
+
+// eslint-disable-next-line unicorn/no-array-for-each
+uniqueThings.forEach((letter) => {
+  console.log(letter);
+});
+
 type XorY = { x: string } | { y: number };
 const xory: XorY = { x: "yeah" } as XorY;
 if ("x" in xory) {
