@@ -330,24 +330,26 @@ clean up those stray uses of `process.env`.
 
 ### `for-of` vs. `forEach()`
 
-`forEach()` methods — mainly `Array#forEach()`, though it also exists for Maps,
-Sets, TypedArrays, and some "array-like" DOM entities — are a holdover from an
-earlier age of JavaScript. Before the block-scoped declarations `let` and
-`const` became widely supported, iteration blocks were either clunky or risky to
-use. Even a simple `for(var i = 0; i < x; i++)` often needs its body wrapped in
-an [IIFE](https://developer.mozilla.org/en-US/docs/Glossary/IIFE). In these dire
-circumstances, `forEach()` emerged as a more elegant and humane alternative for
-iteration.
+`forEach()` methods — mainly `Array#forEach()`, though equivalents also exist
+for Maps, Sets, TypedArrays, and some "array-like" DOM entities — are a holdover
+from an earlier age of JavaScript. Before the block-scoped declarations `let`
+and `const` became widely supported, iteration blocks were either clunky or
+risky to use. Even a simple `for(var i = 0; i < x; i++)` often needed its body
+wrapped in an [IIFE](https://developer.mozilla.org/en-US/docs/Glossary/IIFE). In
+these dire circumstances, `forEach()` emerged as a more elegant and humane
+alternative for iteration.
 
 Fortunately, things are better for JavaScript these days, and `for-of` loops are
 generally a simpler and more readable construct. Every built-in with a
 `forEach()` method also supports iteration via `for-of`.
 
 Digging a bit deeper, `forEach()` has some issues in that it's imperative but
-_looks functional_, and it can sometimes be tempting to add it at the end of a
-chain of array `.map()` and `.filter()` calls. Unfortunately, the resulting code
-is generally the worst of both worlds, with none of the benefits of functional
-code but all of the costs. In this config, the rule comes by way of
+_looks functional_; it can sometimes be tempting to add it at the end of a chain
+of array `.map()` and `.filter()` calls. Unfortunately, the resulting code is
+generally the worst of both worlds, with none of the benefits of truly
+functional code but all of the drawbacks.
+
+In this config, the rule forbidding `forEach()` comes by way of
 [eslint-plugin-unicorn](https://github.com/sindresorhus/eslint-plugin-unicorn/blob/main/docs/rules/no-array-for-each.md),
 but [Github's ESLint docs about
 `forEach()`](https://github.com/github/eslint-plugin-github/blob/main/docs/rules/array-foreach.md)
