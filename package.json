@@ -15,7 +15,8 @@
     "test:configs": "eslint --color '*.js'",
     "test:fixtures": "eslint --color 'test/**/*.ts' --max-warnings=0",
     "test:prettier": "prettier -l '**/*.{js,ts}'",
-    "prettier": "prettier --write '**/*.{js,ts}'"
+    "prettier": "prettier --write '**/*.{js,ts}'",
+    "prepublishOnly": "run-s test"
   },
   "dependencies": {
     "@rushstack/eslint-patch": "^1.1.0",
