@@ -440,6 +440,7 @@ const config = {
       },
     ],
     "import/no-commonjs": "warn",
+    "import/no-unused-modules": ["warn", { unusedExports: true }],
     "import/order": [
       "warn",
       {
