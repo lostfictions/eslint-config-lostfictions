@@ -10,8 +10,8 @@
 </a>
 </p>
 
-`eslint-config-lostfictions` is a (gently) opinionated shareable configuration for
-[ESLint](https://eslint.org/).
+`eslint-config-lostfictions` is a shareable, opinionated, batteries-included
+configuration for [ESLint](https://eslint.org/).
 
 **Features**
 
@@ -255,7 +255,7 @@ disable these rules. These functions have shipped in all evergreen browsers and
 _should_ be polyfilled by frontend tools that incorporate core-js polyfills
 (Next.js, CRA) if your browserslist config indicates that support is required.
 
-### The `in` operator
+### Warnings about the `in` operator
 
 The [`in`
 operator](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Operators/in)
@@ -308,3 +308,22 @@ of a _discriminant property_. (For example, the **`kind`** property in
 `type Shape = { kind: 'circle'; radius: number } | { kind: 'square'; size: number }`
 is a discriminant.) Discriminants sidestep the need to reach for something like
 `in` in the first place.
+
+### Warnings about `process.env`
+
+As noted in eslint-plugin-node's [`no-process-env`
+rule](https://github.com/mysticatea/eslint-plugin-node/blob/master/docs/rules/no-process-env.md),
+Node's
+[`process.env`](https://nodejs.org/dist/latest/docs/api/process.html#processenv)
+is effectively a kind of global mutable variable. But even if you don't mutate
+it, spreading it around your codebase can make it difficult to reason about your
+application's configuration. Instead, it's recommended to declare and validate
+all your configuration up-front in a single file, and then export those
+validated bindings for use across your application. (Something like
+[znv](https://github.com/lostfictions/znv) could help you with this.)
+
+`no-process-env` is thus enabled by default, with the expectation that you'll
+disable it in the file that handles your app configuration. This might be a bit
+noisy for brownfield projects that don't already follow the
+single-point-of-declaration convention, but in my experience it's worth it to
+clean up those stray uses of `process.env`.

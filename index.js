@@ -459,6 +459,7 @@ const config = {
      */
     "node/no-new-require": "warn",
     "node/no-path-concat": "warn",
+    "node/no-process-env": "warn",
     "node/prefer-promises/fs": "warn",
     "node/prefer-promises/dns": "warn",
 

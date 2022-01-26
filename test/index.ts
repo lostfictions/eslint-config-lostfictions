@@ -259,6 +259,11 @@ for (const v in args) {
   console.log(v);
 }
 
+// eslint-disable-next-line node/no-process-env
+if (process.env["NODE_ENV"] === "development") {
+  console.log("phew, no pressure to get everything right here.");
+}
+
 type XorY = { x: string } | { y: number };
 const xory: XorY = { x: "yeah" } as XorY;
 if ("x" in xory) {
