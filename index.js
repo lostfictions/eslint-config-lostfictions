@@ -425,6 +425,9 @@ const config = {
     /*
      * eslint-plugin-import rules.
      */
+
+    // anonymous default exports are not only harder to search for, they degrade
+    // typescript's ability to suggest automatic imports.
     "import/no-anonymous-default-export": [
       "warn",
       {
@@ -433,14 +436,26 @@ const config = {
         allowAnonymousClass: false,
         allowAnonymousFunction: false,
         // allowed by default, and we allow it ourselves since it's useful in
-        // some scenarios.
+        // some scenarios (HOCs, etc).
         allowCallExpression: true,
         allowLiteral: false,
         allowObject: false,
       },
     ],
     "import/no-commonjs": "warn",
-    "import/no-unused-modules": ["warn", { unusedExports: true }],
+
+    // no-unused-modules is potentially useful, but currently generates a
+    // significant number of false positives (for example, exports in module
+    // declaration blocks in .d.ts files). it's also not too rare to have
+    // exports that aren't in the "main" file according to the package.json but
+    // which are still usable by consumers via namespaced imports, eg.
+    // `import x from "my-module/other-file-in-my-module"`.
+    //
+    // i recommend enabling this rule manually if you need to track down dead
+    // code.
+    //
+    // "import/no-unused-modules": ["warn", { unusedExports: true }],
+
     "import/order": [
       "warn",
       {
