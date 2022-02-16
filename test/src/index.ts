@@ -278,6 +278,7 @@ uniqueThings.forEach((letter) => {
   console.log(letter);
 });
 
+// using 'in' with a string literal LHS should be ok:
 type XorY = { x: string } | { y: number };
 const xory: XorY = { x: "yeah" } as XorY;
 if ("x" in xory) {
@@ -285,9 +286,15 @@ if ("x" in xory) {
 } else {
   console.log(xory.y);
 }
+// ...but anything else, even (for now) if it's typed as a string literal,
+// results in a warning.
+const prop = "x";
+// eslint-disable-next-line no-restricted-syntax
+if (prop in xory) {
+  console.log(xory.x);
+} else {
+  console.log(xory.y);
+}
 
-// if (Object.prototype.hasOwnProperty.call(xory, "x")) {
-//   console.log(xory.x);
-// } else {
-//   console.log(xory.y);
-// }
+// an invalid "describe" in a non-test file should not cause warnings:
+describe("", () => {});
