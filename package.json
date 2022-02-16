@@ -13,7 +13,7 @@
     "deprecated": "eslint-find-rules -dn ./index.js",
     "test": "run-p -cl test:*",
     "test:configs": "eslint --color '*.js'",
-    "test:fixtures": "eslint --color 'test/**/*.ts' --max-warnings=0",
+    "test:fixtures": "eslint --color 'test/**/*.{js,ts}' --max-warnings=0",
     "test:prettier": "prettier -l '**/*.{js,ts}'",
     "prettier": "prettier --write '**/*.{js,ts}'",
     "prepublishOnly": "run-s test"

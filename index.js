@@ -341,8 +341,10 @@ const config = {
     "@typescript-eslint/no-non-null-asserted-nullish-coalescing": "warn",
     "@typescript-eslint/no-non-null-asserted-optional-chain": "error",
 
-    // non-null assertions are occasionally necessary.
+    // even though i wish they weren't... non-null assertions are occasionally
+    // necessary.
     "@typescript-eslint/no-non-null-assertion": "off",
+
     "@typescript-eslint/no-this-alias": "warn",
     "@typescript-eslint/no-unnecessary-boolean-literal-compare": "warn",
 
@@ -568,6 +570,25 @@ config.overrides.push({
     "jest/valid-expect": "warn",
     "jest/valid-expect-in-promise": "warn",
     "jest/valid-title": "warn",
+  },
+});
+
+// tweak some rules for js files.
+// note that this config is still designed primarily for typescript and may not
+// catch errors that a more js-centric config might (for example, with a more
+// thorough eslint-plugin-import config). this is more for best-effort
+// compatibility/harm reduction.
+config.overrides.push({
+  files: ["**/*.{js,jsx}"],
+  rules: {
+    // `no-undef` might cause a bit of redundant noise if `checkJs` is also on,
+    // but better to be noisy than to miss errors.
+    "no-undef": "error",
+
+    // assume js/jsx files use commonjs (or at least tolerate the use of
+    // `require`). the consequences are less dire than for ts code, where
+    // `require` results in an untyped import by default.
+    "import/no-commonjs": "off",
   },
 });
 
