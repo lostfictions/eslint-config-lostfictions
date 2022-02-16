@@ -49,8 +49,8 @@ const config = {
     "grouped-accessor-pairs": "warn",
 
     // occasionally useful, but in my experience async code is often serial for
-    // good reason (for example, you don't want interleaved disk access). in the
-    // end i've found it gives more false positives far more often than not.
+    // good reason (for example, you may not want interleaved disk access). in
+    // the end i've found it gives more false positives far more often than not.
     "no-await-in-loop": "off",
 
     "no-constructor-return": "warn",
@@ -234,7 +234,7 @@ const config = {
     "@typescript-eslint/no-duplicate-imports": "warn",
 
     // no-empty-function is enabled in the typescript-eslint recommended set...
-    // but empty functions are useful to express no-ops and typescript itself
+    // but empty functions are useful to express no-ops, and typescript itself
     // arguably catches all other interesting cases.
     "no-empty-function": "off",
     "@typescript-eslint/no-empty-function": "off",
@@ -288,6 +288,8 @@ const config = {
     // });
     // given that in my experience async-without-await is almost always benign
     // (especially with typechecking), it seems better to leave it off.
+    // note that we _do_ warn about promises that need to be consumed-- that's
+    // `@typescript-eslint/no-misused-promises`.
     "require-await": "off",
     "@typescript-eslint/require-await": "off",
 
@@ -540,8 +542,12 @@ const config = {
   overrides: [],
 };
 
+// this set of overrides tries to conform to the jest defaults for `testMatch`
+// paths/filenames: https://jestjs.io/docs/configuration#testmatch-arraystring
+// it's admittedly not very configurable at the moment, but in the interests of
+// keeping everything simple and in one file let's keep it like this for now.
 config.overrides.push({
-  files: ["**/*.test.{js,jsx,ts,tsx}", "**/test/*.{js,jsx,ts,tsx}"],
+  files: ["**/__tests__/*.{js,jsx,ts,tsx}", "**/*.{spec,test}.{js,jsx,ts,tsx}"],
   plugins: [...config.plugins, "jest"],
   rules: {
     /*
