@@ -563,6 +563,7 @@ config.overrides.push({
     "jest/no-interpolation-in-snapshots": "warn",
     "jest/no-mocks-import": "warn",
     "jest/no-standalone-expect": "error",
+    "jest/prefer-snapshot-hint": ["warn", "multi"],
     "jest/prefer-to-be": "warn",
     "jest/prefer-to-contain": "warn",
     "jest/prefer-to-have-length": "warn",
