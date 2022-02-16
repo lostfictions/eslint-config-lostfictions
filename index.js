@@ -586,6 +586,10 @@ config.overrides.push({
     // but better to be noisy than to miss errors.
     "no-undef": "error",
 
+    // this seems to cause many more false positives in js (maybe due to
+    // confusion about object vs namespace imports when using `require`?)
+    "@typescript-eslint/unbound-method": "off",
+
     // assume js/jsx files use commonjs (or at least tolerate the use of
     // `require`). the consequences are less dire than for ts code, where
     // `require` results in an untyped import by default.
