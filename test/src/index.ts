@@ -92,7 +92,7 @@ function whatever() {
 }
 
 function what2() {
-  // expecting sonarjs/prefer-single-boolean-return here, but it doesn't trigger.
+  // eslint-disable-next-line sonarjs/prefer-single-boolean-return
   if (xdd) {
     return true;
   }
