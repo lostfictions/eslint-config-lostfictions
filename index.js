@@ -346,6 +346,7 @@ const config = {
     "@typescript-eslint/no-non-null-assertion": "off",
 
     "@typescript-eslint/no-this-alias": "warn",
+    "@typescript-eslint/no-redundant-type-constituents": "warn",
     "@typescript-eslint/no-unnecessary-boolean-literal-compare": "warn",
 
     // `no-unnecessary-condition` is only useful in tandem with
@@ -500,12 +501,7 @@ const config = {
     // without needing a warning.
     "sonarjs/no-nested-switch": "off",
 
-    // this could be good in the future but currently seems to be useless, as
-    // all usecases are already covered by the built-in rule `no-else-return`.
-    // tracking issue:
-    // https://github.com/SonarSource/eslint-plugin-sonarjs/issues/316
-    "sonarjs/prefer-single-boolean-return": "off",
-
+    "sonarjs/prefer-single-boolean-return": "warn",
     "sonarjs/prefer-while": "warn",
 
     /*
