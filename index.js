@@ -559,7 +559,12 @@ config.overrides.push({
     "jest/no-interpolation-in-snapshots": "warn",
     "jest/no-mocks-import": "warn",
     "jest/no-standalone-expect": "error",
-    "jest/prefer-snapshot-hint": ["warn", "multi"],
+
+    // prefer-snapshot-hint is currently broken. see this issue:
+    // https://github.com/jest-community/eslint-plugin-jest/issues/1068
+    // "jest/prefer-snapshot-hint": ["warn", "multi"],
+    "jest/prefer-snapshot-hint": "off",
+
     "jest/prefer-to-be": "warn",
     "jest/prefer-to-contain": "warn",
     "jest/prefer-to-have-length": "warn",
