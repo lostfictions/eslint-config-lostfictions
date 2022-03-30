@@ -416,7 +416,11 @@ const config = {
     "@typescript-eslint/restrict-template-expressions": "off",
 
     "@typescript-eslint/switch-exhaustiveness-check": "warn",
-    "@typescript-eslint/unbound-method": ["warn", { ignoreStatic: true }],
+
+    // unbound-method unfortunately still causes false positives with
+    // third-party code, like `useForm()` from `react-hook-form`.
+    "@typescript-eslint/unbound-method": "off",
+
     "@typescript-eslint/unified-signatures": "warn",
 
     /*
