@@ -12,25 +12,25 @@
     "unused": "eslint-find-rules -un ./index.js",
     "deprecated": "eslint-find-rules -dn ./index.js",
     "test": "run-p -cl test:*",
-    "test:configs": "eslint --color '*.js'",
-    "test:fixtures": "eslint --color 'test/**/*.{js,ts}' --max-warnings=0",
+    "test:configs": "eslint --color --max-warnings=0 '*.js'",
+    "test:fixtures": "eslint --color --max-warnings=0 'test/**/*.{js,ts}'",
     "test:prettier": "prettier -l '**/*.{js,ts}'",
     "prettier": "prettier --write '**/*.{js,ts}'",
     "prepublishOnly": "run-s test"
   },
   "dependencies": {
     "@rushstack/eslint-patch": "^1.1.1",
-    "@typescript-eslint/eslint-plugin": "5.15.0",
-    "@typescript-eslint/parser": "^5.15.0",
+    "@typescript-eslint/eslint-plugin": "5.17.0",
+    "@typescript-eslint/parser": "^5.17.0",
     "eslint-config-prettier": "^8.5.0",
-    "eslint-import-resolver-typescript": "^2.5.0",
+    "eslint-import-resolver-typescript": "^2.7.0",
     "eslint-plugin-deprecation": "^1.3.2",
     "eslint-plugin-eslint-comments": "^3.2.0",
     "eslint-plugin-import": "^2.25.4",
-    "eslint-plugin-jest": "^26.1.1",
+    "eslint-plugin-jest": "^26.1.3",
     "eslint-plugin-node": "^11.1.0",
     "eslint-plugin-react": "^7.29.4",
-    "eslint-plugin-react-hooks": "^4.3.0",
+    "eslint-plugin-react-hooks": "^4.4.0",
     "eslint-plugin-sonarjs": "^0.12.0",
     "eslint-plugin-unicorn": "^40.1.0"
   },
@@ -39,8 +39,8 @@
     "eslint": "^8.10.0",
     "eslint-find-rules": "^4.1.0",
     "npm-run-all": "^4.1.5",
-    "prettier": "^2.6.0",
-    "typescript": "^4.6.2"
+    "prettier": "^2.6.1",
+    "typescript": "^4.6.3"
   },
   "peerDependencies": {
     "eslint": "^8.5.0",

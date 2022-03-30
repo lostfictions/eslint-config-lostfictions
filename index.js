@@ -568,8 +568,9 @@ config.overrides.push({
     "jest/no-mocks-import": "warn",
     "jest/no-standalone-expect": "error",
 
-    // prefer-snapshot-hint is currently broken. see this issue:
-    // https://github.com/jest-community/eslint-plugin-jest/issues/1068
+    // unfortunately `jest/prefer-snapshot-hint isn't super useful at the moment
+    // since it considers too broad a scope:
+    // https://github.com/jest-community/eslint-plugin-jest/issues/1074
     // "jest/prefer-snapshot-hint": ["warn", "multi"],
     "jest/prefer-snapshot-hint": "off",
 
@@ -588,22 +589,33 @@ config.overrides.push({
 // catch errors that a more js-centric config might (for example, with a more
 // thorough eslint-plugin-import config). this is more for best-effort
 // compatibility/harm reduction.
-config.overrides.push({
-  files: ["**/*.{js,jsx}"],
-  rules: {
-    // `no-undef` might cause a bit of redundant noise if `checkJs` is also on,
-    // but better to be noisy than to miss errors.
-    "no-undef": "error",
+config.overrides.push(
+  {
+    files: ["**/*.{js,jsx}"],
+    rules: {
+      // `no-undef` might cause a bit of redundant noise if `checkJs` is also on,
+      // but better to be noisy than to miss errors.
+      "no-undef": "error",
 
-    // this seems to cause many more false positives in js (maybe due to
-    // confusion about object vs namespace imports when using `require`?)
-    "@typescript-eslint/unbound-method": "off",
+      // this is already disabled in the base config, but i hope to re-enable it
+      // someday... but it seems to cause even more false positives in js even in
+      // strict mode strict with `checkJs` on, so we probably can't turn it on
+      // here anytime soon.
+      "@typescript-eslint/unbound-method": "off",
 
-    // assume js/jsx files use commonjs (or at least tolerate the use of
-    // `require`). the consequences are less dire than for ts code, where
-    // `require` results in an untyped import by default.
-    "import/no-commonjs": "off",
-  },
-});
+      // assume js/jsx files use commonjs (or at least tolerate the use of
+      // `require`). the consequences are less dire than for ts code, where
+      // `require` results in an untyped import by default.
+      "import/no-commonjs": "off",
+    },
+  }
+  // we might want to enable strict mode for plain js files, but per
+  // https://eslint.org/docs/rules/strict it would require changing the parser
+  // options. this is an area to investigate for the future.
+  // {
+  //   files: ["**/*.js"], rules: { strict: ["warn", "global"],
+  //   },
+  // }
+);
 
 module.exports = config;

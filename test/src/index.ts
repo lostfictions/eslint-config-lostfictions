@@ -209,6 +209,7 @@ const args = [1, 2, 3, 4];
 Math.max.apply(Math, args);
 
 const someNum = "0x3847";
+// eslint-disable-next-line radix
 parseInt(someNum, 10);
 
 // eslint-disable-next-line import/no-commonjs
