@@ -210,7 +210,11 @@ const config = {
     "prefer-rest-params": "error",
     "prefer-spread": "warn",
     "prefer-template": "warn",
-    radix: "warn",
+
+    // we assume we're running in at least an es5 environment (ie. at least
+    // IE9). if you're not... godspeed, brave one.
+    radix: ["warn", "as-needed"],
+
     "require-atomic-updates": ["warn", { allowProperties: true }],
 
     // generally good idea, but the performance implications are unclear and it
