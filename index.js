@@ -284,12 +284,16 @@ const config = {
     // require-await can catch some legitimate (if benign) oversights, but it
     // also forces things like async handlers that only do sync work to be
     // refactored into an awkward and more confusing form. for example,
+    //
     // handleMessage(async (msg) => console.log(msg));
+    //
     // would need to be refactored to something much more verbose, like
+    //
     // handleMessage((msg) => {
     //   console.log(msg);
     //   return Promise.resolve();
     // });
+    //
     // given that in my experience async-without-await is almost always benign
     // (especially with typechecking), it seems better to leave it off.
     // note that we _do_ warn about promises that need to be consumed-- that's
@@ -325,6 +329,9 @@ const config = {
       { ignoredTypeNames: ["Error", "RegExp"] },
     ],
     "@typescript-eslint/no-confusing-non-null-assertion": "warn",
+
+    // TODO: it might be preferable to use the `ignoreVoidOperator` option
+    // instead.
     "@typescript-eslint/no-confusing-void-expression": [
       "warn",
       { ignoreArrowShorthand: true },
@@ -406,7 +413,14 @@ const config = {
     "@typescript-eslint/prefer-return-this-type": "warn",
     "@typescript-eslint/prefer-string-starts-ends-with": "warn",
     "@typescript-eslint/prefer-ts-expect-error": "warn",
-    "@typescript-eslint/require-array-sort-compare": "error",
+
+    // technically we may want to require that string arrays are always compared
+    // with `String#localeCompare()`. in practice i haven't found this to always
+    // be necessary, so we allow `sort()` without args for string arrays.
+    "@typescript-eslint/require-array-sort-compare": [
+      "warn",
+      { ignoreStringArrays: true },
+    ],
     "@typescript-eslint/restrict-plus-operands": [
       "warn",
       { checkCompoundAssignments: true },
