@@ -8,6 +8,7 @@ describe("my cool test", () => {
 
   it("requires hints for a test with multiple snapshots", () => {
     expect(1).toMatchSnapshot("a cool hint");
+    // eslint-disable-next-line jest/prefer-snapshot-hint
     expect(2).toMatchSnapshot();
   });
 });
