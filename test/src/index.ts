@@ -299,3 +299,17 @@ if (prop in xory) {
 
 // an invalid "describe" in a non-test file should not cause warnings:
 describe("", () => {});
+
+switch (true) {
+  // eslint-disable-next-line eqeqeq
+  case cat == "lol":
+    console.log("weird cat");
+    break;
+  case cat === "mew":
+    console.log("slightly odd cat");
+    break;
+  // eslint-disable-next-line unicorn/no-useless-switch-case
+  case cat === "meow":
+  default:
+    console.log("normal cat");
+}

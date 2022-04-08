@@ -821,10 +821,10 @@ eslint-plugin-sonarjs@^0.12.0:
   resolved "https://registry.yarnpkg.com/eslint-plugin-sonarjs/-/eslint-plugin-sonarjs-0.12.0.tgz#03a160a58f179fde084135baec08656b59786b8c"
   integrity sha512-soxjK67hoYxO8hesKqXWN50GSM+oG2r35N5WnAMehetahO6zoVpv3HZbdziP0jYWNopEe6te/BFUZOYAZI+qhg==
 
-eslint-plugin-unicorn@^40.1.0:
-  version "40.1.0"
-  resolved "https://registry.yarnpkg.com/eslint-plugin-unicorn/-/eslint-plugin-unicorn-40.1.0.tgz#48975360e39d23df726e4b33e8dd5d650e184832"
-  integrity sha512-y5doK2DF9Sr5AqKEHbHxjFllJ167nKDRU01HDcWyv4Tnmaoe9iNxMrBnaybZvWZUaE3OC5Unu0lNIevYamloig==
+eslint-plugin-unicorn@^42.0.0:
+  version "42.0.0"
+  resolved "https://registry.yarnpkg.com/eslint-plugin-unicorn/-/eslint-plugin-unicorn-42.0.0.tgz#47d60c00c263ad743403b052db689e39acbacff1"
+  integrity sha512-ixBsbhgWuxVaNlPTT8AyfJMlhyC5flCJFjyK3oKE8TRrwBnaHvUbuIkCM1lqg8ryYrFStL/T557zfKzX4GKSlg==
   dependencies:
     "@babel/helper-validator-identifier" "^7.15.7"
     ci-info "^3.3.0"
