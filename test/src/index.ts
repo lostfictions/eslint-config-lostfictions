@@ -313,3 +313,23 @@ switch (true) {
   default:
     console.log("normal cat");
 }
+
+function redundantJump(xs: number[]) {
+  for (const myX of xs) {
+    if (myX === 1) {
+      console.log("x == 1");
+      // eslint-disable-next-line sonarjs/no-redundant-jump
+      continue;
+    } else {
+      console.log("lol");
+    }
+  }
+}
+
+function redundantJump2(zx: string) {
+  if (zx === "dog") {
+    console.log("its a dog");
+    // eslint-disable-next-line no-useless-return, sonarjs/no-redundant-jump
+    return;
+  }
+}

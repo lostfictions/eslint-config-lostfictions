@@ -510,18 +510,25 @@ const config = {
      * eslint-plugin-sonarjs rules.
      */
     "sonarjs/no-all-duplicated-branches": "warn",
+    // https://github.com/SonarSource/eslint-plugin-sonarjs/blob/master/docs/rules/no-collection-size-mischeck.md
+    "sonarjs/no-collection-size-mischeck": "warn",
     "sonarjs/no-element-overwrite": "warn",
     "sonarjs/no-empty-collection": "warn",
     "sonarjs/no-identical-expressions": "warn",
     "sonarjs/no-ignored-return": "warn",
-    "sonarjs/no-collection-size-mischeck": "warn",
     "sonarjs/no-inverted-boolean-check": "warn",
 
     // not hugely useful when using a formatter -- small nested switches haven't
     // been a problem for readability in my experience. hopefully you can notice
     // when a nested switch is becoming cumbersome enough to refactor out
     // without needing a warning.
+    // https://github.com/SonarSource/eslint-plugin-sonarjs/blob/master/docs/rules/no-nested-switch.md
     "sonarjs/no-nested-switch": "off",
+
+    // this overlaps with the eslint built-in no-useless-return, but handles
+    // some other cases, like a useless `continue` in a for-of loop.
+    // https://github.com/SonarSource/eslint-plugin-sonarjs/blob/master/docs/rules/no-redundant-jump.md
+    "sonarjs/no-redundant-jump": "warn",
 
     "sonarjs/prefer-single-boolean-return": "warn",
     "sonarjs/prefer-while": "warn",
