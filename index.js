@@ -38,9 +38,10 @@ const config = {
   ignorePatterns: ["*.test.ts.snap", ".eslintrc.js"],
   reportUnusedDisableDirectives: true,
   rules: {
-    /*
-     * base eslint rules not already enabled in eslint:recommended.
-     */
+    /////////////////////////////////////////////////////////////////
+    // base eslint rules not already enabled in eslint:recommended.
+    /////////////////////////////////////////////////////////////////
+
     "array-callback-return": "warn",
     curly: ["warn", "multi-line", "consistent"],
     "default-case": "warn",
@@ -48,9 +49,14 @@ const config = {
     eqeqeq: ["error", "always", { null: "ignore" }],
     "grouped-accessor-pairs": "warn",
 
-    // occasionally useful, but in my experience async code is often serial for
-    // good reason (for example, you may not want interleaved disk access). in
-    // the end i've found it gives more false positives far more often than not.
+    /**
+     * https://eslint.org/docs/rules/no-await-in-loop
+     *
+     * `no-await-in-loop` is occasionally useful, but in my experience async
+     * code is often serial for good reason (for example, you may not want
+     * interleaved disk access). in the end i've found it gives more false
+     * positives far more often than not.
+     */
     "no-await-in-loop": "off",
 
     "no-constructor-return": "warn",
@@ -76,6 +82,7 @@ const config = {
     "no-octal-escape": "warn",
     "no-param-reassign": "warn",
     "no-promise-executor-return": "warn",
+
     "no-restricted-globals": [
       "warn",
       {
@@ -125,6 +132,7 @@ const config = {
       message: `Use \`window.${name}\` if you really meant to refer to the global.`
     }))
     ),
+
     "no-restricted-syntax": [
       "warn",
       {
@@ -141,6 +149,7 @@ const config = {
         ].join(" "),
       },
     ],
+
     "no-return-assign": "error",
     "no-return-await": "warn",
     "no-script-url": "warn",
@@ -169,12 +178,16 @@ const config = {
     "no-useless-return": "warn",
     "no-var": "error",
 
-    // the `void` keyword in js (distinct from the `void` type in typescript)
-    // should generally be avoided. however, the `void` keyword in statement
-    // position is useful to express that the return value of a
-    // promise-returning function should be discarded ("fire-and-forget"). see
-    // the @typescript-eslint/no-floating-promises rule, which enforces this:
-    // https://typescript-eslint.io/rules/no-floating-promises
+    /**
+     * https://eslint.org/docs/rules/no-void
+     *
+     * the `void` keyword in js (distinct from the `void` type in typescript)
+     * should generally be avoided. however, the `void` keyword in statement
+     * position is useful to express that the return value of a
+     * promise-returning function should be discarded ("fire-and-forget"). see
+     * the `@typescript-eslint/no-floating-promises` rule, which enforces this:
+     * https://typescript-eslint.io/rules/no-floating-promises
+     */
     "no-void": ["warn", { allowAsStatement: true }],
 
     "object-shorthand": "warn",
@@ -200,7 +213,7 @@ const config = {
     "prefer-exponentiation-operator": "warn",
     "prefer-numeric-literals": "warn",
 
-    // Object.hasOwn() hasn't shipped in typescript. tracking issue:
+    // `Object.hasOwn()` hasn't shipped in typescript. tracking issue:
     // https://github.com/microsoft/TypeScript/issues/44253
     // "prefer-object-has-own": "warn",
 
@@ -228,9 +241,10 @@ const config = {
     "valid-typeof": ["error", { requireStringLiterals: true }],
     yoda: "warn",
 
-    /*
-     * eslint rules that have a typescript-eslint equivalent.
-     */
+    /////////////////////////////////////////////////////////////////
+    // eslint rules that have a typescript-eslint equivalent.
+    /////////////////////////////////////////////////////////////////
+
     "no-array-constructor": "off",
     "@typescript-eslint/no-array-constructor": "warn",
 
@@ -301,9 +315,10 @@ const config = {
     "require-await": "off",
     "@typescript-eslint/require-await": "off",
 
-    /*
-     * other typescript-eslint rules.
-     */
+    /////////////////////////////////////////////////////////////////
+    // other typescript-eslint rules.
+    /////////////////////////////////////////////////////////////////
+
     "@typescript-eslint/adjacent-overload-signatures": "warn",
     "@typescript-eslint/await-thenable": "warn",
     "@typescript-eslint/ban-tslint-comment": "warn",
@@ -437,21 +452,23 @@ const config = {
 
     "@typescript-eslint/unified-signatures": "warn",
 
-    /*
-     * eslint-plugin-deprecation rules.
-     */
+    /////////////////////////////////////////////////////////////////
+    // eslint-plugin-deprecation rules.
+    /////////////////////////////////////////////////////////////////
+
     "deprecation/deprecation": "warn",
 
-    /*
-     * eslint-plugin-eslint-comments rules.
-     */
+    /////////////////////////////////////////////////////////////////
+    // eslint-plugin-eslint-comments rules.
+    /////////////////////////////////////////////////////////////////
+
     "eslint-comments/disable-enable-pair": ["warn", { allowWholeFile: true }],
     "eslint-comments/no-unlimited-disable": "warn",
     "eslint-comments/no-unused-enable": "warn",
 
-    /*
-     * eslint-plugin-import rules.
-     */
+    /////////////////////////////////////////////////////////////////
+    // eslint-plugin-import rules.
+    /////////////////////////////////////////////////////////////////
 
     // anonymous default exports are not only harder to search for, they degrade
     // typescript's ability to suggest automatic imports.
@@ -497,45 +514,58 @@ const config = {
       },
     ],
 
-    /*
-     * eslint-plugin-node rules.
-     */
+    /////////////////////////////////////////////////////////////////
+    // eslint-plugin-node rules.
+    /////////////////////////////////////////////////////////////////
+
     "node/no-new-require": "warn",
     "node/no-path-concat": "warn",
     "node/no-process-env": "warn",
     "node/prefer-promises/fs": "warn",
     "node/prefer-promises/dns": "warn",
 
-    /*
-     * eslint-plugin-sonarjs rules.
-     */
+    /////////////////////////////////////////////////////////////////
+    // eslint-plugin-sonarjs rules.
+    /////////////////////////////////////////////////////////////////
+
     "sonarjs/no-all-duplicated-branches": "warn",
-    // https://github.com/SonarSource/eslint-plugin-sonarjs/blob/master/docs/rules/no-collection-size-mischeck.md
+
+    /**
+     * https://github.com/SonarSource/eslint-plugin-sonarjs/blob/master/docs/rules/no-collection-size-mischeck.md
+     */
     "sonarjs/no-collection-size-mischeck": "warn",
+
     "sonarjs/no-element-overwrite": "warn",
     "sonarjs/no-empty-collection": "warn",
     "sonarjs/no-identical-expressions": "warn",
     "sonarjs/no-ignored-return": "warn",
     "sonarjs/no-inverted-boolean-check": "warn",
 
-    // not hugely useful when using a formatter -- small nested switches haven't
-    // been a problem for readability in my experience. hopefully you can notice
-    // when a nested switch is becoming cumbersome enough to refactor out
-    // without needing a warning.
-    // https://github.com/SonarSource/eslint-plugin-sonarjs/blob/master/docs/rules/no-nested-switch.md
+    /**
+     * https://github.com/SonarSource/eslint-plugin-sonarjs/blob/master/docs/rules/no-nested-switch.md
+     *
+     * not hugely useful when using a formatter -- small nested switches haven't
+     * been a problem for readability in my experience. hopefully you can notice
+     * when a nested switch is becoming cumbersome enough to refactor out
+     * without needing a warning.
+     */
     "sonarjs/no-nested-switch": "off",
 
-    // this overlaps with the eslint built-in no-useless-return, but handles
-    // some other cases, like a useless `continue` in a for-of loop.
-    // https://github.com/SonarSource/eslint-plugin-sonarjs/blob/master/docs/rules/no-redundant-jump.md
+    /**
+     * https://github.com/SonarSource/eslint-plugin-sonarjs/blob/master/docs/rules/no-redundant-jump.md
+     *
+     * this overlaps with the eslint built-in no-useless-return, but handles
+     * some other cases, like a useless `continue` in a for-of loop.
+     */
     "sonarjs/no-redundant-jump": "warn",
 
     "sonarjs/prefer-single-boolean-return": "warn",
     "sonarjs/prefer-while": "warn",
 
-    /*
-     * eslint-plugin-unicorn rules.
-     */
+    /////////////////////////////////////////////////////////////////
+    // eslint-plugin-unicorn rules.
+    /////////////////////////////////////////////////////////////////
+
     "unicorn/consistent-function-scoping": "warn",
     "unicorn/consistent-destructuring": "warn",
     "unicorn/error-message": "warn",
@@ -579,9 +609,10 @@ config.overrides.push({
   files: ["**/__tests__/*.{js,jsx,ts,tsx}", "**/*.{spec,test}.{js,jsx,ts,tsx}"],
   plugins: [...config.plugins, "jest"],
   rules: {
-    /*
-     * eslint-plugin-jest rules.
-     */
+    /////////////////////////////////////////////////////////////////
+    // eslint-plugin-jest rules.
+    /////////////////////////////////////////////////////////////////
+
     "jest/consistent-test-it": "warn",
     "jest/expect-expect": "warn",
     "jest/no-conditional-expect": "warn",
@@ -614,15 +645,23 @@ config.overrides.push(
       // but better to be noisy than to miss errors.
       "no-undef": "error",
 
-      // this is already disabled in the base config, but i hope to re-enable it
-      // someday... but it seems to cause even more false positives in js even in
-      // strict mode strict with `checkJs` on, so we probably can't turn it on
-      // here anytime soon.
+      /**
+       * https://typescript-eslint.io/rules/unbound-method
+       * 
+       * this is already disabled in the base config, but i hope to re-enable it
+       * someday... but it seems to cause even more false positives in js even in
+       * strict mode strict with `checkJs` on, so we probably can't turn it on
+       * here anytime soon. 
+       */
       "@typescript-eslint/unbound-method": "off",
 
-      // assume js/jsx files use commonjs (or at least tolerate the use of
-      // `require`). the consequences are less dire than for ts code, where
-      // `require` results in an untyped import by default.
+      /**
+       * https://github.com/import-js/eslint-plugin-import/blob/main/docs/rules/no-commonjs.md
+       *
+       * assume js/jsx files use commonjs (or at least tolerate the use of
+       * `require`). the consequences are less dire than for ts code, where
+       * `require` results in an untyped import by default.
+       */
       "import/no-commonjs": "off",
     },
   }

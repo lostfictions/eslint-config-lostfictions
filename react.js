@@ -16,11 +16,15 @@ module.exports = {
   rules: {
     ...base.rules,
 
-    /*
-     * eslint-plugin-react rules.
-     */
+    /////////////////////////////////////////////////////////////////
+    // eslint-plugin-react rules.
+    /////////////////////////////////////////////////////////////////
 
-    // enforce naming convention for useState hooks.
+    /**
+     * https://github.com/jsx-eslint/eslint-plugin-react/blob/master/docs/rules/hook-use-state.md
+     *
+     * enforce naming convention for useState hooks.
+     */
     "react/hook-use-state": "warn",
 
     "react/iframe-missing-sandbox": "warn",
@@ -53,7 +57,10 @@ module.exports = {
     // on in codebases where that style is used).
     "react/prop-types": "off",
 
+    /////////////////////////////////////////////////////////////////
     // eslint-plugin-react-hooks rules.
+    /////////////////////////////////////////////////////////////////
+
     "react-hooks/exhaustive-deps": "warn",
     "react-hooks/rules-of-hooks": "error",
   },
