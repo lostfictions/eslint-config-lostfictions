@@ -1,5 +1,8 @@
 const base = require("./index");
 
+// TODO: it might make sense to inline this in the main file as an override for
+// `.{jsx,tsx}` extensions instead of maintaining a separate config.
+
 module.exports = {
   ...base,
   // we place prettier at the end of the extends stack to ensure it turns
@@ -31,6 +34,22 @@ module.exports = {
     "react/jsx-boolean-value": "warn",
     "react/jsx-fragments": "warn",
     "react/jsx-no-constructed-context-values": "warn",
+
+    /**
+     * https://github.com/jsx-eslint/eslint-plugin-react/blob/master/docs/rules/jsx-no-leaked-render.md
+     *
+     * this rule might seem annoying if you're working in a typed codebase and
+     * confident that you're only using the `x && <Component />` pattern in
+     * situations where `x` is a boolean. (and in an ideal world, there'd be a
+     * typescript-aware version of the react plugin that could detect just such
+     * a case, which is safe.) but imo it's better to be on the safe side, even
+     * if it's slightly more verbose to have to say `x ? <Component /> : null`.
+     */
+    "react/jsx-no-leaked-render": [
+      "warn",
+      { validStrategies: ["ternary", "coerce"] },
+    ],
+
     "react/jsx-no-script-url": "warn",
     "react/jsx-no-target-blank": "warn",
     "react/jsx-no-useless-fragment": "warn",
