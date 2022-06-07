@@ -646,6 +646,28 @@ config.overrides.push(
       "no-undef": "error",
 
       /**
+       * https://eslint.org/docs/rules/no-use-before-define
+       */
+      "no-use-before-define": [
+        "error",
+        {
+          // functions are always hoisted; this is safe.
+          functions: false,
+
+          // these lines are a little more dangerous -- it'll squelch warnings for
+          // classes and variables that are defined later in an *upper* scope --
+          // but should still catch use-before-defines for both in the current
+          // scope.
+          classes: false,
+          variables: false,
+
+          // named exports in `export {}` are always safe, even if they contain
+          // references to variables declared later in the code.
+          allowNamedExports: true,
+        },
+      ],
+
+      /**
        * https://typescript-eslint.io/rules/unbound-method
        * 
        * this is already disabled in the base config, but i hope to re-enable it
