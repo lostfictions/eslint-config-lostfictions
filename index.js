@@ -229,8 +229,12 @@ const config = {
     "prefer-spread": "warn",
     "prefer-template": "warn",
 
-    // we assume we're running in at least an es5 environment (ie. at least
-    // IE9). if you're not... godspeed, brave one.
+    /**
+     * https://eslint.org/docs/rules/radix
+     *
+     * not that with `as-needed` we assume we're running in at least an es5
+     * environment (ie. at least IE9). if you're not... godspeed, brave one.
+     */
     radix: ["warn", "as-needed"],
 
     "require-atomic-updates": ["warn", { allowProperties: true }],
@@ -239,7 +243,11 @@ const config = {
     // can be cumbersome for existing code. to be revisited.
     // "require-unicode-regexp": "warn",
 
-    // strict is already added by typescript or babel where necessary.
+    /**
+     * https://eslint.org/docs/rules/strict
+     *
+     * strict is already added by typescript or babel where necessary.
+     */
     strict: "warn",
 
     "symbol-description": "warn",
@@ -300,23 +308,32 @@ const config = {
     "no-useless-constructor": "off",
     "@typescript-eslint/no-useless-constructor": "warn",
 
-    // require-await can catch some legitimate (if benign) oversights, but it
-    // also forces things like async handlers that only do sync work to be
-    // refactored into an awkward and more confusing form. for example,
-    //
-    // handleMessage(async (msg) => console.log(msg));
-    //
-    // would need to be refactored to something much more verbose, like
-    //
-    // handleMessage((msg) => {
-    //   console.log(msg);
-    //   return Promise.resolve();
-    // });
-    //
-    // given that in my experience async-without-await is almost always benign
-    // (especially with typechecking), it seems better to leave it off.
-    // note that we _do_ warn about promises that need to be consumed-- that's
-    // `@typescript-eslint/no-misused-promises`.
+    /**
+     * https://eslint.org/docs/rules/require-await
+     * https://typescript-eslint.io/rules/require-await/
+     *
+     * require-await can catch some legitimate (if benign) oversights, but it
+     * also forces things like async handlers that only do sync work to be
+     * refactored into an awkward and more confusing form. for example,
+     *
+     * ```js
+     * handleMessage(async (msg) => console.log(msg));
+     * ```
+     *
+     * would need to be refactored to something much more verbose, like
+     *
+     * ```js
+     * handleMessage((msg) => {
+     *   console.log(msg);
+     *   return Promise.resolve();
+     * });
+     * ```
+     *
+     * given that in my experience async-without-await is almost always benign
+     * (especially with typechecking), it seems better to leave it off. note
+     * that we _do_ warn about promises that need to be _consumed_: that's
+     * `@typescript-eslint/no-misused-promises`.
+     */
     "require-await": "off",
     "@typescript-eslint/require-await": "off",
 
