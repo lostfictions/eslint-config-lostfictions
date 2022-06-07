@@ -59,6 +59,11 @@ const config = {
      */
     "no-await-in-loop": "off",
 
+    /**
+     * https://eslint.org/docs/rules/no-constant-binary-expression
+     */
+    "no-constant-binary-expression": "error",
+
     "no-constructor-return": "warn",
     "no-dupe-class-members": "error",
     "no-dupe-else-if": "error",
@@ -669,11 +674,11 @@ config.overrides.push(
 
       /**
        * https://typescript-eslint.io/rules/unbound-method
-       * 
+       *
        * this is already disabled in the base config, but i hope to re-enable it
        * someday... but it seems to cause even more false positives in js even in
        * strict mode strict with `checkJs` on, so we probably can't turn it on
-       * here anytime soon. 
+       * here anytime soon.
        */
       "@typescript-eslint/unbound-method": "off",
 
