@@ -626,6 +626,17 @@ config.overrides.push({
     "jest/no-interpolation-in-snapshots": "warn",
     "jest/no-mocks-import": "warn",
     "jest/no-standalone-expect": "error",
+
+    /**
+     * https://github.com/jest-community/eslint-plugin-jest/blob/main/docs/rules/prefer-hooks-in-order.md
+     */
+    "jest/prefer-hooks-in-order": "warn",
+
+    /**
+     * https://github.com/jest-community/eslint-plugin-jest/blob/main/docs/rules/prefer-hooks-on-top.md
+     */
+    "jest/prefer-hooks-on-top": "warn",
+
     "jest/prefer-snapshot-hint": ["warn", "multi"],
     "jest/prefer-to-be": "warn",
     "jest/prefer-to-contain": "warn",
