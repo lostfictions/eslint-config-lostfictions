@@ -373,6 +373,12 @@ const config = {
       "warn",
       { ignoreArrowShorthand: true },
     ],
+
+    /**
+     * https://typescript-eslint.io/rules/no-duplicate-enum-values
+     */
+    "@typescript-eslint/no-duplicate-enum-values": "warn",
+
     "@typescript-eslint/no-empty-interface": "warn",
 
     // `any` is occasionally necessary as a workaround. don't abuse it! a more
@@ -468,11 +474,23 @@ const config = {
 
     "@typescript-eslint/switch-exhaustiveness-check": "warn",
 
-    // unbound-method unfortunately still causes false positives with
-    // third-party code, like `useForm()` from `react-hook-form`.
+    /**
+     * https://github.com/typescript-eslint/typescript-eslint/blob/main/packages/eslint-plugin/docs/rules/unbound-method.md
+     *
+     * `unbound-method` is a good idea, but unfortunately it still causes false
+     * positives with third-party code, like `useForm()` from `react-hook-form`.
+     */
     "@typescript-eslint/unbound-method": "off",
 
-    "@typescript-eslint/unified-signatures": "warn",
+    /**
+     * https://github.com/typescript-eslint/typescript-eslint/blob/main/packages/eslint-plugin/docs/rules/unified-signatures.md
+     */
+    "@typescript-eslint/unified-signatures": [
+      "warn",
+      {
+        ignoreDifferentlyNamedParameters: true,
+      },
+    ],
 
     /////////////////////////////////////////////////////////////////
     // eslint-plugin-deprecation rules.
