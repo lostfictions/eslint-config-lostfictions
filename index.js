@@ -796,9 +796,11 @@ config.overrides.push({
      * https://typescript-eslint.io/rules/unbound-method
      *
      * this is already disabled in the base config, but i hope to re-enable it
-     * someday... but it seems to cause even more false positives in js even in
-     * strict mode strict with `checkJs` on, so we probably can't turn it on
-     * here anytime soon.
+     * someday, if issues like false positives for third-party code are ever
+     * resolved. but it seems to cause even more false positives in js than in
+     * typescript (even with a `tsconfig.json` in strict mode with `checkJs`
+     * on). the upshot is that we probably can't turn it on for plain js files
+     * anytime soon.
      */
     "@typescript-eslint/unbound-method": "off",
 
