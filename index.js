@@ -271,9 +271,9 @@ const config = {
     "valid-typeof": ["error", { requireStringLiterals: true }],
     yoda: "warn",
 
-    /////////////////////////////////////////////////////////////////
+    ///////////////////////////////////////////////////////////////////
     // eslint rules that have a typescript-eslint equivalent.
-    /////////////////////////////////////////////////////////////////
+    ///////////////////////////////////////////////////////////////////
 
     "no-array-constructor": "off",
     "@typescript-eslint/no-array-constructor": "warn",
@@ -354,9 +354,9 @@ const config = {
     "require-await": "off",
     "@typescript-eslint/require-await": "off",
 
-    /////////////////////////////////////////////////////////////////
-    // other typescript-eslint rules.
-    /////////////////////////////////////////////////////////////////
+    ///////////////////////////////////////////////////////////////////
+    // additional typescript-eslint rules not enabled in @typescript-eslint/recommended.
+    ///////////////////////////////////////////////////////////////////
 
     "@typescript-eslint/adjacent-overload-signatures": "warn",
     "@typescript-eslint/await-thenable": "warn",
@@ -383,9 +383,37 @@ const config = {
       { ignoredTypeNames: ["Error", "RegExp"] },
     ],
     "@typescript-eslint/no-confusing-non-null-assertion": "warn",
-
-    // TODO: it might be preferable to use the `ignoreVoidOperator` option
-    // instead.
+    
+    /**
+     * https://typescript-eslint.io/rules/no-confusing-void-expression
+     *
+     * From the above documentation page:
+     *
+     * > Returning the results of an expression whose type is void can be
+     * > misleading. Attempting to do so is likely a symptom of expecting a
+     * > different return type from a function. Even if used correctly, it can
+     * > be misleading for other developers, who don't know what a particular
+     * > function does and if its result matters.
+     *
+     * we use the `ignoreArrowShorthand` option to allow expressions like this
+     * one:
+     *
+     * ```js
+     * promise.then(value => window.postMessage(value))
+     * ```
+     *
+     * however, it might be preferable to use the `ignoreVoidOperator` option
+     * instead, which instead requires we be more explicit:
+     *
+     * ```js
+     * promise.then(value => void window.postMessage(value))
+     * ```
+     *
+     * the latter also aligns nicely with the `ignoreVoid` option for the
+     * `@typescript-eslint/no-floating-promises` rule. unfortunately, using
+     * `ignoreVoidOperator` for this rule is likely to flag many more benign
+     * cases in transitional codebases.
+     */
     "@typescript-eslint/no-confusing-void-expression": [
       "warn",
       { ignoreArrowShorthand: true },
@@ -481,6 +509,7 @@ const config = {
       "warn",
       { ignoreStringArrays: true },
     ],
+    
     "@typescript-eslint/restrict-plus-operands": [
       "warn",
       { checkCompoundAssignments: true },
@@ -509,23 +538,23 @@ const config = {
       },
     ],
 
-    /////////////////////////////////////////////////////////////////
+    ///////////////////////////////////////////////////////////////////
     // eslint-plugin-deprecation rules.
-    /////////////////////////////////////////////////////////////////
+    ///////////////////////////////////////////////////////////////////
 
     "deprecation/deprecation": "warn",
 
-    /////////////////////////////////////////////////////////////////
+    ///////////////////////////////////////////////////////////////////
     // eslint-plugin-eslint-comments rules.
-    /////////////////////////////////////////////////////////////////
+    ///////////////////////////////////////////////////////////////////
 
     "eslint-comments/disable-enable-pair": ["warn", { allowWholeFile: true }],
     "eslint-comments/no-unlimited-disable": "warn",
     "eslint-comments/no-unused-enable": "warn",
 
-    /////////////////////////////////////////////////////////////////
+    ///////////////////////////////////////////////////////////////////
     // eslint-plugin-import rules.
-    /////////////////////////////////////////////////////////////////
+    ///////////////////////////////////////////////////////////////////
 
     // anonymous default exports are not only harder to search for, they degrade
     // typescript's ability to suggest automatic imports.
@@ -551,6 +580,8 @@ const config = {
     // exports that aren't in the "main" file according to the package.json but
     // which are still usable by consumers via namespaced imports, eg.
     // `import x from "my-module/other-file-in-my-module"`.
+    // as far as i can tell eslint-plugin-import doesn't yet have good solutions
+    // for all of these edge cases.
     //
     // i recommend enabling this rule manually if you need to track down dead
     // code.
@@ -571,19 +602,33 @@ const config = {
       },
     ],
 
-    /////////////////////////////////////////////////////////////////
+    ///////////////////////////////////////////////////////////////////
     // eslint-plugin-node rules.
-    /////////////////////////////////////////////////////////////////
+    ///////////////////////////////////////////////////////////////////
 
     "node/no-new-require": "warn",
     "node/no-path-concat": "warn",
+    
+    /**
+     * https://github.com/mysticatea/eslint-plugin-node/blob/master/docs/rules/no-process-env.md
+     *
+     * it's strongly recommended, instead to centralize usage of `process.env`
+     * in a single file rather than accessing it ad-hoc across your codebase.
+     * the file (which you could call something like `env.ts`, say) should
+     * parse, validate and export sanitized env vars. within that file (and only
+     * that file) this rule should be disabled.
+     *
+     * you can use a package like znv (https://github.com/lostfictions/znv) to
+     * simplify doing this in a typesafe way.
+     */
     "node/no-process-env": "warn",
+    
     "node/prefer-promises/fs": "warn",
     "node/prefer-promises/dns": "warn",
 
-    /////////////////////////////////////////////////////////////////
+    /////////////////////////////////////////////////////////////////////
     // eslint-plugin-sonarjs rules.
-    /////////////////////////////////////////////////////////////////
+    /////////////////////////////////////////////////////////////////////
 
     "sonarjs/no-all-duplicated-branches": "warn",
 
@@ -619,9 +664,9 @@ const config = {
     "sonarjs/prefer-single-boolean-return": "warn",
     "sonarjs/prefer-while": "warn",
 
-    /////////////////////////////////////////////////////////////////
+    ///////////////////////////////////////////////////////////////////
     // eslint-plugin-unicorn rules.
-    /////////////////////////////////////////////////////////////////
+    ///////////////////////////////////////////////////////////////////
 
     "unicorn/consistent-function-scoping": "warn",
     "unicorn/consistent-destructuring": "warn",
@@ -666,9 +711,9 @@ config.overrides.push({
   files: ["**/__tests__/*.{js,jsx,ts,tsx}", "**/*.{spec,test}.{js,jsx,ts,tsx}"],
   plugins: [...config.plugins, "jest"],
   rules: {
-    /////////////////////////////////////////////////////////////////
+    ///////////////////////////////////////////////////////////////////
     // eslint-plugin-jest rules.
-    /////////////////////////////////////////////////////////////////
+    ///////////////////////////////////////////////////////////////////
 
     "jest/consistent-test-it": "warn",
     "jest/expect-expect": "warn",
@@ -734,6 +779,18 @@ config.overrides.push(
           allowNamedExports: true,
         },
       ],
+      
+      // per the documentation for `strict`
+      // (https://eslint.org/docs/rules/strict), correctly detecting whether
+      // 'use strict' is necessary require setting eslint's parser options.
+      // (it's not necessary in es modules, typescript, jsx, or files
+      // transformed by babel, swc or another transpiler, for example.) as it
+      // stands, we don't know enough about the context of plain js files to
+      // safely warn about adding OR removing 'use strict'. maintainers of js
+      // files where there would be significant benefit to enforcing this should
+      // add it in their repo eslint config (or an .eslintrc file in a
+      // subdirectory where the rule should be enforced).
+      strict: "off",
 
       /**
        * https://typescript-eslint.io/rules/unbound-method
@@ -755,13 +812,6 @@ config.overrides.push(
       "import/no-commonjs": "off",
     },
   }
-  // we might want to enable strict mode for plain js files, but per
-  // https://eslint.org/docs/rules/strict it would require changing the parser
-  // options. this is an area to investigate for the future.
-  // {
-  //   files: ["**/*.js"], rules: { strict: ["warn", "global"],
-  //   },
-  // }
 );
 
 module.exports = config;
