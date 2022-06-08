@@ -16,6 +16,8 @@ const config = {
     ecmaFeatures: {
       modules: true,
     },
+    // consumers of this config still need to specify a `tsconfigRootDir`, but
+    // this reduces verbosity a bit.
     project: "./tsconfig.json",
   },
   extends: [
@@ -34,13 +36,13 @@ const config = {
     "sonarjs",
     "unicorn",
   ],
-  // ignore jest snapshots and the eslint config itself by default
+  // ignore jest snapshots and the eslint config itself by default.
   ignorePatterns: ["*.test.ts.snap", ".eslintrc.js"],
   reportUnusedDisableDirectives: true,
   rules: {
-    /////////////////////////////////////////////////////////////////
+    ///////////////////////////////////////////////////////////////////
     // base eslint rules not already enabled in eslint:recommended.
-    /////////////////////////////////////////////////////////////////
+    ///////////////////////////////////////////////////////////////////
 
     "array-callback-return": "warn",
     curly: ["warn", "multi-line", "consistent"],
@@ -52,10 +54,11 @@ const config = {
     /**
      * https://eslint.org/docs/rules/no-await-in-loop
      *
-     * `no-await-in-loop` is occasionally useful, but in my experience async
-     * code is often serial for good reason (for example, you may not want
-     * interleaved disk access). in the end i've found it gives more false
-     * positives far more often than not.
+     * `no-await-in-loop` is occasionally useful for avoiding code that is
+     * serial when it could be parallel -- like sending off multiple requests --
+     * but in my experience async code is often serial for good reason (for
+     * example, you may not want interleaved disk access). in the end i've found
+     * it gives more false positives more often than not.
      */
     "no-await-in-loop": "off",
 
@@ -105,14 +108,14 @@ const config = {
         ].join(" "),
       },
     ].concat(
-      // the following globals are sourced from here:
+      // the following browser globals are sourced from here:
       // https://github.com/facebook/create-react-app/blob/9673858a3715287c40aef9e800c431c7d45c05a2/packages/confusing-browser-globals/index.js#L10
-      // inlined directly to minimize dependency churn and effort required to
-      // audit updates, especially since create-react-app versions its packages
-      // in lockstep (creating tons of bumps to this package even when there's
-      // no changes).
+      // i've inlined them directly to minimize dependency churn and effort
+      // required to audit updates, especially since create-react-app versions
+      // its packages in lockstep (creating tons of bumps to this package even
+      // when there's no changes).
 
-      // the idea (borrowed from eslint-config-airbnb but extended with more
+      // the idea (borrowed from `eslint-config-airbnb`, but extended with more
       // descriptive error messages) is that it's too easy to introduce an error
       // by accidentally referring to these globals when writing things like
       // event handlers. if you really mean to refer to the global, use
@@ -145,6 +148,9 @@ const config = {
         message:
           "Use a `for-of` loop with `Object.{keys,values,entries}` for object iteration.",
       },
+      // the `in` operator is only allowed when testing whether a *literal
+      // value* is present as a key in an object. see the repo's readme for more
+      // details.
       {
         selector: "BinaryExpression[left.type!='Literal'][operator='in']",
         message: [
@@ -168,7 +174,12 @@ const config = {
     "no-setter-return": "warn",
     "no-template-curly-in-string": "warn",
 
-    // handled by typescript.
+    /**
+     * https://eslint.org/docs/rules/no-undef
+     *
+     * undeclared vars are already caught by typescript. the eslint override
+     * block for untyped js files re-enables this rule.
+     */
     "no-undef": "off",
 
     "no-unmodified-loop-condition": "warn",
@@ -188,9 +199,10 @@ const config = {
      *
      * the `void` keyword in js (distinct from the `void` type in typescript)
      * should generally be avoided. however, the `void` keyword in statement
-     * position is useful to express that the return value of a
+     * position can be useful to express that the return value of a
      * promise-returning function should be discarded ("fire-and-forget"). see
      * the `@typescript-eslint/no-floating-promises` rule, which enforces this:
+     *
      * https://typescript-eslint.io/rules/no-floating-promises
      */
     "no-void": ["warn", { allowAsStatement: true }],
@@ -199,6 +211,10 @@ const config = {
     "one-var": ["warn", "never"],
     "prefer-arrow-callback": "warn",
     "prefer-const": "warn",
+    
+    /**
+     * https://eslint.org/docs/rules/prefer-destructuring
+     */
     "prefer-destructuring": [
       "warn",
       {
@@ -215,11 +231,12 @@ const config = {
         enforceForRenamedProperties: false,
       },
     ],
+    
     "prefer-exponentiation-operator": "warn",
     "prefer-numeric-literals": "warn",
 
-    // `Object.hasOwn()` hasn't shipped in typescript. tracking issue:
-    // https://github.com/microsoft/TypeScript/issues/44253
+    // `Object.hasOwn()` hasn't shipped with narrowing in typescript yet.
+    // tracking issue: https://github.com/microsoft/TypeScript/issues/44253
     // "prefer-object-has-own": "warn",
 
     "prefer-object-spread": "warn",
@@ -232,7 +249,7 @@ const config = {
     /**
      * https://eslint.org/docs/rules/radix
      *
-     * not that with `as-needed` we assume we're running in at least an es5
+     * note that with `as-needed` we assume we're running in at least an es5
      * environment (ie. at least IE9). if you're not... godspeed, brave one.
      */
     radix: ["warn", "as-needed"],
