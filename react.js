@@ -19,9 +19,9 @@ module.exports = {
   rules: {
     ...base.rules,
 
-    /////////////////////////////////////////////////////////////////
+    ///////////////////////////////////////////////////////////////////
     // eslint-plugin-react rules.
-    /////////////////////////////////////////////////////////////////
+    ///////////////////////////////////////////////////////////////////
 
     /**
      * https://github.com/jsx-eslint/eslint-plugin-react/blob/master/docs/rules/hook-use-state.md
@@ -71,14 +71,21 @@ module.exports = {
     "react/no-unused-state": "warn",
     "react/no-will-update-set-state": "warn",
 
-    // proptypes are usually not used in ts. (though ts _does_ have faculties to
-    // infer types when proptypes are declared; this rule can be switched back
-    // on in codebases where that style is used).
+    /**
+     * https://github.com/jsx-eslint/eslint-plugin-react/blob/master/docs/rules/prop-types.md
+     *
+     * [proptypes](https://reactjs.org/docs/typechecking-with-proptypes.html) is
+     * a react feature that provides runtime type checking for component
+     * property types; it's rarely used or needed when writing react with
+     * typescript. (that said, ts _does_ have special faculties to infer types
+     * when proptypes are declared; this rule can be switched back on in
+     * codebases where such a style is used.)
+     */
     "react/prop-types": "off",
 
-    /////////////////////////////////////////////////////////////////
+    ///////////////////////////////////////////////////////////////////
     // eslint-plugin-react-hooks rules.
-    /////////////////////////////////////////////////////////////////
+    ///////////////////////////////////////////////////////////////////
 
     "react-hooks/exhaustive-deps": "warn",
     "react-hooks/rules-of-hooks": "error",
