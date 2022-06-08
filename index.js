@@ -612,14 +612,15 @@ const config = {
     /**
      * https://github.com/mysticatea/eslint-plugin-node/blob/master/docs/rules/no-process-env.md
      *
-     * it's strongly recommended, instead to centralize usage of `process.env`
-     * in a single file rather than accessing it ad-hoc across your codebase.
-     * the file (which you could call something like `env.ts`, say) should
-     * parse, validate and export sanitized env vars. within that file (and only
-     * that file) this rule should be disabled.
+     * it's strongly recommended to centralize reading `process.env` in a single
+     * file rather than accessing it ad-hoc across your codebase. the file
+     * (which you could call something like `env.ts`) should parse, validate and
+     * export sanitized env vars. within that file (and only that file) this
+     * rule, `no-process-env`, should be disabled.
      *
      * you can use a package like znv (https://github.com/lostfictions/znv) to
-     * simplify doing this in a typesafe way.
+     * simplify doing this in a typesafe way. see this repo's readme for
+     * details.
      */
     "node/no-process-env": "warn",
 

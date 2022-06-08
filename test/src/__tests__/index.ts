@@ -1,14 +1,6 @@
+// eslint-plugin-jest rules are tested in index.test.ts in the parent directory;
+// this file is here to ensure that the rule override pattern applies to files
+// under `__tests__` directories as well.
+
 // eslint-disable-next-line jest/valid-title
 describe("", () => {});
-
-describe("my cool test", () => {
-  it("doesn't require hints for a test with a single snapshot", () => {
-    expect(2).toMatchSnapshot();
-  });
-
-  it("requires hints for a test with multiple snapshots", () => {
-    expect(1).toMatchSnapshot("a cool hint");
-    // eslint-disable-next-line jest/prefer-snapshot-hint
-    expect(2).toMatchSnapshot();
-  });
-});
