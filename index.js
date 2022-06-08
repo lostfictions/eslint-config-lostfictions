@@ -211,7 +211,7 @@ const config = {
     "one-var": ["warn", "never"],
     "prefer-arrow-callback": "warn",
     "prefer-const": "warn",
-    
+
     /**
      * https://eslint.org/docs/rules/prefer-destructuring
      */
@@ -231,7 +231,7 @@ const config = {
         enforceForRenamedProperties: false,
       },
     ],
-    
+
     "prefer-exponentiation-operator": "warn",
     "prefer-numeric-literals": "warn",
 
@@ -383,7 +383,7 @@ const config = {
       { ignoredTypeNames: ["Error", "RegExp"] },
     ],
     "@typescript-eslint/no-confusing-non-null-assertion": "warn",
-    
+
     /**
      * https://typescript-eslint.io/rules/no-confusing-void-expression
      *
@@ -509,7 +509,7 @@ const config = {
       "warn",
       { ignoreStringArrays: true },
     ],
-    
+
     "@typescript-eslint/restrict-plus-operands": [
       "warn",
       { checkCompoundAssignments: true },
@@ -608,7 +608,7 @@ const config = {
 
     "node/no-new-require": "warn",
     "node/no-path-concat": "warn",
-    
+
     /**
      * https://github.com/mysticatea/eslint-plugin-node/blob/master/docs/rules/no-process-env.md
      *
@@ -622,7 +622,7 @@ const config = {
      * simplify doing this in a typesafe way.
      */
     "node/no-process-env": "warn",
-    
+
     "node/prefer-promises/fs": "warn",
     "node/prefer-promises/dns": "warn",
 
@@ -746,72 +746,71 @@ config.overrides.push({
 });
 
 // tweak some rules for js files.
+//
 // note that this config is still designed primarily for typescript and may not
 // catch errors that a more js-centric config might (for example, with a more
 // thorough eslint-plugin-import config). this is more for best-effort
 // compatibility/harm reduction.
-config.overrides.push(
-  {
-    files: ["**/*.{js,jsx}"],
-    rules: {
-      // `no-undef` might cause a bit of redundant noise if `checkJs` is also on,
-      // but better to be noisy than to miss errors.
-      "no-undef": "error",
+config.overrides.push({
+  files: ["**/*.{js,jsx}"],
+  rules: {
+    // `no-undef` might cause a bit of redundant noise if `checkJs` is also on,
+    // but better to be noisy than to miss errors.
+    "no-undef": "error",
 
-      /**
-       * https://eslint.org/docs/rules/no-use-before-define
-       */
-      "no-use-before-define": [
-        "error",
-        {
-          // functions are always hoisted; this is safe.
-          functions: false,
+    /**
+     * https://eslint.org/docs/rules/no-use-before-define
+     */
+    "no-use-before-define": [
+      "error",
+      {
+        // functions are always hoisted; this is safe.
+        functions: false,
 
-          // these lines are a little more dangerous -- it'll squelch warnings for
-          // classes and variables that are defined later in an *upper* scope --
-          // but should still catch use-before-defines for both in the current
-          // scope.
-          classes: false,
-          variables: false,
+        // these lines are a little more dangerous -- it'll squelch warnings for
+        // classes and variables that are defined later in an *upper* scope --
+        // but should still catch use-before-defines for both in the current
+        // scope.
+        classes: false,
+        variables: false,
 
-          // named exports in `export {}` are always safe, even if they contain
-          // references to variables declared later in the code.
-          allowNamedExports: true,
-        },
-      ],
-      
-      // per the documentation for `strict`
-      // (https://eslint.org/docs/rules/strict), correctly detecting whether
-      // 'use strict' is necessary require setting eslint's parser options.
-      // (it's not necessary in es modules, typescript, jsx, or files
-      // transformed by babel, swc or another transpiler, for example.) as it
-      // stands, we don't know enough about the context of plain js files to
-      // safely warn about adding OR removing 'use strict'. maintainers of js
-      // files where there would be significant benefit to enforcing this should
-      // add it in their repo eslint config (or an .eslintrc file in a
-      // subdirectory where the rule should be enforced).
-      strict: "off",
+        // named exports in `export {}` are always safe, even if they contain
+        // references to variables declared later in the code.
+        allowNamedExports: true,
+      },
+    ],
 
-      /**
-       * https://typescript-eslint.io/rules/unbound-method
-       *
-       * this is already disabled in the base config, but i hope to re-enable it
-       * someday... but it seems to cause even more false positives in js even in
-       * strict mode strict with `checkJs` on, so we probably can't turn it on
-       * here anytime soon.
-       */
-      "@typescript-eslint/unbound-method": "off",
+    // per the documentation for `strict`
+    // (https://eslint.org/docs/rules/strict), correctly detecting whether 'use
+    // strict' is necessary require setting eslint's parser options. (it's not
+    // necessary in es modules, typescript, jsx, or files transformed by babel,
+    // swc or another transpiler, for example.) as it stands, we don't know
+    // enough about the context of plain js files to safely warn about adding OR
+    // removing 'use strict'. maintainers of js files where there would be
+    // significant benefit to enforcing this should add it in their repo eslint
+    // config (or an .eslintrc file in a subdirectory where the rule should be
+    // enforced).
+    strict: "off",
 
-      /**
-       * https://github.com/import-js/eslint-plugin-import/blob/main/docs/rules/no-commonjs.md
-       *
-       * assume js/jsx files use commonjs (or at least tolerate the use of
-       * `require`). the consequences are less dire than for ts code, where
-       * `require` results in an untyped import by default.
-       */
-      "import/no-commonjs": "off",
-    },
-  }
-);
+    /**
+     * https://typescript-eslint.io/rules/unbound-method
+     *
+     * this is already disabled in the base config, but i hope to re-enable it
+     * someday... but it seems to cause even more false positives in js even in
+     * strict mode strict with `checkJs` on, so we probably can't turn it on
+     * here anytime soon.
+     */
+    "@typescript-eslint/unbound-method": "off",
+
+    /**
+     * https://github.com/import-js/eslint-plugin-import/blob/main/docs/rules/no-commonjs.md
+     *
+     * assume js/jsx files use commonjs (or at least tolerate the use of
+     * `require`). the consequences are less dire than for ts code, where
+     * `require` results in an untyped import by default.
+     */
+    "import/no-commonjs": "off",
+  },
+});
 
 module.exports = config;
