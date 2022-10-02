@@ -742,12 +742,23 @@ config.overrides.push({
 
     "jest/consistent-test-it": "warn",
     "jest/expect-expect": "warn",
+
+    /**
+     * https://github.com/jest-community/eslint-plugin-jest/blob/main/docs/rules/no-alias-methods.md
+     */
+    "jest/no-alias-methods": "warn",
+
     "jest/no-conditional-expect": "warn",
     "jest/no-done-callback": "warn",
     "jest/no-identical-title": "warn",
     "jest/no-interpolation-in-snapshots": "warn",
     "jest/no-mocks-import": "warn",
     "jest/no-standalone-expect": "error",
+
+    /**
+     * https://github.com/jest-community/eslint-plugin-jest/blob/main/docs/rules/prefer-each.md
+     */
+    "jest/prefer-each": "warn",
 
     /**
      * https://github.com/jest-community/eslint-plugin-jest/blob/main/docs/rules/prefer-hooks-in-order.md
@@ -758,6 +769,11 @@ config.overrides.push({
      * https://github.com/jest-community/eslint-plugin-jest/blob/main/docs/rules/prefer-hooks-on-top.md
      */
     "jest/prefer-hooks-on-top": "warn",
+
+    /**
+     * https://github.com/jest-community/eslint-plugin-jest/blob/main/docs/rules/prefer-mock-promise-shorthand.md
+     */
+    "jest/prefer-mock-promise-shorthand": "warn",
 
     "jest/prefer-snapshot-hint": ["warn", "multi"],
     "jest/prefer-to-be": "warn",
