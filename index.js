@@ -75,6 +75,12 @@ const config = {
     "no-eval": "warn",
     "no-extend-native": "warn",
     "no-extra-bind": "warn",
+
+    /**
+     * https://eslint.org/docs/latest/rules/no-fallthrough
+     */
+    "no-fallthrough": ["error", { allowEmptyCase: true }],
+
     "no-floating-decimal": "warn",
     "no-implicit-coercion": "warn",
     "no-import-assign": "warn",
