@@ -381,6 +381,15 @@ const config = {
         },
       },
     ],
+
+    /**
+     * https://typescript-eslint.io/rules/consistent-generic-constructors
+     */
+    "@typescript-eslint/consistent-generic-constructors": [
+      "warn",
+      "constructor",
+    ],
+
     "@typescript-eslint/consistent-type-assertions": "warn",
     "@typescript-eslint/consistent-type-exports": "warn",
     "@typescript-eslint/method-signature-style": "warn",
@@ -495,7 +504,16 @@ const config = {
     // but both can be useful for writing typedefs of an untyped npm module.
     "@typescript-eslint/prefer-namespace-keyword": "off",
 
-    "@typescript-eslint/prefer-nullish-coalescing": "warn",
+    /**
+     * https://typescript-eslint.io/rules/prefer-nullish-coalescing
+     */
+    "@typescript-eslint/prefer-nullish-coalescing": [
+      "warn",
+      {
+        ignoreTernaryTests: false,
+      },
+    ],
+
     "@typescript-eslint/prefer-optional-chain": "warn",
     "@typescript-eslint/prefer-readonly": "warn",
 

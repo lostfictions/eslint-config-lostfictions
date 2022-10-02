@@ -333,3 +333,6 @@ function redundantJump2(zx: string) {
     return;
   }
 }
+
+// eslint-disable-next-line @typescript-eslint/consistent-generic-constructors
+const inconsistent: Map<string, number> = new Map();
