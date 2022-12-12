@@ -350,3 +350,10 @@ function isWhatever() {
 if (isWhatever() === false) {
   console.log("deleting everything");
 }
+
+// eslint-disable-next-line unicorn/no-typeof-undefined
+if (typeof inconsistent === "undefined") {
+  console.log("hmm");
+} else if (inconsistent === undefined) {
+  console.log("ahh");
+}

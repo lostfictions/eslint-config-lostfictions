@@ -751,6 +751,22 @@ const config = {
     "unicorn/no-instanceof-array": "warn",
     "unicorn/no-invalid-remove-event-listener": "warn",
     "unicorn/no-lonely-if": "warn",
+
+    /**
+     * https://github.com/sindresorhus/eslint-plugin-unicorn/blob/main/docs/rules/no-negated-condition.md
+     *
+     * the premise of this rule is that negation is always harder to read. but
+     * imo sometimes it's valuable for readability to have negation as the base
+     * case or thing that comes first -- discretion is better than enforcement
+     * here.
+     */
+    "unicorn/no-negated-condition": "off",
+
+    /**
+     * https://github.com/sindresorhus/eslint-plugin-unicorn/blob/main/docs/rules/no-typeof-undefined.md
+     */
+    "unicorn/no-typeof-undefined": "warn",
+
     "unicorn/no-useless-fallback-in-spread": "warn",
     "unicorn/no-useless-length-check": "warn",
     "unicorn/no-useless-promise-resolve-reject": "warn",
@@ -770,6 +786,12 @@ const config = {
     "unicorn/prefer-math-trunc": "warn",
     "unicorn/prefer-negative-index": "warn",
     "unicorn/prefer-regexp-test": "warn",
+
+    /**
+     * https://github.com/sindresorhus/eslint-plugin-unicorn/blob/main/docs/rules/prefer-set-size.md
+     */
+    "unicorn/prefer-set-size": "warn",
+
     "unicorn/prefer-string-replace-all": "warn",
     "unicorn/prefer-string-slice": "warn",
     "unicorn/prefer-string-starts-ends-with": "warn",
