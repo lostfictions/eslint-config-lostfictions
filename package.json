@@ -6,7 +6,8 @@
   "homepage": "https://github.com/lostfictions/eslint-config-lostfictions",
   "files": [
     "index.js",
-    "react.js"
+    "react.js",
+    "patch/index.js"
   ],
   "scripts": {
     "unused": "eslint-find-rules -un ./index.js",
