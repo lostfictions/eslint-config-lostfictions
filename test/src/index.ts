@@ -341,3 +341,12 @@ class Boing {
   // eslint-disable-next-line no-empty-static-block
   static {}
 }
+
+function isWhatever() {
+  return true;
+}
+
+// eslint-disable-next-line @typescript-eslint/no-unnecessary-boolean-literal-compare
+if (isWhatever() === false) {
+  console.log("deleting everything");
+}

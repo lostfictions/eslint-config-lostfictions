@@ -719,6 +719,15 @@ const config = {
     "sonarjs/no-nested-switch": "off",
 
     /**
+     * https://github.com/SonarSource/eslint-plugin-sonarjs/blob/master/docs/rules/no-redundant-boolean.md
+     *
+     * already handled by
+     * "@typescript-eslint/no-unnecessary-boolean-literal-compare":
+     * https://typescript-eslint.io/rules/no-unnecessary-boolean-literal-compare/
+     */
+    "sonarjs/no-redundant-boolean": "off",
+
+    /**
      * https://github.com/SonarSource/eslint-plugin-sonarjs/blob/master/docs/rules/no-redundant-jump.md
      *
      * this overlaps with the eslint built-in no-useless-return, but handles
