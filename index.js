@@ -500,6 +500,15 @@ const config = {
     "@typescript-eslint/no-unsafe-argument": "off",
     "@typescript-eslint/no-unsafe-assignment": "off",
     "@typescript-eslint/no-unsafe-call": "off",
+
+    /**
+     * https://typescript-eslint.io/rules/no-unsafe-declaration-merging
+     *
+     * among the no-unsafe- family of rules, no-unsafe-declaration-merging is
+     * useful at catching mistakes and easy to turn on.
+     */
+    "@typescript-eslint/no-unsafe-declaration-merging": "warn",
+
     "@typescript-eslint/no-unsafe-member-access": "off",
     "@typescript-eslint/no-unsafe-return": "off",
 
