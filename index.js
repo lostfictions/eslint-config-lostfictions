@@ -526,17 +526,33 @@ const config = {
     "@typescript-eslint/prefer-string-starts-ends-with": "warn",
     "@typescript-eslint/prefer-ts-expect-error": "warn",
 
-    // technically we may want to require that string arrays are always compared
-    // with `String#localeCompare()`. in practice i haven't found this to always
-    // be necessary, so we allow `sort()` without args for string arrays.
+    /**
+     * https://typescript-eslint.io/rules/require-array-sort-compare
+     *
+     * technically we may want to require that string arrays are always compared
+     * with `String#localeCompare()`. in practice i haven't found this to always
+     * be necessary, so we allow `sort()` without args for string arrays.
+     */
     "@typescript-eslint/require-array-sort-compare": [
       "warn",
       { ignoreStringArrays: true },
     ],
 
+    /**
+     * https://typescript-eslint.io/rules/restrict-plus-operands
+     *
+     * generally template strings or explicit conversion are preferable to
+     * coercion via the plus operator. we allow plus operands typed as `any`;
+     * generally it's benign, and disallowing it causes many false positives,
+     * especially in js. a better option is restricting the use of `any`
+     * outright.
+     */
     "@typescript-eslint/restrict-plus-operands": [
       "warn",
-      { checkCompoundAssignments: true },
+      {
+        checkCompoundAssignments: true,
+        allowAny: true,
+      },
     ],
 
     // desirable cases should be handled already by "@typescript-eslint/no-base-to-string".
@@ -832,6 +848,15 @@ config.overrides.push({
     // config (or an .eslintrc file in a subdirectory where the rule should be
     // enforced).
     strict: "off",
+
+    /**
+     * https://typescript-eslint.io/rules/require-array-sort-compare
+     *
+     * when the type of the array can't be determined, this rule will always
+     * yield a warning -- which results a lot of false positives for string
+     * arrays.
+     */
+    "@typescript-eslint/require-array-sort-compare": "off",
 
     /**
      * https://typescript-eslint.io/rules/unbound-method
