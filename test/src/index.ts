@@ -336,3 +336,8 @@ function redundantJump2(zx: string) {
 
 // eslint-disable-next-line @typescript-eslint/consistent-generic-constructors
 const inconsistent: Map<string, number> = new Map();
+
+class Boing {
+  // eslint-disable-next-line no-empty-static-block
+  static {}
+}

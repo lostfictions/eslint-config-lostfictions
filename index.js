@@ -72,6 +72,12 @@ const config = {
     "no-dupe-else-if": "error",
     "no-else-return": ["warn", { allowElseIf: false }],
     "no-empty": "warn",
+
+    /**
+     * https://eslint.org/docs/latest/rules/no-empty-static-block
+     */
+    "no-empty-static-block": "warn",
+
     "no-eval": "warn",
     "no-extend-native": "warn",
     "no-extra-bind": "warn",
@@ -90,6 +96,15 @@ const config = {
     "no-multi-str": "warn",
     "no-new": "warn",
     "no-new-func": "error",
+
+    /**
+     * https://eslint.org/docs/latest/rules/no-new-native-nonconstructor
+     *
+     * already handled by typescript, but this provides a more helpful error
+     * message and works in plain js too.
+     */
+    "no-new-native-nonconstructor": "error",
+
     "no-new-object": "warn",
     "no-new-wrappers": "error",
     "no-nonoctal-decimal-escape": "warn",
