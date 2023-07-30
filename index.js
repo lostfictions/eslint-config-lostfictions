@@ -620,8 +620,12 @@ const config = {
     // eslint-plugin-import rules.
     ///////////////////////////////////////////////////////////////////
 
-    // anonymous default exports are not only harder to search for, they degrade
-    // typescript's ability to suggest automatic imports.
+    /**
+     * https://github.com/import-js/eslint-plugin-import/blob/main/docs/rules/no-anonymous-default-export.md
+     *
+     * anonymous default exports are not only harder to search for, they degrade
+     * typescript's ability to suggest automatic imports.
+     */
     "import/no-anonymous-default-export": [
       "warn",
       {
@@ -633,10 +637,17 @@ const config = {
         // some scenarios (HOCs, etc).
         allowCallExpression: true,
         allowLiteral: false,
+        allowNew: false,
         allowObject: false,
       },
     ],
+
     "import/no-commonjs": "warn",
+
+    /**
+     * https://github.com/import-js/eslint-plugin-import/blob/main/docs/rules/no-empty-named-blocks.md
+     */
+    "import/no-empty-named-blocks": "warn",
 
     // no-unused-modules is potentially useful, but currently generates a
     // significant number of false positives (for example, exports in module
