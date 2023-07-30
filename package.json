@@ -11,7 +11,7 @@
   ],
   "scripts": {
     "unused": "eslint-find-rules -un ./index.js",
-    "deprecated": "eslint-find-rules -dn ./index.js",
+    "deprecated": "ESLINT_CONFIG_PRETTIER_NO_DEPRECATED=true eslint-find-rules -dn ./index.js",
     "test": "run-p -cl test:*",
     "test:configs": "eslint --color --max-warnings=0 '*.js'",
     "test:fixtures": "TIMING=1 eslint --color --max-warnings=0 'test/**/*.{js,ts,jsx,tsx}'",
