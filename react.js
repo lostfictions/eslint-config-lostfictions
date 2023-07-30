@@ -28,7 +28,7 @@ module.exports = {
      *
      * enforce naming convention for useState hooks.
      */
-    "react/hook-use-state": "warn",
+    "react/hook-use-state": ["warn", { allowDestructuredState: true }],
 
     "react/iframe-missing-sandbox": "warn",
     "react/jsx-boolean-value": "warn",
@@ -59,6 +59,12 @@ module.exports = {
     "react/no-did-update-set-state": "warn",
     "react/no-invalid-html-attribute": "warn",
     "react/no-namespace": "warn",
+
+    /**
+     * https://github.com/jsx-eslint/eslint-plugin-react/blob/master/docs/rules/no-object-type-as-default-prop.md
+     */
+    "react/no-object-type-as-default-prop": "warn",
+
     "react/no-redundant-should-component-update": "warn",
     "react/no-unescaped-entities": "warn",
     "react/no-unsafe": "warn",
