@@ -159,7 +159,7 @@ const config = {
     ].map(name => ({
       name,
       message: `Use \`window.${name}\` if you really meant to refer to the global.`
-    }))
+    })),
     ),
 
     "no-restricted-syntax": [
