@@ -183,9 +183,6 @@ if (5 === y) {
   console.log("yoda");
 }
 
-// eslint-disable-next-line no-octal-escape
-const something = "what \204";
-
 // eslint-disable-next-line import/order, no-useless-rename
 import { format as format } from "path";
 
