@@ -293,14 +293,11 @@ const config = {
     yoda: "warn",
 
     ///////////////////////////////////////////////////////////////////
-    // eslint rules that have a typescript-eslint equivalent.
+    // eslint rules that have a typescript-eslint or import equivalent.
     ///////////////////////////////////////////////////////////////////
 
     "no-array-constructor": "off",
     "@typescript-eslint/no-array-constructor": "warn",
-
-    "no-duplicate-imports": "off",
-    "@typescript-eslint/no-duplicate-imports": "warn",
 
     // no-empty-function is enabled in the typescript-eslint recommended set...
     // but empty functions are useful to express no-ops, and typescript itself
@@ -374,6 +371,9 @@ const config = {
      */
     "require-await": "off",
     "@typescript-eslint/require-await": "off",
+
+    // use import/no-duplicates instead
+    "no-duplicate-imports": "off",
 
     ///////////////////////////////////////////////////////////////////
     // additional typescript-eslint rules not enabled in @typescript-eslint/recommended.
@@ -454,6 +454,11 @@ const config = {
      */
     "@typescript-eslint/no-duplicate-enum-values": "warn",
 
+    /**
+     * https://typescript-eslint.io/rules/no-duplicate-type-constituents
+     */
+    "@typescript-eslint/no-duplicate-type-constituents": "warn",
+
     "@typescript-eslint/no-empty-interface": "warn",
 
     // `any` is occasionally necessary as a workaround. don't abuse it! a more
@@ -467,6 +472,12 @@ const config = {
     "@typescript-eslint/no-meaningless-void-operator": "warn",
     "@typescript-eslint/no-misused-new": "warn",
     "@typescript-eslint/no-misused-promises": "warn",
+
+    /**
+     * https://typescript-eslint.io/rules/no-mixed-enums
+     */
+    "@typescript-eslint/no-mixed-enums": "error",
+
     "@typescript-eslint/no-non-null-asserted-nullish-coalescing": "warn",
     "@typescript-eslint/no-non-null-asserted-optional-chain": "error",
 
@@ -508,6 +519,11 @@ const config = {
      * useful at catching mistakes and easy to turn on.
      */
     "@typescript-eslint/no-unsafe-declaration-merging": "warn",
+
+    /**
+     * https://typescript-eslint.io/rules/no-unsafe-enum-comparison
+     */
+    "@typescript-eslint/no-unsafe-enum-comparison": "warn",
 
     "@typescript-eslint/no-unsafe-member-access": "off",
     "@typescript-eslint/no-unsafe-return": "off",
@@ -574,13 +590,22 @@ const config = {
     "@typescript-eslint/restrict-plus-operands": [
       "warn",
       {
-        checkCompoundAssignments: true,
+        skipCompoundAssignments: false,
         allowAny: true,
       },
     ],
 
-    // desirable cases should be handled already by "@typescript-eslint/no-base-to-string".
-    "@typescript-eslint/restrict-template-expressions": "off",
+    /**
+     * https://typescript-eslint.io/rules/restrict-template-expressions
+     *
+     * desirable cases are usually handled already by
+     * "@typescript-eslint/no-base-to-string", but there are a few interesting
+     * exceptions, like `never`
+     */
+    "@typescript-eslint/restrict-template-expressions": [
+      "warn",
+      { allowNever: false },
+    ],
 
     "@typescript-eslint/switch-exhaustiveness-check": "warn",
 
@@ -643,6 +668,11 @@ const config = {
     ],
 
     "import/no-commonjs": "warn",
+
+    /**
+     * https://github.com/import-js/eslint-plugin-import/blob/main/docs/rules/no-duplicates.md
+     */
+    "import/no-duplicates": "warn",
 
     /**
      * https://github.com/import-js/eslint-plugin-import/blob/main/docs/rules/no-empty-named-blocks.md

@@ -9,8 +9,10 @@
 
 import { foo } from "./other";
 
-// eslint-disable-next-line import/order
-import { parseForESLint } from "@typescript-eslint/parser";
+// eslint-disable-next-line import/order, import/no-duplicates
+import { rules } from "@typescript-eslint/eslint-plugin";
+// eslint-disable-next-line import/order, import/no-duplicates
+import { rules as oi } from "@typescript-eslint/eslint-plugin";
 
 // eslint-disable-next-line import/no-empty-named-blocks
 import {} from "buffer";
@@ -30,13 +32,15 @@ if (bool === false) {
   //
 }
 
-const xx = `do you think ${new Error("whatever")} won't stringify?`;
 const xy = `do you think ${/haha yeah/} won't stringify?`;
+// eslint-disable-next-line @typescript-eslint/restrict-template-expressions
+const xx = `do you think ${new Error("whatever")} won't stringify?`;
+// eslint-disable-next-line @typescript-eslint/restrict-template-expressions
 const xz = `do you think ${new URL("https://ok.com")} won't stringify?`;
 
 // we'd prefer if this passed, actually, but apparently it doesn't look up the prototype chain
 class MyError extends Error {}
-// eslint-disable-next-line @typescript-eslint/no-base-to-string
+// eslint-disable-next-line @typescript-eslint/no-base-to-string, @typescript-eslint/restrict-template-expressions
 const xzz = `do you think ${new MyError("anotherthing")} won't stringify?`;
 
 // eslint-disable-next-line deprecation/deprecation, unicorn/prefer-string-slice
@@ -52,8 +56,20 @@ const abc = "something".substr(4);
 // eslint-disable-next-line @typescript-eslint/prefer-as-const
 const dogger = "dog" as "dog";
 
-// eslint-disable-next-line @typescript-eslint/no-base-to-string
+// eslint-disable-next-line @typescript-eslint/no-base-to-string, @typescript-eslint/restrict-template-expressions
 const s = `ha ha ${{ haha: "yeah" }}`;
+
+const snev = "yo";
+// eslint-disable-next-line @typescript-eslint/restrict-template-expressions
+const s2 = typeof snev === "string" ? snev : `ha ha ${snev}`;
+
+enum Status {
+  // eslint-disable-next-line @typescript-eslint/prefer-enum-initializers
+  Unknown,
+  Closed = 1,
+  // eslint-disable-next-line @typescript-eslint/no-mixed-enums
+  Open = "open",
+}
 
 // eslint-disable-next-line @typescript-eslint/no-unused-expressions
 ("bark bark");
