@@ -819,6 +819,12 @@ const config = {
     "unicorn/prefer-array-index-of": "warn",
     "unicorn/prefer-array-some": "warn",
     "unicorn/prefer-at": "warn",
+
+    /**
+     * https://github.com/sindresorhus/eslint-plugin-unicorn/blob/main/docs/rules/prefer-blob-reading-methods.md
+     */
+    "unicorn/prefer-blob-reading-methods": "warn",
+
     "unicorn/prefer-code-point": "warn",
     "unicorn/prefer-date-now": "warn",
     "unicorn/prefer-dom-node-dataset": "warn",
