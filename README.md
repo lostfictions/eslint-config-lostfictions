@@ -145,14 +145,14 @@ yarn add -D eslint eslint-config-lostfictions
 dependencies. Since ESLint doesn't yet directly support bundling plugins in a
 config in this way (the [feature request for
 it](https://github.com/eslint/eslint/issues/3458) is by far the most upvoted
-open issue in the ESLint repo), `eslint-config-lostfictions` also includes
+open issue in the ESLint repo), `eslint-config-lostfictions` also re-exports
 [`@rushstack/eslint-patch`](https://github.com/microsoft/rushstack/tree/master/eslint/eslint-patch).
-You'll need to `require` the latter in your ESLint config like this:
+You'll need to `require` it in your ESLint config like this:
 
 #### `.eslintrc.js`
 
 ```js
-require("@rushstack/eslint-patch/modern-module-resolution");
+require("eslint-config-lostfictions/patch");
 module.exports = {
   extends: ["lostfictions"],
   parserOptions: { tsconfigRootDir: __dirname },
@@ -163,7 +163,7 @@ For React projects, use the `lostfictions/react` config, which adds additional
 React-specific plugins and rules:
 
 ```diff
-require("@rushstack/eslint-patch/modern-module-resolution");
+require("eslint-config-lostfictions/patch");
 module.exports = {
 ---  extends: ["lostfictions"],
 +++  extends: ["lostfictions/react"],
