@@ -153,6 +153,8 @@ You'll need to `require` it in your ESLint config like this:
 
 ```js
 require("eslint-config-lostfictions/patch");
+
+/** @type {import("eslint-config-lostfictions").Config} */
 module.exports = {
   extends: ["lostfictions"],
   parserOptions: { tsconfigRootDir: __dirname },
@@ -164,6 +166,8 @@ React-specific plugins and rules:
 
 ```diff
 require("eslint-config-lostfictions/patch");
+
+/** @type {import("eslint-config-lostfictions").Config} */
 module.exports = {
 ---  extends: ["lostfictions"],
 +++  extends: ["lostfictions/react"],

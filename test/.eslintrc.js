@@ -1,3 +1,6 @@
+// @ts-check
+
+/** @type {import("..").Config} */
 module.exports = {
   extends: ["../react"],
   // override the default version setting of `detect`, since it causes warnings
