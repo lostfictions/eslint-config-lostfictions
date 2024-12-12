@@ -225,9 +225,10 @@ export default tseslint.config(
       "prefer-exponentiation-operator": "warn",
       "prefer-numeric-literals": "warn",
 
-      // `Object.hasOwn()` hasn't shipped with narrowing in typescript yet.
-      // tracking issue: https://github.com/microsoft/TypeScript/issues/44253
-      // "prefer-object-has-own": "warn",
+      // Note that `Object.hasOwn()` hasn't shipped with narrowing in typescript
+      // yet. tracking issue:
+      // https://github.com/microsoft/TypeScript/issues/44253
+      "prefer-object-has-own": "warn",
 
       "prefer-object-spread": "warn",
       "prefer-regex-literals": "warn",

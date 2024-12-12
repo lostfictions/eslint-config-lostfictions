@@ -23,6 +23,10 @@ const x: object = { dog: "woof" };
 // eslint-disable-next-line @typescript-eslint/no-confusing-void-expression
 const response = alert("Are you sure?");
 
+// eslint-disable-next-line prefer-object-has-own
+Object.prototype.hasOwnProperty.call({}, "dog");
+Object.hasOwn({}, "dog");
+
 // eslint-disable-next-line @typescript-eslint/no-empty-object-type
 interface Howdy {}
 
