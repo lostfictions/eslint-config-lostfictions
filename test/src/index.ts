@@ -17,13 +17,13 @@ import { rules as oi } from "@typescript-eslint/eslint-plugin";
 // eslint-disable-next-line import/no-empty-named-blocks
 import {} from "buffer";
 
-// eslint-disable-next-line @typescript-eslint/ban-types
+// eslint-disable-next-line @typescript-eslint/no-restricted-types
 const x: object = { dog: "woof" };
 
 // eslint-disable-next-line @typescript-eslint/no-confusing-void-expression
 const response = alert("Are you sure?");
 
-// eslint-disable-next-line @typescript-eslint/no-empty-interface
+// eslint-disable-next-line @typescript-eslint/no-empty-object-type
 interface Howdy {}
 
 const bool = false as boolean;
@@ -32,10 +32,9 @@ if (bool === false) {
   //
 }
 
+// eslint-disable-next-line @typescript-eslint/no-unnecessary-template-expression
 const xy = `do you think ${/haha yeah/} won't stringify?`;
-// eslint-disable-next-line @typescript-eslint/restrict-template-expressions
 const xx = `do you think ${new Error("whatever")} won't stringify?`;
-// eslint-disable-next-line @typescript-eslint/restrict-template-expressions
 const xz = `do you think ${new URL("https://ok.com")} won't stringify?`;
 
 // we'd prefer if this passed, actually, but apparently it doesn't look up the prototype chain
@@ -43,7 +42,7 @@ class MyError extends Error {}
 // eslint-disable-next-line @typescript-eslint/no-base-to-string, @typescript-eslint/restrict-template-expressions
 const xzz = `do you think ${new MyError("anotherthing")} won't stringify?`;
 
-// eslint-disable-next-line deprecation/deprecation, unicorn/prefer-string-slice
+// eslint-disable-next-line unicorn/prefer-string-slice, @typescript-eslint/no-deprecated
 const abc = "something".substr(4);
 
 // const num = 4;
@@ -53,7 +52,7 @@ const abc = "something".substr(4);
 // // eslint-disable-next-line @typescript-eslint/no-unsafe-assignment
 // const dog = 5 as any;
 
-// eslint-disable-next-line @typescript-eslint/prefer-as-const
+// eslint-disable-next-line @typescript-eslint/prefer-as-const, @typescript-eslint/no-unnecessary-type-assertion
 const dogger = "dog" as "dog";
 
 // eslint-disable-next-line @typescript-eslint/no-base-to-string, @typescript-eslint/restrict-template-expressions
@@ -74,6 +73,7 @@ enum Status {
 // eslint-disable-next-line @typescript-eslint/no-unused-expressions
 ("bark bark");
 
+// eslint-disable-next-line @typescript-eslint/no-unnecessary-type-assertion
 const y = Math.max(3, 4)!;
 
 // no jest warnings outside of test files
@@ -242,7 +242,7 @@ module.exports = { dog: "cool" };
 
 const thing = { dog: "bark", cat: "meow" };
 
-// eslint-disable-next-line prefer-destructuring
+// eslint-disable-next-line @typescript-eslint/prefer-destructuring
 const dog = thing.dog;
 
 const barker = thing.dog;
