@@ -23,12 +23,7 @@ export default tseslint.config(
       ecmaVersion: 2023,
       sourceType: "module",
       parserOptions: {
-        projectService: {
-          allowDefaultProject: ["*.js", "*.mjs"],
-          defaultProject: "tsconfig.json",
-        },
-        // uh @ts-expect-error -- dunno why
-        // tsconfigRootDir: import.meta.dirname,
+        projectService: { allowDefaultProject: ["*.js", "*.mjs"] },
       },
     },
     linterOptions: {
