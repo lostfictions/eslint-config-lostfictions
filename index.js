@@ -1,31 +1,55 @@
+// disabled @ts-check
+import globals from "globals";
+import js from "@eslint/js";
+import prettier from "eslint-config-prettier";
+
 const { homepage, version } = require("./package.json");
 
 const docPage = `${homepage}/tree/v${version}`;
 
-const config = {
-  root: true,
-  env: {
-    es6: true,
-    node: true,
-    browser: true,
+export default /** @type {import("eslint").Linter.Config[]} */ ([
+  js.configs.recommended,
+  prettier,
+  {
+    languageOptions: {
+      globals: { ...globals.node, ...globals.browser },
+      ecmaVersion: 2023,
+      sourceType: "module",
+    },
+    linterOptions: {
+      reportUnusedDisableDirectives: "warn",
+    },
+    rules: {
+      "no-unused-expressions": "error",
+    },
   },
+]);
+
+const config = {
+  // root: true,
+  // env: {
+  //   es6: true,
+  //   node: true,
+  //   browser: true,
+  // },
   parser: "@typescript-eslint/parser",
   parserOptions: {
-    sourceType: "module",
-    ecmaVersion: 2021,
-    ecmaFeatures: {
-      modules: true,
-    },
+    // sourceType: "module",
+    // ecmaVersion: 2021,
+    // ecmaFeatures: {
+    //   modules: true,
+    // },
+
     // consumers of this config still need to specify a `tsconfigRootDir`, but
     // this reduces verbosity a bit.
     project: "./tsconfig.json",
   },
   extends: [
-    "eslint:recommended",
+    // "eslint:recommended",
     "plugin:import/typescript",
     "plugin:@typescript-eslint/recommended",
     "plugin:@typescript-eslint/recommended-requiring-type-checking",
-    "prettier",
+    // "prettier",
   ],
   plugins: [
     "@typescript-eslint",
@@ -232,27 +256,6 @@ const config = {
     "one-var": ["warn", "never"],
     "prefer-arrow-callback": "warn",
     "prefer-const": "warn",
-
-    /**
-     * https://eslint.org/docs/rules/prefer-destructuring
-     */
-    "prefer-destructuring": [
-      "warn",
-      {
-        VariableDeclarator: {
-          array: false,
-          object: true,
-        },
-        AssignmentExpression: {
-          array: false,
-          object: false,
-        },
-      },
-      {
-        enforceForRenamedProperties: false,
-      },
-    ],
-
     "prefer-exponentiation-operator": "warn",
     "prefer-numeric-literals": "warn",
 
@@ -261,7 +264,6 @@ const config = {
     // "prefer-object-has-own": "warn",
 
     "prefer-object-spread": "warn",
-    "prefer-promise-reject-errors": "warn",
     "prefer-regex-literals": "warn",
     "prefer-rest-params": "error",
     "prefer-spread": "warn",
@@ -320,8 +322,9 @@ const config = {
     "no-shadow": "off",
     "@typescript-eslint/no-shadow": "warn",
 
+    /** https://typescript-eslint.io/rules/only-throw-error/ */
     "no-throw-literal": "off",
-    "@typescript-eslint/no-throw-literal": "warn",
+    "@typescript-eslint/only-throw-error": "warn",
 
     "no-unused-expressions": "off",
     "@typescript-eslint/no-unused-expressions": [
@@ -342,6 +345,21 @@ const config = {
 
     "no-useless-constructor": "off",
     "@typescript-eslint/no-useless-constructor": "warn",
+
+    /** https://eslint.org/docs/rules/prefer-destructuring */
+    "prefer-destructuring": "off",
+    "@typescript-eslint/prefer-destructuring": [
+      "warn",
+      {
+        VariableDeclarator: { array: false, object: true },
+        AssignmentExpression: { array: false, object: false },
+      },
+      { enforceForRenamedProperties: false },
+    ],
+
+    /** https://typescript-eslint.io/rules/prefer-promise-reject-errors/ */
+    "prefer-promise-reject-errors": "off",
+    "@typescript-eslint/prefer-promise-reject-errors": "warn",
 
     /**
      * https://eslint.org/docs/rules/require-await
@@ -380,26 +398,25 @@ const config = {
     ///////////////////////////////////////////////////////////////////
 
     "@typescript-eslint/adjacent-overload-signatures": "warn",
+
+    /** https://typescript-eslint.io/rules/array-type/ */
+    "@typescript-eslint/array-type": "warn",
     "@typescript-eslint/await-thenable": "warn",
-    "@typescript-eslint/ban-tslint-comment": "warn",
-    "@typescript-eslint/ban-types": [
+
+    /** https://typescript-eslint.io/rules/ban-ts-comment */
+    "@typescript-eslint/ban-ts-comment": [
       "warn",
       {
-        extendDefaults: true,
-        types: {
-          object: {
-            message: [
-              "The `object` type rarely has a practical use and is often included in error (especially when importing JSDoc types).",
-              "You may be looking for `Record<string, unknown>` or an object literal type instead.",
-            ].join("\n"),
-          },
-        },
+        minimumDescriptionLength: 3,
+        "ts-check": false,
+        "ts-expect-error": "allow-with-description",
+        "ts-ignore": true,
+        "ts-nocheck": false,
       },
     ],
+    "@typescript-eslint/ban-tslint-comment": "warn",
 
-    /**
-     * https://typescript-eslint.io/rules/consistent-generic-constructors
-     */
+    /** https://typescript-eslint.io/rules/consistent-generic-constructors */
     "@typescript-eslint/consistent-generic-constructors": [
       "warn",
       "constructor",
@@ -408,6 +425,8 @@ const config = {
     "@typescript-eslint/consistent-type-assertions": "warn",
     "@typescript-eslint/consistent-type-exports": "warn",
     "@typescript-eslint/method-signature-style": "warn",
+    /** https://typescript-eslint.io/rules/no-array-delete/ */
+    "@typescript-eslint/no-array-delete": "warn",
     "@typescript-eslint/no-base-to-string": [
       "warn",
       { ignoredTypeNames: ["Error", "RegExp"] },
@@ -425,8 +444,8 @@ const config = {
      * > be misleading for other developers, who don't know what a particular
      * > function does and if its result matters.
      *
-     * we use the `ignoreArrowShorthand` option to allow expressions like this
-     * one:
+     * we could use the `ignoreArrowShorthand` option to allow expressions like
+     * this one:
      *
      * ```js
      * promise.then(value => window.postMessage(value))
@@ -440,26 +459,29 @@ const config = {
      * ```
      *
      * the latter also aligns nicely with the `ignoreVoid` option for the
-     * `@typescript-eslint/no-floating-promises` rule. unfortunately, using
+     * `@typescript-eslint/no-floating-promises` rule. that said, using
      * `ignoreVoidOperator` for this rule is likely to flag many more benign
      * cases in transitional codebases.
      */
     "@typescript-eslint/no-confusing-void-expression": [
       "warn",
-      { ignoreArrowShorthand: true },
+      { ignoreVoidOperator: true },
     ],
 
-    /**
-     * https://typescript-eslint.io/rules/no-duplicate-enum-values
-     */
+    /** https://typescript-eslint.io/rules/no-deprecated/ */
+    "@typescript-eslint/no-deprecated": "warn",
+
+    /** https://typescript-eslint.io/rules/no-duplicate-enum-values */
     "@typescript-eslint/no-duplicate-enum-values": "warn",
 
-    /**
-     * https://typescript-eslint.io/rules/no-duplicate-type-constituents
-     */
+    /** https://typescript-eslint.io/rules/no-duplicate-type-constituents */
     "@typescript-eslint/no-duplicate-type-constituents": "warn",
 
-    "@typescript-eslint/no-empty-interface": "warn",
+    /** https://typescript-eslint.io/rules/no-dynamic-delete/ */
+    "@typescript-eslint/no-dynamic-delete": "warn",
+
+    /** https://typescript-eslint.io/rules/no-empty-object-type/ */
+    "@typescript-eslint/no-empty-object-type": "warn",
 
     // `any` is occasionally necessary as a workaround. don't abuse it! a more
     // useful alternative is the @typescript-eslint/no-unsafe-* family of rules,
@@ -473,9 +495,7 @@ const config = {
     "@typescript-eslint/no-misused-new": "warn",
     "@typescript-eslint/no-misused-promises": "warn",
 
-    /**
-     * https://typescript-eslint.io/rules/no-mixed-enums
-     */
+    /** https://typescript-eslint.io/rules/no-mixed-enums */
     "@typescript-eslint/no-mixed-enums": "error",
 
     "@typescript-eslint/no-non-null-asserted-nullish-coalescing": "warn",
@@ -487,6 +507,21 @@ const config = {
 
     "@typescript-eslint/no-this-alias": "warn",
     "@typescript-eslint/no-redundant-type-constituents": "warn",
+
+    "@typescript-eslint/no-restricted-types": [
+      "warn",
+      {
+        types: {
+          object: {
+            message: [
+              "The `object` type rarely has a practical use and is often included in error (especially when importing JSDoc types).",
+              "You may be looking for `Record<string, unknown>` or an object literal type instead.",
+            ].join("\n"),
+          },
+        },
+      },
+    ],
+
     "@typescript-eslint/no-unnecessary-boolean-literal-compare": "warn",
 
     // `no-unnecessary-condition` is only useful in tandem with
@@ -499,10 +534,17 @@ const config = {
     // opt-in.
     "@typescript-eslint/no-unnecessary-condition": "off",
 
+    /** https://typescript-eslint.io/rules/no-unnecessary-parameter-property-assignment/ */
+    "@typescript-eslint/no-unnecessary-parameter-property-assignment": "warn",
     "@typescript-eslint/no-unnecessary-qualifier": "warn",
+
+    /** https://typescript-eslint.io/rules/no-unnecessary-template-expression */
+    "@typescript-eslint/no-unnecessary-template-expression": "warn",
     "@typescript-eslint/no-unnecessary-type-arguments": "warn",
     "@typescript-eslint/no-unnecessary-type-assertion": "warn",
     "@typescript-eslint/no-unnecessary-type-constraint": "warn",
+    /** https://typescript-eslint.io/rules/no-unnecessary-type-parameters/ */
+    "@typescript-eslint/no-unnecessary-type-parameters": "warn",
 
     // the no-unsafe family of rules are a good idea, but somewhat obtrusive.
     // their use could be revisited alongside documentation on how to deal with
@@ -520,22 +562,34 @@ const config = {
      */
     "@typescript-eslint/no-unsafe-declaration-merging": "warn",
 
-    /**
-     * https://typescript-eslint.io/rules/no-unsafe-enum-comparison
-     */
+    /** https://typescript-eslint.io/rules/no-unsafe-enum-comparison */
     "@typescript-eslint/no-unsafe-enum-comparison": "warn",
+
+    /** https://typescript-eslint.io/rules/no-unsafe-function-type/ */
+    "@typescript-eslint/no-unsafe-function-type": "error",
 
     "@typescript-eslint/no-unsafe-member-access": "off",
     "@typescript-eslint/no-unsafe-return": "off",
+
+    /** https://typescript-eslint.io/rules/no-unsafe-type-assertion/ */
+    "@typescript-eslint/no-unsafe-type-assertion": "off",
+
+    /** https://typescript-eslint.io/rules/no-unsafe-unary-minus/ */
+    "@typescript-eslint/no-unsafe-unary-minus": "error",
 
     // requires cause an implicit `any` in ts and should be used with care, but
     // they're easily caught - whereas the recommended solution of `import x =
     // require('x')` doesn't work in many scenarios.
     "@typescript-eslint/no-var-requires": "off",
 
+    /** https://typescript-eslint.io/rules/no-wrapper-object-types/ */
+    "@typescript-eslint/no-wrapper-object-types": "error",
+
     "@typescript-eslint/non-nullable-type-assertion-style": "warn",
     "@typescript-eslint/prefer-as-const": "warn",
     "@typescript-eslint/prefer-enum-initializers": "warn",
+    /** https://typescript-eslint.io/rules/prefer-find/ */
+    "@typescript-eslint/prefer-find": "warn",
     "@typescript-eslint/prefer-for-of": "warn",
     "@typescript-eslint/prefer-function-type": "warn",
     "@typescript-eslint/prefer-includes": "warn",
@@ -544,14 +598,10 @@ const config = {
     // but both can be useful for writing typedefs of an untyped npm module.
     "@typescript-eslint/prefer-namespace-keyword": "off",
 
-    /**
-     * https://typescript-eslint.io/rules/prefer-nullish-coalescing
-     */
+    /** https://typescript-eslint.io/rules/prefer-nullish-coalescing */
     "@typescript-eslint/prefer-nullish-coalescing": [
       "warn",
-      {
-        ignoreTernaryTests: false,
-      },
+      { ignoreTernaryTests: false },
     ],
 
     "@typescript-eslint/prefer-optional-chain": "warn",
@@ -561,10 +611,13 @@ const config = {
     // for non-global and string.matchall for global matching). as it stands
     // this rule just makes things more confusing.
     "@typescript-eslint/prefer-regexp-exec": "off",
-
+    /** https://typescript-eslint.io/rules/prefer-reduce-type-parameter/ */
+    "@typescript-eslint/prefer-reduce-type-parameter": "warn",
     "@typescript-eslint/prefer-return-this-type": "warn",
     "@typescript-eslint/prefer-string-starts-ends-with": "warn",
-    "@typescript-eslint/prefer-ts-expect-error": "warn",
+
+    /** https://typescript-eslint.io/rules/related-getter-setter-pairs/ */
+    "@typescript-eslint/related-getter-setter-pairs": "warn",
 
     /**
      * https://typescript-eslint.io/rules/require-array-sort-compare
@@ -617,21 +670,13 @@ const config = {
      */
     "@typescript-eslint/unbound-method": "off",
 
-    /**
-     * https://github.com/typescript-eslint/typescript-eslint/blob/main/packages/eslint-plugin/docs/rules/unified-signatures.md
-     */
+    /** https://typescript-eslint.io/rules/unified-signatures/ */
     "@typescript-eslint/unified-signatures": [
       "warn",
-      {
-        ignoreDifferentlyNamedParameters: true,
-      },
+      { ignoreDifferentlyNamedParameters: true },
     ],
-
-    ///////////////////////////////////////////////////////////////////
-    // eslint-plugin-deprecation rules.
-    ///////////////////////////////////////////////////////////////////
-
-    "deprecation/deprecation": "warn",
+    /** https://typescript-eslint.io/rules/use-unknown-in-catch-callback-variable/ */
+    "@typescript-eslint/use-unknown-in-catch-callback-variable": "warn",
 
     ///////////////////////////////////////////////////////////////////
     // eslint-plugin-eslint-comments rules.
