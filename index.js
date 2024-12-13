@@ -1,26 +1,49 @@
 // @ts-check
 import globals from "globals";
 import eslint from "@eslint/js";
+import json from "@eslint/json";
 import tseslint from "typescript-eslint";
 import prettier from "eslint-config-prettier";
+import node from "eslint-plugin-n";
 
-// FIXME: import json when eslint supports it https://github.com/eslint/eslint/discussions/15305
-// const { homepage, version } = require("./package.json");
+import pkg from "./package.json" with { type: "json" };
 
-const homepage = "https://github.com/lostfictions/eslint-config-lostfictions";
-const version = "7.0.0";
+const docPage = `${pkg.homepage}/tree/v${pkg.version}`;
 
-const docPage = `${homepage}/tree/v${version}`;
+const jsFiles = ["**/*.{js,jsx,cjs,mjs,ts,tsx,cts,mts}"];
 
 export default tseslint.config(
-  eslint.configs.recommended,
-  tseslint.configs.recommendedTypeChecked,
-  // @ts-expect-error cmon man
-  prettier,
   {
+    files: ["**/*.json"],
+    ignores: ["package-lock.json"],
+    language: "json/json",
+    ...json.configs.recommended,
+  },
+  {
+    files: ["**/*.jsonc", ".vscode/*.json", "**/tsconfig.json"],
+    language: "json/jsonc",
+    // @ts-expect-error thanks bud
+    languageOptions: { allowTrailingCommas: true },
+    ...json.configs.recommended,
+  },
+  {
+    files: ["**/*.json5"],
+    language: "json/json5",
+    ...json.configs.recommended,
+  },
+  // this hard-to-read little dance-about is necessary, since otherwise eslint
+  // will attempt to lint json files with these rules and explode.
+  ...[
+    eslint.configs.recommended,
+    tseslint.configs.recommendedTypeChecked,
+    node.configs["flat/recommended-module"],
+    prettier,
+  ].map((c) => ({ files: jsFiles, ...c })),
+  {
+    files: jsFiles,
     languageOptions: {
       globals: { ...globals.node, ...globals.browser },
-      ecmaVersion: 2023,
+      ecmaVersion: 2025,
       sourceType: "module",
       parserOptions: {
         projectService: { allowDefaultProject: ["*.js", "*.mjs"] },
@@ -28,6 +51,9 @@ export default tseslint.config(
     },
     linterOptions: {
       reportUnusedDisableDirectives: "warn",
+    },
+    settings: {
+      node: { version: ">=18.20.5" },
     },
     rules: {
       ///////////////////////////////////////////////////////////////////
@@ -52,9 +78,7 @@ export default tseslint.config(
        */
       "no-await-in-loop": "off",
 
-      /**
-       * https://eslint.org/docs/rules/no-constant-binary-expression
-       */
+      /** https://eslint.org/docs/rules/no-constant-binary-expression */
       "no-constant-binary-expression": "error",
 
       "no-constructor-return": "warn",
@@ -63,25 +87,34 @@ export default tseslint.config(
       "no-else-return": ["warn", { allowElseIf: false }],
       "no-empty": "warn",
 
-      /**
-       * https://eslint.org/docs/latest/rules/no-empty-static-block
-       */
+      /** https://eslint.org/docs/latest/rules/no-empty-static-block */
       "no-empty-static-block": "warn",
 
       "no-eval": "warn",
       "no-extend-native": "warn",
       "no-extra-bind": "warn",
 
-      /**
-       * https://eslint.org/docs/latest/rules/no-fallthrough
-       */
-      "no-fallthrough": ["error", { allowEmptyCase: true }],
+      /** https://eslint.org/docs/latest/rules/no-extra-boolean-cast */
+      "no-extra-boolean-cast": ["warn", { enforceForInnerExpressions: true }],
 
-      "no-floating-decimal": "warn",
+      /** https://eslint.org/docs/latest/rules/no-fallthrough */
+      "no-fallthrough": [
+        "error",
+        { allowEmptyCase: true, reportUnusedFallthroughComment: true },
+      ],
+
       "no-implicit-coercion": "warn",
       "no-import-assign": "warn",
+
+      /** https://eslint.org/docs/latest/rules/no-inner-declarations */
+      "no-inner-declarations": "warn",
+
       "no-labels": "error",
       "no-lonely-if": "warn",
+
+      /** https://eslint.org/docs/latest/rules/no-loss-of-precision */
+      "no-loss-of-precision": "error",
+
       "no-multi-assign": "warn",
       "no-multi-str": "warn",
       "no-new": "warn",
@@ -95,9 +128,9 @@ export default tseslint.config(
        */
       "no-new-native-nonconstructor": "error",
 
-      "no-new-object": "warn",
       "no-new-wrappers": "error",
       "no-nonoctal-decimal-escape": "warn",
+      "no-object-constructor": "warn",
       "no-octal-escape": "warn",
       "no-param-reassign": "warn",
       "no-promise-executor-return": "warn",
@@ -173,7 +206,6 @@ export default tseslint.config(
       ],
 
       "no-return-assign": "error",
-      "no-return-await": "warn",
       "no-script-url": "warn",
       "no-self-compare": "error",
       "no-sequences": [
@@ -197,6 +229,10 @@ export default tseslint.config(
       "no-unneeded-ternary": "warn",
       "no-unreachable-loop": "warn",
       "no-unused-private-class-members": "warn",
+
+      /** https://eslint.org/docs/latest/rules/no-useless-assignment */
+      "no-useless-assignment": "warn",
+
       "no-useless-backreference": "warn",
       "no-useless-call": "warn",
       "no-useless-computed-key": "warn",
@@ -279,9 +315,6 @@ export default tseslint.config(
 
       "no-loop-func": "off",
       "@typescript-eslint/no-loop-func": "warn",
-
-      "no-loss-of-precision": "off",
-      "@typescript-eslint/no-loss-of-precision": ["error"],
 
       "no-redeclare": "off",
       "@typescript-eslint/no-redeclare": "warn",
@@ -475,6 +508,10 @@ export default tseslint.config(
       "@typescript-eslint/no-this-alias": "warn",
       "@typescript-eslint/no-redundant-type-constituents": "warn",
 
+      // TODO: disable for js
+      /** https://typescript-eslint.io/rules/no-require-imports */
+      "@typescript-eslint/no-require-imports": "warn",
+
       "@typescript-eslint/no-restricted-types": [
         "warn",
         {
@@ -543,11 +580,6 @@ export default tseslint.config(
 
       /** https://typescript-eslint.io/rules/no-unsafe-unary-minus/ */
       "@typescript-eslint/no-unsafe-unary-minus": "error",
-
-      // requires cause an implicit `any` in ts and should be used with care, but
-      // they're easily caught - whereas the recommended solution of `import x =
-      // require('x')` doesn't work in many scenarios.
-      "@typescript-eslint/no-var-requires": "off",
 
       /** https://typescript-eslint.io/rules/no-wrapper-object-types/ */
       "@typescript-eslint/no-wrapper-object-types": "error",

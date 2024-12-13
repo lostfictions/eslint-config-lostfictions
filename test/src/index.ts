@@ -7,7 +7,7 @@
 // so let's at least disable no-unused-vars.
 /* eslint-disable @typescript-eslint/no-unused-vars */
 
-import { foo } from "./other";
+import { foo } from "./other.js";
 
 // eslint-disable-next-line import/order, import/no-duplicates
 import { rules } from "@typescript-eslint/eslint-plugin";

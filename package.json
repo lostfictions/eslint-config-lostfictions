@@ -15,8 +15,8 @@
     "unused": "eslint-find-rules --flatConfig -un ./index.js",
     "deprecated": "ESLINT_CONFIG_PRETTIER_NO_DEPRECATED=true eslint-find-rules --flatConfig -dn ./index.js",
     "test": "run-p -cl test:*",
-    "test:configs": "eslint --color --max-warnings=0 '*.js'",
-    "test:fixtures": "TIMING=1 eslint --color --max-warnings=0 'test/**/*.{js,ts,jsx,tsx}'",
+    "test:configs": "eslint --color --max-warnings=0 '*.{js,jsx,cjs,mjs,json,json5,jsonc}'",
+    "test:fixtures": "TIMING=1 eslint --color --max-warnings=0 'test/**/*.{js,jsx,cjs,mjs,ts,tsx,cts,mts,json,json5,jsonc}'",
     "test:prettier": "prettier -l '**/*.{js,ts}'",
     "prettier": "prettier --write '**/*.{js,ts}'",
     "prepublishOnly": "run-s test"
@@ -24,6 +24,7 @@
   "dependencies": {
     "@eslint/eslintrc": "^3.2.0",
     "@eslint/js": "^9.16.0",
+    "@eslint/json": "^0.8.0",
     "eslint-config-prettier": "^9.1.0",
     "eslint-import-resolver-typescript": "^3.5.5",
     "eslint-plugin-eslint-comments": "^3.2.0",
@@ -48,7 +49,7 @@
   },
   "peerDependencies": {
     "eslint": "^9.16.0",
-    "typescript": "^4.7.0 || ^5.0.0"
+    "typescript": "^5.7.2"
   },
   "packageManager": "pnpm@9.7.1+sha512.faf344af2d6ca65c4c5c8c2224ea77a81a5e8859cbc4e06b1511ddce2f0151512431dd19e6aff31f2c6a8f5f2aced9bd2273e1fed7dd4de1868984059d2c4247"
 }
