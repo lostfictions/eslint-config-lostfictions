@@ -7,6 +7,7 @@ import prettier from "eslint-config-prettier";
 import reactPlugin from "eslint-plugin-react";
 import reactHooks from "eslint-plugin-react-hooks";
 import node from "eslint-plugin-n";
+import unicorn from "eslint-plugin-unicorn";
 
 import pkg from "./package.json" with { type: "json" };
 
@@ -45,6 +46,7 @@ const config = tseslint.config(
     eslint.configs.recommended,
     tseslint.configs.recommendedTypeChecked,
     node.configs["flat/recommended-module"],
+    { plugins: { unicorn } },
     prettier,
   ]
     .flat()
@@ -713,11 +715,112 @@ const config = tseslint.config(
        */
       "n/no-process-env": "warn",
 
+      /** https://github.com/eslint-community/eslint-plugin-n/blob/HEAD/docs/rules/no-unsupported-features/node-builtins.md */
+      "n/no-unsupported-features/node-builtins": "off",
+
       /** https://github.com/eslint-community/eslint-plugin-n/blob/master/docs/rules/prefer-node-protocol.md */
       "n/prefer-node-protocol": "warn",
 
       "n/prefer-promises/fs": "warn",
       "n/prefer-promises/dns": "warn",
+
+      ///////////////////////////////////////////////////////////////////
+      // eslint-plugin-unicorn rules.
+      ///////////////////////////////////////////////////////////////////
+
+      /**
+       * https://github.com/sindresorhus/eslint-plugin-unicorn/blob/main/docs/rules/consistent-empty-array-spread.md
+       *
+       * not especially needed when we have a type system.
+       */
+      "unicorn/consistent-empty-array-spread": "off",
+
+      "unicorn/consistent-function-scoping": "warn",
+      "unicorn/consistent-destructuring": "warn",
+      "unicorn/error-message": "warn",
+      "unicorn/expiring-todo-comments": "warn",
+      "unicorn/explicit-length-check": "warn",
+
+      /** https://github.com/sindresorhus/eslint-plugin-unicorn/blob/main/docs/rules/no-anonymous-default-export.md */
+      "unicorn/no-anonymous-default-export": "warn",
+
+      "unicorn/no-array-for-each": "warn",
+
+      /** https://github.com/sindresorhus/eslint-plugin-unicorn/blob/main/docs/rules/no-await-in-promise-methods.md */
+      "unicorn/no-await-in-promise-methods": "warn",
+
+      "unicorn/no-instanceof-array": "warn",
+
+      /**
+       * https://github.com/sindresorhus/eslint-plugin-unicorn/blob/main/docs/rules/no-invalid-fetch-options.md
+       *
+       * note that sometimes rogue servers DO read the body on a GET request,
+       * against what god and nature intended. still useful to warn about it;
+       * typescript doesn't catch this.
+       */
+      "unicorn/no-invalid-fetch-options": "warn",
+
+      "unicorn/no-invalid-remove-event-listener": "warn",
+      "unicorn/no-lonely-if": "warn",
+
+      /** https://github.com/sindresorhus/eslint-plugin-unicorn/blob/main/docs/rules/no-magic-array-flat-depth.md */
+      "unicorn/no-magic-array-flat-depth": "off",
+
+      /**
+       * https://github.com/sindresorhus/eslint-plugin-unicorn/blob/main/docs/rules/no-negated-condition.md
+       *
+       * the premise of this rule is that negation is always harder to read. but
+       * imo sometimes it's valuable for readability to have negation as the base
+       * case or thing that comes first -- discretion is better than enforcement
+       * here.
+       */
+      "unicorn/no-negated-condition": "off",
+
+      /** https://github.com/sindresorhus/eslint-plugin-unicorn/blob/main/docs/rules/no-single-promise-in-promise-methods.md */
+      "unicorn/no-single-promise-in-promise-methods": "warn",
+
+      /** https://github.com/sindresorhus/eslint-plugin-unicorn/blob/main/docs/rules/no-typeof-undefined.md */
+      "unicorn/no-typeof-undefined": "warn",
+
+      /** https://github.com/sindresorhus/eslint-plugin-unicorn/blob/main/docs/rules/no-unnecessary-polyfills.md */
+      "unicorn/no-unnecessary-polyfills": "off",
+
+      "unicorn/no-useless-fallback-in-spread": "warn",
+      "unicorn/no-useless-length-check": "warn",
+      "unicorn/no-useless-promise-resolve-reject": "warn",
+      "unicorn/no-useless-spread": "warn",
+      "unicorn/no-useless-switch-case": "warn",
+      "unicorn/prefer-array-find": "warn",
+      "unicorn/prefer-array-flat": "warn",
+      "unicorn/prefer-array-flat-map": "warn",
+      "unicorn/prefer-array-index-of": "warn",
+      "unicorn/prefer-array-some": "warn",
+      "unicorn/prefer-at": "warn",
+
+      /** https://github.com/sindresorhus/eslint-plugin-unicorn/blob/main/docs/rules/prefer-blob-reading-methods.md */
+      "unicorn/prefer-blob-reading-methods": "warn",
+
+      "unicorn/prefer-code-point": "warn",
+      "unicorn/prefer-date-now": "warn",
+      "unicorn/prefer-dom-node-dataset": "warn",
+      "unicorn/prefer-export-from": "warn",
+      "unicorn/prefer-includes": "warn",
+      "unicorn/prefer-math-trunc": "warn",
+      "unicorn/prefer-negative-index": "warn",
+      "unicorn/prefer-regexp-test": "warn",
+
+      /** https://github.com/sindresorhus/eslint-plugin-unicorn/blob/main/docs/rules/prefer-set-size.md */
+      "unicorn/prefer-set-size": "warn",
+
+      /** https://github.com/sindresorhus/eslint-plugin-unicorn/blob/main/docs/rules/prefer-string-raw.md */
+      "unicorn/prefer-string-raw": "warn",
+
+      "unicorn/prefer-string-replace-all": "warn",
+      "unicorn/prefer-string-slice": "warn",
+      "unicorn/prefer-string-starts-ends-with": "warn",
+
+      /** https://github.com/sindresorhus/eslint-plugin-unicorn/blob/main/docs/rules/prefer-structured-clone.md */
+      "unicorn/prefer-structured-clone": "warn",
     },
   },
 );
@@ -730,12 +833,12 @@ export const react = [
     // another dance
     reactConfig.recommended,
     reactConfig["jsx-runtime"],
+    { plugins: { "react-hooks": reactHooks } },
   ]
     .flat()
     .map((c) => ({ files: jsFiles, ...c })),
   {
     files: jsFiles,
-    plugins: { "react-hooks": reactHooks },
     languageOptions: {
       ...reactConfig.recommended.languageOptions,
       globals: {
@@ -845,7 +948,12 @@ export const react = [
 // "eslint-plugin-import": "^2.28.0",
 // "eslint-plugin-jest": "^27.2.3",
 // "eslint-plugin-sonarjs": "^0.19.0",
-// "eslint-plugin-unicorn": "^48.0.1",
+// also consider
+// https://github.com/ota-meshi/eslint-plugin-astro/
+// https://github.com/ota-meshi/eslint-plugin-regexp
+// https://github.com/vitest-dev/eslint-plugin-vitest
+// and maybe
+// https://perfectionist.dev/rules/sort-imports
 
 const oldConfig = {
   extends: ["plugin:import/typescript"],
@@ -974,70 +1082,6 @@ const oldConfig = {
 
     "sonarjs/prefer-single-boolean-return": "warn",
     "sonarjs/prefer-while": "warn",
-
-    ///////////////////////////////////////////////////////////////////
-    // eslint-plugin-unicorn rules.
-    ///////////////////////////////////////////////////////////////////
-
-    "unicorn/consistent-function-scoping": "warn",
-    "unicorn/consistent-destructuring": "warn",
-    "unicorn/error-message": "warn",
-    "unicorn/expiring-todo-comments": "warn",
-    "unicorn/explicit-length-check": "warn",
-    "unicorn/no-array-for-each": "warn",
-    "unicorn/no-instanceof-array": "warn",
-    "unicorn/no-invalid-remove-event-listener": "warn",
-    "unicorn/no-lonely-if": "warn",
-
-    /**
-     * https://github.com/sindresorhus/eslint-plugin-unicorn/blob/main/docs/rules/no-negated-condition.md
-     *
-     * the premise of this rule is that negation is always harder to read. but
-     * imo sometimes it's valuable for readability to have negation as the base
-     * case or thing that comes first -- discretion is better than enforcement
-     * here.
-     */
-    "unicorn/no-negated-condition": "off",
-
-    /**
-     * https://github.com/sindresorhus/eslint-plugin-unicorn/blob/main/docs/rules/no-typeof-undefined.md
-     */
-    "unicorn/no-typeof-undefined": "warn",
-
-    "unicorn/no-useless-fallback-in-spread": "warn",
-    "unicorn/no-useless-length-check": "warn",
-    "unicorn/no-useless-promise-resolve-reject": "warn",
-    "unicorn/no-useless-spread": "warn",
-    "unicorn/no-useless-switch-case": "warn",
-    "unicorn/prefer-array-find": "warn",
-    "unicorn/prefer-array-flat": "warn",
-    "unicorn/prefer-array-flat-map": "warn",
-    "unicorn/prefer-array-index-of": "warn",
-    "unicorn/prefer-array-some": "warn",
-    "unicorn/prefer-at": "warn",
-
-    /**
-     * https://github.com/sindresorhus/eslint-plugin-unicorn/blob/main/docs/rules/prefer-blob-reading-methods.md
-     */
-    "unicorn/prefer-blob-reading-methods": "warn",
-
-    "unicorn/prefer-code-point": "warn",
-    "unicorn/prefer-date-now": "warn",
-    "unicorn/prefer-dom-node-dataset": "warn",
-    "unicorn/prefer-export-from": "warn",
-    "unicorn/prefer-includes": "warn",
-    "unicorn/prefer-math-trunc": "warn",
-    "unicorn/prefer-negative-index": "warn",
-    "unicorn/prefer-regexp-test": "warn",
-
-    /**
-     * https://github.com/sindresorhus/eslint-plugin-unicorn/blob/main/docs/rules/prefer-set-size.md
-     */
-    "unicorn/prefer-set-size": "warn",
-
-    "unicorn/prefer-string-replace-all": "warn",
-    "unicorn/prefer-string-slice": "warn",
-    "unicorn/prefer-string-starts-ends-with": "warn",
   },
   overrides: [],
 };

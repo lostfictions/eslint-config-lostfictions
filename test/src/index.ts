@@ -379,3 +379,11 @@ if (typeof inconsistent === "undefined") {
 } else if (inconsistent === undefined) {
   console.log("ahh");
 }
+
+const arr2 = [z, ...(foo ? [z, z] : "")];
+
+// eslint-disable-next-line unicorn/no-anonymous-default-export
+export default () => {};
+
+// eslint-disable-next-line unicorn/no-invalid-fetch-options
+const respnse = await fetch("/", { body: "foo=bar" });
