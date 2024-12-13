@@ -1,12 +1,3 @@
 // @ts-check
 
-export { default } from "../index.js";
-
-// /** @type {import("..").Config} */
-// module.exports = {
-//   extends: ["../react"],
-//   // override the default version setting of `detect`, since it causes warnings
-//   // if react isn't installed as a dependency.
-//   settings: { react: { version: "19" } },
-//   parserOptions: { tsconfigRootDir: __dirname },
-// };
+export { react as default } from "../index.js";

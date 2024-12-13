@@ -4,6 +4,8 @@ import eslint from "@eslint/js";
 import json from "@eslint/json";
 import tseslint from "typescript-eslint";
 import prettier from "eslint-config-prettier";
+import reactPlugin from "eslint-plugin-react";
+import reactHooks from "eslint-plugin-react-hooks";
 import node from "eslint-plugin-n";
 
 import pkg from "./package.json" with { type: "json" };
@@ -12,7 +14,13 @@ const docPage = `${pkg.homepage}/tree/v${pkg.version}`;
 
 const jsFiles = ["**/*.{js,jsx,cjs,mjs,ts,tsx,cts,mts}"];
 
-export default tseslint.config(
+// for some reason this imports as possibly undefined
+const reactConfig =
+  /** @type {NonNullable<typeof reactPlugin.configs.flat> } */ (
+    reactPlugin.configs.flat
+  );
+
+const config = tseslint.config(
   {
     files: ["**/*.json"],
     ignores: ["package-lock.json"],
@@ -38,7 +46,9 @@ export default tseslint.config(
     tseslint.configs.recommendedTypeChecked,
     node.configs["flat/recommended-module"],
     prettier,
-  ].map((c) => ({ files: jsFiles, ...c })),
+  ]
+    .flat()
+    .map((c) => ({ files: jsFiles, ...c })),
   {
     files: jsFiles,
     languageOptions: {
@@ -54,6 +64,7 @@ export default tseslint.config(
     },
     settings: {
       node: { version: ">=18.20.5" },
+      react: { version: "detect" },
     },
     rules: {
       ///////////////////////////////////////////////////////////////////
@@ -704,7 +715,7 @@ export default tseslint.config(
       "n/no-process-env": "warn",
 
       /** https://github.com/eslint-community/eslint-plugin-n/blob/master/docs/rules/prefer-node-protocol.md */
-      "n/prefer-node-protocol)": "warn",
+      "n/prefer-node-protocol": "warn",
 
       "n/prefer-promises/fs": "warn",
       "n/prefer-promises/dns": "warn",
@@ -712,7 +723,132 @@ export default tseslint.config(
   },
 );
 
-const config = {
+export default config;
+
+export const react = [
+  ...config,
+  ...[
+    // another dance
+    reactConfig.recommended,
+    reactConfig["jsx-runtime"],
+  ]
+    .flat()
+    .map((c) => ({ files: jsFiles, ...c })),
+  {
+    files: jsFiles,
+    plugins: { "react-hooks": reactHooks },
+    languageOptions: {
+      ...reactConfig.recommended.languageOptions,
+      globals: {
+        ...globals.node,
+        ...globals.serviceworker,
+        ...globals.browser,
+      },
+    },
+    rules: {
+      ///////////////////////////////////////////////////////////////////
+      // eslint-plugin-react rules.
+      ///////////////////////////////////////////////////////////////////
+
+      /** https://github.com/jsx-eslint/eslint-plugin-react/blob/master/docs/rules/checked-requires-onchange-or-readonly.md */
+      "react/checked-requires-onchange-or-readonly": "warn",
+
+      /**
+       * https://github.com/jsx-eslint/eslint-plugin-react/blob/master/docs/rules/hook-use-state.md
+       *
+       * enforce naming convention for useState hooks.
+       */
+      "react/hook-use-state": ["warn", { allowDestructuredState: true }],
+
+      /** https://github.com/jsx-eslint/eslint-plugin-react/blob/master/docs/rules/forward-ref-uses-ref.md */
+      "react/forward-ref-uses-ref": "warn",
+
+      "react/iframe-missing-sandbox": "warn",
+      "react/jsx-boolean-value": "warn",
+      "react/jsx-fragments": "warn",
+
+      /** https://github.com/jsx-eslint/eslint-plugin-react/blob/master/docs/rules/jsx-props-no-spread-multi.md */
+      "react/jsx-props-no-spread-multi": "error",
+
+      "react/jsx-no-constructed-context-values": "warn",
+
+      /**
+       * https://github.com/jsx-eslint/eslint-plugin-react/blob/master/docs/rules/jsx-no-leaked-render.md
+       *
+       * this rule might seem annoying if you're working in a typed codebase and
+       * confident that you're only using the `x && <Component />` pattern in
+       * situations where `x` is a boolean. (and in an ideal world, there'd be a
+       * typescript-aware version of the react plugin that could detect just such
+       * a case, which is safe.) but imo it's better to be on the safe side, even
+       * if it's slightly more verbose to have to say `x ? <Component /> : null`.
+       */
+      "react/jsx-no-leaked-render": [
+        "warn",
+        { validStrategies: ["ternary", "coerce"] },
+      ],
+
+      "react/jsx-no-script-url": "warn",
+      "react/jsx-no-target-blank": "warn",
+      "react/jsx-no-useless-fragment": "warn",
+      "react/no-access-state-in-setstate": "warn",
+      "react/no-deprecated": "warn",
+      "react/no-did-mount-set-state": "warn",
+      "react/no-did-update-set-state": "warn",
+      "react/no-invalid-html-attribute": "warn",
+      "react/no-namespace": "warn",
+
+      /**
+       * https://github.com/jsx-eslint/eslint-plugin-react/blob/master/docs/rules/no-object-type-as-default-prop.md
+       */
+      "react/no-object-type-as-default-prop": "warn",
+
+      "react/no-redundant-should-component-update": "warn",
+
+      /** https://github.com/jsx-eslint/eslint-plugin-react/blob/master/docs/rules/no-string-refs.md */
+      "react/no-string-refs": "warn",
+
+      "react/no-unescaped-entities": "warn",
+      "react/no-unsafe": "warn",
+      "react/no-unstable-nested-components": ["warn", { allowAsProps: true }],
+
+      // sometimes has false positives; investigate whether it's useful to
+      // re-enable
+      // "react/no-unused-prop-types": "warn",
+
+      "react/no-unused-state": "warn",
+      "react/no-will-update-set-state": "warn",
+
+      /**
+       * https://github.com/jsx-eslint/eslint-plugin-react/blob/master/docs/rules/prop-types.md
+       *
+       * [proptypes](https://reactjs.org/docs/typechecking-with-proptypes.html) is
+       * a react feature that provides runtime type checking for component
+       * property types; it's rarely used or needed when writing react with
+       * typescript. (that said, ts _does_ have special faculties to infer types
+       * when proptypes are declared; this rule can be switched back on in
+       * codebases where such a style is used.)
+       */
+      "react/prop-types": "off",
+
+      ///////////////////////////////////////////////////////////////////
+      // eslint-plugin-react-hooks rules.
+      ///////////////////////////////////////////////////////////////////
+
+      "react-hooks/exhaustive-deps": "warn",
+      "react-hooks/rules-of-hooks": "error",
+    },
+  },
+];
+
+// TODO:
+// "eslint-import-resolver-typescript": "^3.5.5",
+// "eslint-plugin-eslint-comments": "^3.2.0",
+// "eslint-plugin-import": "^2.28.0",
+// "eslint-plugin-jest": "^27.2.3",
+// "eslint-plugin-sonarjs": "^0.19.0",
+// "eslint-plugin-unicorn": "^48.0.1",
+
+const oldConfig = {
   extends: ["plugin:import/typescript"],
   plugins: ["eslint-comments", "import", "node", "sonarjs", "unicorn"],
   // ignore jest snapshots and the eslint config itself by default.
