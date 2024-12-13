@@ -676,6 +676,38 @@ export default tseslint.config(
       ],
       /** https://typescript-eslint.io/rules/use-unknown-in-catch-callback-variable/ */
       "@typescript-eslint/use-unknown-in-catch-callback-variable": "warn",
+
+      ///////////////////////////////////////////////////////////////////
+      // eslint-plugin-n rules.
+      ///////////////////////////////////////////////////////////////////
+
+      // handled by ts, and fails fast at runtime
+      "n/no-missing-import": "off",
+      "n/no-missing-require": "off",
+
+      "n/no-new-require": "warn",
+      "n/no-path-concat": "warn",
+
+      /**
+       * https://github.com/eslint-community/eslint-plugin-n/blob/master/docs/rules/no-process-env.md
+       *
+       * it's strongly recommended to centralize reading `process.env` in a single
+       * file rather than accessing it ad-hoc across your codebase. the file
+       * (which you could call something like `env.ts`) should parse, validate and
+       * export sanitized env vars. within that file (and only that file) this
+       * rule, `no-process-env`, should be disabled.
+       *
+       * you can use a package like znv (https://github.com/lostfictions/znv) to
+       * simplify doing this in a typesafe way. see this repo's readme for
+       * details.
+       */
+      "n/no-process-env": "warn",
+
+      /** https://github.com/eslint-community/eslint-plugin-n/blob/master/docs/rules/prefer-node-protocol.md */
+      "n/prefer-node-protocol)": "warn",
+
+      "n/prefer-promises/fs": "warn",
+      "n/prefer-promises/dns": "warn",
     },
   },
 );
@@ -760,31 +792,6 @@ const config = {
         ],
       },
     ],
-
-    ///////////////////////////////////////////////////////////////////
-    // eslint-plugin-node rules.
-    ///////////////////////////////////////////////////////////////////
-
-    "node/no-new-require": "warn",
-    "node/no-path-concat": "warn",
-
-    /**
-     * https://github.com/mysticatea/eslint-plugin-node/blob/master/docs/rules/no-process-env.md
-     *
-     * it's strongly recommended to centralize reading `process.env` in a single
-     * file rather than accessing it ad-hoc across your codebase. the file
-     * (which you could call something like `env.ts`) should parse, validate and
-     * export sanitized env vars. within that file (and only that file) this
-     * rule, `no-process-env`, should be disabled.
-     *
-     * you can use a package like znv (https://github.com/lostfictions/znv) to
-     * simplify doing this in a typesafe way. see this repo's readme for
-     * details.
-     */
-    "node/no-process-env": "warn",
-
-    "node/prefer-promises/fs": "warn",
-    "node/prefer-promises/dns": "warn",
 
     /////////////////////////////////////////////////////////////////////
     // eslint-plugin-sonarjs rules.
