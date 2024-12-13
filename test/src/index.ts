@@ -395,9 +395,6 @@ if (!a === b) {
   // cool
 }
 
-// test if unused disables will fail the command
-// eslint-disable-next-line prefer-object-has-own
-
 // eslint-disable-next-line comments/disable-enable-pair
 /* eslint-disable unicorn/no-negation-in-equality-check */
 if (!a === b) {
