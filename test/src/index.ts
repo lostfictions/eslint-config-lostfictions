@@ -387,3 +387,10 @@ export default () => {};
 
 // eslint-disable-next-line unicorn/no-invalid-fetch-options
 const respnse = await fetch("/", { body: "foo=bar" });
+
+const a = false;
+const b = true;
+// eslint-disable-next-line unicorn/no-negation-in-equality-check
+if (!a === b) {
+  // cool
+}

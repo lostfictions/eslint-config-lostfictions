@@ -735,6 +735,9 @@ const config = tseslint.config(
        */
       "unicorn/consistent-empty-array-spread": "off",
 
+      /** https://github.com/sindresorhus/eslint-plugin-unicorn/blob/main/docs/rules/consistent-existence-index-check.md */
+      "unicorn/consistent-existence-index-check": "warn",
+
       "unicorn/consistent-function-scoping": "warn",
       "unicorn/consistent-destructuring": "warn",
       "unicorn/error-message": "warn",
@@ -761,6 +764,10 @@ const config = tseslint.config(
       "unicorn/no-invalid-fetch-options": "warn",
 
       "unicorn/no-invalid-remove-event-listener": "warn",
+
+      /** https://github.com/sindresorhus/eslint-plugin-unicorn/blob/main/docs/rules/no-length-as-slice-end.md */
+      "unicorn/no-length-as-slice-end": "warn",
+
       "unicorn/no-lonely-if": "warn",
 
       /** https://github.com/sindresorhus/eslint-plugin-unicorn/blob/main/docs/rules/no-magic-array-flat-depth.md */
@@ -775,6 +782,9 @@ const config = tseslint.config(
        * here.
        */
       "unicorn/no-negated-condition": "off",
+
+      /** https://github.com/sindresorhus/eslint-plugin-unicorn/blob/main/docs/rules/no-negation-in-equality-check.md */
+      "unicorn/no-negation-in-equality-check": "warn",
 
       /** https://github.com/sindresorhus/eslint-plugin-unicorn/blob/main/docs/rules/no-single-promise-in-promise-methods.md */
       "unicorn/no-single-promise-in-promise-methods": "warn",
@@ -804,7 +814,19 @@ const config = tseslint.config(
       "unicorn/prefer-date-now": "warn",
       "unicorn/prefer-dom-node-dataset": "warn",
       "unicorn/prefer-export-from": "warn",
+
+      /**
+       * https://github.com/sindresorhus/eslint-plugin-unicorn/blob/main/docs/rules/prefer-global-this.md
+       *
+       * not super valuable, just a style nit
+       */
+      "unicorn/prefer-global-this": "off",
+
       "unicorn/prefer-includes": "warn",
+
+      /** https://github.com/sindresorhus/eslint-plugin-unicorn/blob/main/docs/rules/prefer-math-min-max.md */
+      "unicorn/prefer-math-min-max": "warn",
+
       "unicorn/prefer-math-trunc": "warn",
       "unicorn/prefer-negative-index": "warn",
       "unicorn/prefer-regexp-test": "warn",
