@@ -584,7 +584,9 @@ const config = tseslint.config(
       "@typescript-eslint/no-unsafe-function-type": "error",
 
       "@typescript-eslint/no-unsafe-member-access": "off",
-      "@typescript-eslint/no-unsafe-return": "off",
+
+      /** https://typescript-eslint.io/rules/no-unsafe-return */
+      "@typescript-eslint/no-unsafe-return": "warn",
 
       /** https://typescript-eslint.io/rules/no-unsafe-type-assertion/ */
       "@typescript-eslint/no-unsafe-type-assertion": "off",
