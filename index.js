@@ -184,20 +184,20 @@ const config = tseslint.config(
 
         // prettier-ignore
         [
-      'addEventListener', 'blur', 'close', 'closed', 'confirm', 'defaultStatus',
-      'defaultstatus', 'event', 'external', 'find', 'focus', 'frameElement',
-      'frames', 'history', 'innerHeight', 'innerWidth', 'length', 'location',
-      'locationbar', 'menubar', 'moveBy', 'moveTo', 'name', 'onblur', 'onerror',
-      'onfocus', 'onload', 'onresize', 'onunload', 'open', 'opener', 'opera',
-      'outerHeight', 'outerWidth', 'pageXOffset', 'pageYOffset', 'parent',
-      'print', 'removeEventListener', 'resizeBy', 'resizeTo', 'screen',
-      'screenLeft', 'screenTop', 'screenX', 'screenY', 'scroll', 'scrollbars',
-      'scrollBy', 'scrollTo', 'scrollX', 'scrollY', 'self', 'status',
-      'statusbar', 'stop', 'toolbar', 'top',
-    ].map(name => ({
-      name,
-      message: `Use \`window.${name}\` if you really meant to refer to the global.`
-    })),
+          'addEventListener', 'blur', 'close', 'closed', 'confirm', 'defaultStatus',
+          'defaultstatus', 'event', 'external', 'find', 'focus', 'frameElement',
+          'frames', 'history', 'innerHeight', 'innerWidth', 'length', 'location',
+          'locationbar', 'menubar', 'moveBy', 'moveTo', 'name', 'onblur', 'onerror',
+          'onfocus', 'onload', 'onresize', 'onunload', 'open', 'opener', 'opera',
+          'outerHeight', 'outerWidth', 'pageXOffset', 'pageYOffset', 'parent',
+          'print', 'removeEventListener', 'resizeBy', 'resizeTo', 'screen',
+          'screenLeft', 'screenTop', 'screenX', 'screenY', 'scroll', 'scrollbars',
+          'scrollBy', 'scrollTo', 'scrollX', 'scrollY', 'self', 'status',
+          'statusbar', 'stop', 'toolbar', 'top',
+        ].map(name => ({
+          name,
+          message: `Use \`window.${name}\` if you really meant to refer to the global.`
+        })),
       ),
 
       "no-restricted-syntax": [
