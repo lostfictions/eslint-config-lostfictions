@@ -561,20 +561,16 @@ const config = tseslint.config(
       /** https://typescript-eslint.io/rules/no-unnecessary-type-parameters/ */
       "@typescript-eslint/no-unnecessary-type-parameters": "warn",
 
-      // the no-unsafe family of rules are a good idea, but somewhat obtrusive.
-      // their use could be revisited alongside documentation on how to deal with
-      // the lints when they show up, since they'll appear very often in some
-      // scenarios.
-      "@typescript-eslint/no-unsafe-argument": "off",
-      "@typescript-eslint/no-unsafe-assignment": "off",
-      "@typescript-eslint/no-unsafe-call": "off",
+      /** https://typescript-eslint.io/rules/no-unsafe-argument */
+      "@typescript-eslint/no-unsafe-argument": "warn",
 
-      /**
-       * https://typescript-eslint.io/rules/no-unsafe-declaration-merging
-       *
-       * among the no-unsafe- family of rules, no-unsafe-declaration-merging is
-       * useful at catching mistakes and easy to turn on.
-       */
+      /** https://typescript-eslint.io/rules/no-unsafe-assignment */
+      "@typescript-eslint/no-unsafe-assignment": "warn",
+
+      /** https://typescript-eslint.io/rules/no-unsafe-call */
+      "@typescript-eslint/no-unsafe-call": "warn",
+
+      /** https://typescript-eslint.io/rules/no-unsafe-declaration-merging */
       "@typescript-eslint/no-unsafe-declaration-merging": "warn",
 
       /** https://typescript-eslint.io/rules/no-unsafe-enum-comparison */
@@ -583,7 +579,8 @@ const config = tseslint.config(
       /** https://typescript-eslint.io/rules/no-unsafe-function-type/ */
       "@typescript-eslint/no-unsafe-function-type": "error",
 
-      "@typescript-eslint/no-unsafe-member-access": "off",
+      /** https://typescript-eslint.io/rules/no-unsafe-member-access */
+      "@typescript-eslint/no-unsafe-member-access": "warn",
 
       /** https://typescript-eslint.io/rules/no-unsafe-return */
       "@typescript-eslint/no-unsafe-return": "warn",
