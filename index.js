@@ -8,6 +8,7 @@ import reactPlugin from "eslint-plugin-react";
 import reactHooks from "eslint-plugin-react-hooks";
 import node from "eslint-plugin-n";
 import unicorn from "eslint-plugin-unicorn";
+import comments from "@eslint-community/eslint-plugin-eslint-comments";
 
 import pkg from "./package.json" with { type: "json" };
 
@@ -47,6 +48,7 @@ const config = tseslint.config(
     tseslint.configs.recommendedTypeChecked,
     node.configs["flat/recommended-module"],
     { plugins: { unicorn } },
+    { plugins: { comments } },
     prettier,
   ]
     .flat()
@@ -843,6 +845,19 @@ const config = tseslint.config(
 
       /** https://github.com/sindresorhus/eslint-plugin-unicorn/blob/main/docs/rules/prefer-structured-clone.md */
       "unicorn/prefer-structured-clone": "warn",
+
+      ///////////////////////////////////////////////////////////////////
+      // eslint-plugin-eslint-comments rules.
+      ///////////////////////////////////////////////////////////////////
+
+      "comments/disable-enable-pair": ["warn", { allowWholeFile: true }],
+      "comments/no-unlimited-disable": "warn",
+      "comments/require-description": "warn",
+
+      // reportUnusedDisableDirectives already catches these:
+      "comments/no-duplicate-disable": "off",
+      "comments/no-unused-disable": "off",
+      "comments/no-unused-enable": "off",
     },
   },
 );
@@ -966,7 +981,6 @@ export const react = [
 
 // TODO:
 // "eslint-import-resolver-typescript": "^3.5.5",
-// "eslint-plugin-eslint-comments": "^3.2.0",
 // "eslint-plugin-import": "^2.28.0",
 // "eslint-plugin-jest": "^27.2.3",
 // "eslint-plugin-sonarjs": "^0.19.0",
@@ -979,19 +993,11 @@ export const react = [
 
 const oldConfig = {
   extends: ["plugin:import/typescript"],
-  plugins: ["eslint-comments", "import", "node", "sonarjs", "unicorn"],
+  plugins: ["import", "sonarjs"],
   // ignore jest snapshots and the eslint config itself by default.
   ignorePatterns: ["*.test.ts.snap", ".eslintrc.js"],
   reportUnusedDisableDirectives: true,
   rules: {
-    ///////////////////////////////////////////////////////////////////
-    // eslint-plugin-eslint-comments rules.
-    ///////////////////////////////////////////////////////////////////
-
-    "eslint-comments/disable-enable-pair": ["warn", { allowWholeFile: true }],
-    "eslint-comments/no-unlimited-disable": "warn",
-    "eslint-comments/no-unused-enable": "warn",
-
     ///////////////////////////////////////////////////////////////////
     // eslint-plugin-import rules.
     ///////////////////////////////////////////////////////////////////

@@ -20,6 +20,7 @@
     "prepublishOnly": "run-s test"
   },
   "dependencies": {
+    "@eslint-community/eslint-plugin-eslint-comments": "^4.4.1",
     "@eslint/eslintrc": "^3.2.0",
     "@eslint/js": "^9.16.0",
     "@eslint/json": "^0.8.0",
