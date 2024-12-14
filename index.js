@@ -478,8 +478,8 @@ const config = tseslint.config(
        * > be misleading for other developers, who don't know what a particular
        * > function does and if its result matters.
        *
-       * we could use the `ignoreArrowShorthand` option to allow expressions like
-       * this one:
+       * we use the `ignoreArrowShorthand` option to allow expressions like this
+       * one:
        *
        * ```js
        * promise.then(value => window.postMessage(value))
@@ -494,12 +494,13 @@ const config = tseslint.config(
        *
        * the latter also aligns nicely with the `ignoreVoid` option for the
        * `@typescript-eslint/no-floating-promises` rule. that said, using
-       * `ignoreVoidOperator` for this rule is likely to flag many more benign
-       * cases in transitional codebases.
+       * `ignoreVoidOperator` for this rule is flags many more benign cases and
+       * requires `no-void` and `@typescript-eslint/no-meaningless-void-operator`
+       * to be configured too. this could be revisited in the future.
        */
       "@typescript-eslint/no-confusing-void-expression": [
         "warn",
-        { ignoreVoidOperator: true },
+        { ignoreArrowShorthand: true },
       ],
 
       /** https://typescript-eslint.io/rules/no-deprecated/ */
