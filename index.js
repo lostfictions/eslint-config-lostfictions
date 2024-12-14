@@ -914,7 +914,26 @@ const config = tseslint.config(
 
       "comments/disable-enable-pair": ["warn", { allowWholeFile: true }],
       "comments/no-unlimited-disable": "warn",
-      "comments/require-description": "warn",
+
+      /**
+       * https://eslint-community.github.io/eslint-plugin-eslint-comments/rules/require-description.html
+       *
+       * this rule is already annoying enough -- no need to require explanations
+       * for re-enabling disabled comments.
+       */
+      "comments/require-description": [
+        "warn",
+        {
+          ignore: [
+            "eslint",
+            "eslint-enable",
+            "eslint-env",
+            "exported",
+            "global",
+            "globals",
+          ],
+        },
+      ],
 
       // reportUnusedDisableDirectives already catches these:
       "comments/no-duplicate-disable": "off",
