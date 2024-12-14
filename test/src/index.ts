@@ -9,9 +9,9 @@
 
 import { foo } from "./other.js";
 
-// eslint-disable-next-line import/order, import/no-duplicates, n/no-extraneous-import
+// eslint-disable-next-line import/order, import/no-duplicates, import/no-extraneous-dependencies
 import { rules } from "@typescript-eslint/eslint-plugin";
-// eslint-disable-next-line import/order, import/no-duplicates, n/no-extraneous-import
+// eslint-disable-next-line import/order, import/no-duplicates, import/no-extraneous-dependencies
 import { rules as oi } from "@typescript-eslint/eslint-plugin";
 
 // eslint-disable-next-line import/no-empty-named-blocks
@@ -282,7 +282,7 @@ for (const v in args) {
   console.log(v);
 }
 
-// eslint-disable-next-line n/no-process-env
+// eslint-disable-next-line node/no-process-env
 if (process.env["NODE_ENV"] === "development") {
   console.log("phew, no pressure to get everything right here.");
 }

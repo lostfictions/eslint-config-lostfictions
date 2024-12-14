@@ -61,7 +61,7 @@ const config = tseslint.config(
   ...[
     eslint.configs.recommended,
     tseslint.configs.recommendedTypeChecked,
-    node.configs["flat/recommended"],
+    { plugins: { node } },
     { plugins: { unicorn } },
     { plugins: { comments } },
     { plugins: { import: importPlugin } },
@@ -714,15 +714,42 @@ const config = tseslint.config(
       "@typescript-eslint/use-unknown-in-catch-callback-variable": "warn",
 
       ///////////////////////////////////////////////////////////////////
-      // eslint-plugin-n rules.
+      // eslint-plugin-n (formerly node) rules.
       ///////////////////////////////////////////////////////////////////
 
-      // handled by ts, and fails fast at runtime
-      "n/no-missing-import": "off",
-      "n/no-missing-require": "off",
+      /** https://github.com/eslint-community/eslint-plugin-n/blob/master/docs/rules/hashbang.md */
+      "node/hashbang": "error",
 
-      "n/no-new-require": "warn",
-      "n/no-path-concat": "warn",
+      /**
+       * https://github.com/eslint-community/eslint-plugin-n/blob/master/docs/rules/no-deprecated-api.md
+       *
+       * probably already covered by `@typescript-eslint/no-deprecated`, but why not.
+       */
+      "node/no-deprecated-api": "warn",
+
+      /** https://github.com/eslint-community/eslint-plugin-n/blob/master/docs/rules/no-exports-assign.md */
+      "node/no-exports-assign)": "warn",
+
+      /**
+       * https://github.com/eslint-community/eslint-plugin-n/blob/master/docs/rules/no-extraneous-import.md
+       *
+       * already handled by `import/no-extraneous-dependencies`.
+       */
+      "node/no-extraneous-import": "off",
+
+      /**
+       * https://github.com/eslint-community/eslint-plugin-n/blob/master/docs/rules/no-extraneous-require.md
+       *
+       * see above
+       */
+      "node/no-extraneous-require": "off",
+
+      // handled by ts, and fails fast at runtime
+      "node/no-missing-import": "off",
+      "node/no-missing-require": "off",
+
+      "node/no-new-require": "warn",
+      "node/no-path-concat": "warn",
 
       /**
        * https://github.com/eslint-community/eslint-plugin-n/blob/master/docs/rules/no-process-env.md
@@ -737,10 +764,14 @@ const config = tseslint.config(
        * simplify doing this in a typesafe way. see this repo's readme for
        * details.
        */
-      "n/no-process-env": "warn",
+      "node/no-process-env": "warn",
+
+      /** https://github.com/eslint-community/eslint-plugin-n/blob/master/docs/rules/no-process-exit.md */
+      // low-value in most scenarios, could occasionally be useful to enable
+      "node/no-process-exit": "off",
 
       /** https://github.com/eslint-community/eslint-plugin-n/blob/HEAD/docs/rules/no-unsupported-features/node-builtins.md */
-      "n/no-unsupported-features/node-builtins": "off",
+      "node/no-unsupported-features/node-builtins": "off",
 
       /**
        * https://github.com/eslint-community/eslint-plugin-n/blob/master/docs/rules/prefer-node-protocol.md
@@ -748,10 +779,10 @@ const config = tseslint.config(
        * not a bad idea, but too obtrusive when viewing older code and somewhat
        * low-value.
        */
-      "n/prefer-node-protocol": "off",
+      "node/prefer-node-protocol": "off",
 
-      "n/prefer-promises/fs": "warn",
-      "n/prefer-promises/dns": "warn",
+      "node/prefer-promises/fs": "warn",
+      "node/prefer-promises/dns": "warn",
 
       ///////////////////////////////////////////////////////////////////
       // eslint-plugin-unicorn rules.
@@ -923,6 +954,9 @@ const config = tseslint.config(
 
       /** https://github.com/import-js/eslint-plugin-import/blob/main/docs/rules/no-empty-named-blocks.md */
       "import/no-empty-named-blocks": "warn",
+
+      /** https://github.com/import-js/eslint-plugin-import/blob/main/docs/rules/no-extraneous-dependencies.md */
+      "import/no-extraneous-dependencies": "warn",
 
       // no-unused-modules is potentially useful, but currently generates a
       // significant number of false positives (for example, exports in module
