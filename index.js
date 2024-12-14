@@ -909,8 +909,22 @@ const config = tseslint.config(
       /** https://github.com/sindresorhus/eslint-plugin-unicorn/blob/main/docs/rules/prefer-set-size.md */
       "unicorn/prefer-set-size": "warn",
 
-      /** https://github.com/sindresorhus/eslint-plugin-unicorn/blob/main/docs/rules/prefer-string-raw.md */
-      "unicorn/prefer-string-raw": "warn",
+      /**
+       * https://github.com/sindresorhus/eslint-plugin-unicorn/blob/main/docs/rules/prefer-string-raw.md
+       *
+       * nice to point out sometimes, but using string.raw is just as often a
+       * matter of taste. it doesn't really make sense for small escaped
+       * sequences, eg.
+       *
+       * `expression.replaceAll(/[\\^$*+?.()|[\]{}]/g, "\\$&")`
+       *
+       * doesn't really read better as
+       *
+       * `expression.replaceAll(/[\\^$*+?.()|[\]{}]/g, String.raw`\$&`)`
+       *
+       * does it?
+       */
+      "unicorn/prefer-string-raw": "off",
 
       "unicorn/prefer-string-replace-all": "warn",
       "unicorn/prefer-string-slice": "warn",
@@ -931,9 +945,12 @@ const config = tseslint.config(
        *
        * this rule is already annoying enough -- no need to require explanations
        * for re-enabling disabled comments.
+       *
+       * in fact, i'm turning it off. it can be nice for working at scale, but
+       * so many disables are self-evident that it creates a lot of noise.
        */
       "comments/require-description": [
-        "warn",
+        "off",
         {
           ignore: [
             "eslint",
