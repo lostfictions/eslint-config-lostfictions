@@ -16,7 +16,8 @@ import pkg from "./package.json" with { type: "json" };
 
 const docPage = `${pkg.homepage}/tree/v${pkg.version}`;
 
-const jsFiles = ["**/*.{js,jsx,cjs,mjs,ts,tsx,cts,mts}"];
+const jsAndTsFiles = ["**/*.{js,jsx,cjs,mjs,ts,tsx,cts,mts}"];
+const jsFiles = ["**/*.{js,jsx,cjs,mjs}"];
 
 // for some reason this imports as possibly undefined
 const reactConfig =
@@ -63,15 +64,15 @@ const config = tseslint.config(
     prettier,
   ]
     .flat()
-    .map((c) => ({ files: jsFiles, ...c })),
+    .map((c) => ({ files: jsAndTsFiles, ...c })),
   {
-    files: jsFiles,
+    files: jsAndTsFiles,
     languageOptions: {
       globals: { ...globals.node, ...globals.browser },
       ecmaVersion: 2025,
       sourceType: "module",
       parserOptions: {
-        projectService: { allowDefaultProject: ["*.js", "*.mjs"] },
+        projectService: true,
       },
     },
     linterOptions: {
@@ -1005,7 +1006,8 @@ const config = tseslint.config(
   // thorough eslint-plugin-import config). this is more for best-effort
   // compatibility/harm reduction.
   {
-    files: ["**/*.{js,jsx,cjs,mjs}"],
+    files: jsFiles,
+    extends: [tseslint.configs.disableTypeChecked],
     rules: {
       // `no-undef` might cause a bit of redundant noise if `checkJs` is also on,
       // but better to be noisy than to miss errors.
@@ -1039,41 +1041,6 @@ const config = tseslint.config(
        */
       strict: ["warn", "global"],
 
-      // https://typescript-eslint.io/rules/no-unsafe-argument
-      // https://typescript-eslint.io/rules/no-unsafe-assignment
-      // https://typescript-eslint.io/rules/no-unsafe-call
-      // https://typescript-eslint.io/rules/no-unsafe-member-access
-      // https://typescript-eslint.io/rules/no-unsafe-return
-      //
-      // these rules try to prevent `any` from leaking freely -- but that means
-      // they don't really work in untyped js code.
-      "@typescript-eslint/no-unsafe-argument": "off",
-      "@typescript-eslint/no-unsafe-assignment": "off",
-      "@typescript-eslint/no-unsafe-call": "off",
-      "@typescript-eslint/no-unsafe-member-access": "off",
-      "@typescript-eslint/no-unsafe-return": "off",
-
-      /**
-       * https://typescript-eslint.io/rules/require-array-sort-compare
-       *
-       * when the type of the array can't be determined, this rule will always
-       * yield a warning -- which results a lot of false positives for string
-       * arrays.
-       */
-      "@typescript-eslint/require-array-sort-compare": "off",
-
-      /**
-       * https://typescript-eslint.io/rules/unbound-method
-       *
-       * this is already disabled in the base config, but i hope to re-enable it
-       * someday, if issues like false positives for third-party code are ever
-       * resolved. but it seems to cause even more false positives in js than in
-       * typescript (even with a `tsconfig.json` in strict mode with `checkJs`
-       * on). the upshot is that we probably can't turn it on for plain js files
-       * anytime soon.
-       */
-      "@typescript-eslint/unbound-method": "off",
-
       /**
        * https://github.com/import-js/eslint-plugin-import/blob/main/docs/rules/no-commonjs.md
        *
@@ -1097,9 +1064,9 @@ export const react = [
     { plugins: { "react-hooks": reactHooks } },
   ]
     .flat()
-    .map((c) => ({ files: jsFiles, ...c })),
+    .map((c) => ({ files: jsAndTsFiles, ...c })),
   {
-    files: jsFiles,
+    files: jsAndTsFiles,
     languageOptions: {
       ...reactConfig.recommended.languageOptions,
       globals: {

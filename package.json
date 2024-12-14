@@ -14,7 +14,7 @@
     "deprecated": "ESLINT_CONFIG_PRETTIER_NO_DEPRECATED=true eslint-find-rules --flatConfig -dn ./index.js",
     "test": "run-p -cl test:*",
     "test:configs": "eslint --color --max-warnings=0 '*.{js,jsx,cjs,mjs,json,json5,jsonc}'",
-    "test:fixtures": "TIMING=1 eslint --color --max-warnings=0 'test/**/*.{js,jsx,cjs,mjs,ts,tsx,cts,mts,json,json5,jsonc}'",
+    "test:fixtures": "TIMING=1 eslint --color --max-warnings=0 -c test/eslint.config.mjs 'test/**/*.{js,jsx,cjs,mjs,ts,tsx,cts,mts,json,json5,jsonc}'",
     "test:prettier": "prettier -l '**/*.{js,ts}'",
     "prettier": "prettier --write '**/*.{js,ts}'",
     "prepublishOnly": "run-s test"

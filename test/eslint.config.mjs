@@ -1,5 +1,4 @@
 // @ts-check
-
 import { react } from "../index.js";
 
 export default [
