@@ -1,0 +1,7 @@
+// Vitest Snapshot v1, https://vitest.dev/guide/snapshot.html
+
+exports[`my cool test > doesn't require hints for a test with a single snapshot 1`] = `2`;
+
+exports[`my cool test > requires hints for a test with multiple snapshots > a cool hint 1`] = `1`;
+
+exports[`my cool test > requires hints for a test with multiple snapshots 1`] = `2`;

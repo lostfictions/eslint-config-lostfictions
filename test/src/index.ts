@@ -319,7 +319,12 @@ if (prop in xory) {
   console.log(xory.y);
 }
 
-// an invalid "describe" in a non-test file should not cause warnings:
+// an invalid "describe" in a non-test file should not cause
+// eslint-plugin-vitest warnings... but it shouldn't be defined, either, since
+// vitest doesn't dump declares into the global namespace like @types/jest does.
+
+// @ts-expect-error ayup
+// eslint-disable-next-line @typescript-eslint/no-unsafe-call
 describe("", () => {});
 
 // eslint-disable-next-line @typescript-eslint/switch-exhaustiveness-check

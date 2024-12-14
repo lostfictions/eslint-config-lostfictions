@@ -17,19 +17,19 @@
 - Intended for use with [TypeScript](https://www.typescriptlang.org/), using [typescript-eslint](https://typescript-eslint.io/)'s parser and type-aware rules. (Also supports JavaScript in projects with a [`tsconfig.json`](https://www.typescriptlang.org/docs/handbook/migrating-from-javascript.html#writing-a-configuration-file) configured.)
 - Includes an alternate React config that adds additional rules from [`eslint-plugin-react`](https://github.com/jsx-eslint/eslint-plugin-react) and [`eslint-plugin-react-hooks`](https://www.npmjs.com/package/eslint-plugin-react-hooks) to catch errors and uphold best practices in React code.
 - Delegates all formatting to [Prettier](https://prettier.io/). No more noisy warnings in your editor shouting that you forgot to indent your code!
-- Includes rules for best practices when writing tests with [Jest](https://jestjs.io/). (But use of Jest is not required to use this config!)
+- Includes rules for best practices when writing tests with ~~[Jest](https://jestjs.io/)~~ [Vitest](https://vitest.dev/). (But use of Vitest is not required to use this config!)
 - Prefers warnings to errors for most lints, which helps distinguish between genuine problems (like TypeScript typechecking errors) and lesser code smells. ([Read more](#red-is-for-errors).)
 - Deviations and disabled rules relative to base ESLint, React and Typescript recommended configs are documented and include a rationale.
 - Adds [warnings about deprecations](https://typescript-eslint.io/rules/no-deprecated/) for both internal and external code (by checking JSDoc annotations), [best practices around imports](https://github.com/import-js/eslint-plugin-import/), [Node.js-specific lints](https://github.com/eslint-community/eslint-plugin-n), and select additional rules from the wonderful [`eslint-plugin-unicorn`](https://github.com/sindresorhus/eslint-plugin-unicorn/).
 - Batteries included: just add ESLint and this package to your existing project and start linting! Unlike many other shareable configs, `eslint-config-lostfictions` doesn't declare any `peerDependencies` besides ESLint and TypeScript, so there's no extra ESLint plugins and parsers cluttering your `package.json` that need to be audited for compatibility on version bumps.
 
-  > Note that this is less of a concern in the shiny new era of "flat" ESLint configs, whose new plugin resolution allows configs to bundle plugins without difficulty.
+  > Admittedly this is less of a concern in the shiny new era of "flat" ESLint configs, whose new plugin resolution allows configs to bundle plugins without difficulty.
 
 Read on for the rationale, or jump to the [Usage](#usage) section below to get started.
 
 ## Why?
 
-TypeScript and ESLint might seem like they're used for the exact same thing — catching errors in JavaScript — but they have different, complementary uses. TypeScript generally limits itself to typechecking, while ESLint can catch a broad variety of other errors, from simple oversights like [expressions that do nothing](https://eslint.org/docs/rules/no-unused-expressions) or [comparing a value to itself](https://eslint.org/docs/rules/no-self-compare), to [technically legal but dangerous syntax](https://typescript-eslint.io/rules/no-non-null-asserted-optional-chain), to analysis of [possible race conditions](https://eslint.org/docs/rules/require-atomic-updates). The [typescript-eslint](https://typescript-eslint.io/) project not only enables ESLint to parse and validate TypeScript code directly, it adds support for a wide range of TypeScript-specific lints and error-checking not covered by the TypeScript compiler. In fact, the TypeScript developers [use ESLint and typescript-eslint on their own codebase](https://github.com/microsoft/TypeScript/blob/main/.eslintrc.json)! (Another tool called [TSLint](https://github.com/palantir/tslint) formerly fulfilled a similar role for TypeScript, but it's been deprecated for a while now in favour of ESLint.)
+TypeScript and ESLint might seem like they're used for the exact same thing — catching errors in JavaScript — but they have different, complementary uses. TypeScript generally limits itself to typechecking, while ESLint can catch a broad variety of other errors, from simple oversights like [expressions that do nothing](https://eslint.org/docs/rules/no-unused-expressions) or [comparing a value to itself](https://eslint.org/docs/rules/no-self-compare), to [technically legal but dangerous syntax](https://typescript-eslint.io/rules/no-non-null-asserted-optional-chain), to analysis of [possible race conditions](https://eslint.org/docs/rules/require-atomic-updates). The [typescript-eslint](https://typescript-eslint.io/) project not only enables ESLint to parse and validate TypeScript code directly, it adds support for a wide range of TypeScript-specific lints and error-checking not covered by the TypeScript compiler. In fact, the TypeScript developers [use ESLint and typescript-eslint on their own codebase](https://github.com/microsoft/TypeScript/blob/main/.eslintrc.json)!
 
 `eslint-config-lostfictions` is based on a few key principles:
 
@@ -45,7 +45,7 @@ Languages like Go and Rust make things easy here by integrating opinionated form
 
 ### Red is for errors.
 
-Some [popular ESLint configs](https://github.com/airbnb/javascript/tree/master/packages/eslint-config-airbnb) like to scream at you at maximum volume for every possible variety of included lint. Again, in my experience, this can result in a lot of noise that masks other more important problems, such as typechecker failures, semantic issues, and parsing errors.
+Some (formerly) [popular ESLint configs](https://github.com/airbnb/javascript/tree/master/packages/eslint-config-airbnb) like to scream at you at maximum volume for every possible variety of included lint. Again, in my experience, this can result in a lot of noise that masks other more important problems, such as typechecker failures, semantic issues, and parsing errors.
 
 By contrast, `eslint-config-lostfictions` tries to reserve the "error" lint level for _genuine suspected errors_ and prefers warnings for lesser code smells and minor issues.
 
@@ -79,7 +79,24 @@ For React projects, use the `lostfictions/react` config, which adds additional R
 export { react as default } from "eslint-config-lostfictions";
 ```
 
-`eslint-config-lostfictions` also includes [`eslint-plugin-jest`](https://github.com/jest-community/eslint-plugin-jest) for linting your tests (including helpful rules like [`expect-expect`](https://github.com/jest-community/eslint-plugin-jest/blob/main/docs/rules/expect-expect.md), which ensures you haven't forgotten to make assertions in your test cases). By default the extra Jest rules are enabled for files with a `.test.{js,jsx,ts,tsx}` suffix, as well as files under a `test` folder — which should match Jest's default rules for finding tests.
+### Customizing the config
+
+If you need to change enabled rules or configure linter settings, that looks something like this:
+
+```js
+import { react } from "../index.js";
+
+export default [
+  ...react,
+  {
+    rules: {
+      "comments/require-description": "off",
+    },
+  },
+];
+```
+
+`eslint-config-lostfictions` also includes [`eslint-plugin-vitest`](https://github.com/vitest-dev/eslint-plugin-vitest) for linting your tests (including helpful rules like [`expect-expect`](https://github.com/vitest-dev/eslint-plugin-vitest/blob/main/docs/rules/expect-expect.md), which ensures you haven't forgotten to make assertions in your test cases). By default, the extra Vitest rules are enabled for files with a `.test.{js,jsx,ts,tsx}` suffix, as well as files under a `__tests__` folder — which should match Jest's default rules for finding tests.
 
 ---
 
@@ -89,7 +106,7 @@ export { react as default } from "eslint-config-lostfictions";
 
 [`unicorn/prefer-at`](https://github.com/sindresorhus/eslint-plugin-unicorn/blob/main/docs/rules/prefer-at.md) and [`prefer-object-has-own`](https://eslint.org/docs/rules/prefer-object-has-own) are both enabled in this config.
 
-The respective functions they recommend are cleaner and less error-prone than their older alternatives, but they're both pretty fresh at the moment. [`Object.hasOwn()`](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Object/hasOwn) shipped in [Node 16.9.0](https://github.com/nodejs/node/blob/master/doc/changelogs/CHANGELOG_V16.md#2021-09-07-version-1690-current-targos) (2021-09-07). [`String#at()`](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/String/at) and [`Array#at()`](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Array/at) shipped in [Node 16.6.0](https://github.com/nodejs/node/blob/master/doc/changelogs/CHANGELOG_V16.md#16.6.0) (2021-07-29). If you're stuck on an older version of Node, you may prefer to disable these rules. These functions have shipped in all evergreen browsers and _should_ be polyfilled by frontend tools that incorporate core-js polyfills (Next.js, CRA) if your browserslist config indicates that support is required.
+The respective functions they recommend are cleaner and less error-prone than their older alternatives. [`Object.hasOwn()`](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Object/hasOwn) shipped in [Node 16.9.0](https://github.com/nodejs/node/blob/master/doc/changelogs/CHANGELOG_V16.md#2021-09-07-version-1690-current-targos) (2021-09-07). [`String#at()`](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/String/at) and [`Array#at()`](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Array/at) shipped in [Node 16.6.0](https://github.com/nodejs/node/blob/master/doc/changelogs/CHANGELOG_V16.md#16.6.0) (2021-07-29). Since `eslint-config-lostfictions` itself requires Node 18+ as of `v7.0.0`, these functions should be available in all environments where you'd use the config.
 
 ### The `in` operator
 

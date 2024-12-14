@@ -11,8 +11,14 @@ import unicorn from "eslint-plugin-unicorn";
 import comments from "@eslint-community/eslint-plugin-eslint-comments";
 import * as importPlugin from "eslint-plugin-import";
 import sonarjs from "eslint-plugin-sonarjs";
+import vitest from "@vitest/eslint-plugin";
 
 import pkg from "./package.json" with { type: "json" };
+
+// TODO:
+// also consider
+// https://github.com/ota-meshi/eslint-plugin-astro/
+// https://github.com/ota-meshi/eslint-plugin-regexp
 
 const docPage = `${pkg.homepage}/tree/v${pkg.version}`;
 
@@ -1051,6 +1057,67 @@ const config = tseslint.config(
       "import/no-commonjs": "off",
     },
   },
+  // this set of overrides tries to conform to the jest/vitest defaults for
+  // `testMatch` paths/filenames:
+  // https://jestjs.io/docs/configuration#testmatch-arraystring. it's admittedly
+  // not very configurable at the moment, but in the interests of keeping
+  // everything simple and in one file let's keep it like this for now.
+  {
+    files: [
+      "**/__tests__/*.{js,jsx,ts,tsx}",
+      "**/*.{spec,test}.{js,jsx,ts,tsx}",
+    ],
+    plugins: { vitest },
+    rules: {
+      ///////////////////////////////////////////////////////////////////
+      // eslint-plugin-vitest rules.
+      ///////////////////////////////////////////////////////////////////
+
+      "vitest/consistent-test-it": "warn",
+      "vitest/expect-expect": "warn",
+
+      /**
+       * https://github.com/jest-community/eslint-plugin-jest/blob/main/docs/rules/no-alias-methods.md
+       */
+      "vitest/no-alias-methods": "warn",
+
+      "vitest/no-conditional-expect": "warn",
+      "vitest/no-done-callback": "warn",
+      "vitest/no-identical-title": "warn",
+      "vitest/no-interpolation-in-snapshots": "warn",
+      "vitest/no-mocks-import": "warn",
+      "vitest/no-standalone-expect": "error",
+
+      /**
+       * https://github.com/jest-community/eslint-plugin-jest/blob/main/docs/rules/prefer-each.md
+       */
+      "vitest/prefer-each": "warn",
+
+      /**
+       * https://github.com/jest-community/eslint-plugin-jest/blob/main/docs/rules/prefer-hooks-in-order.md
+       */
+      "vitest/prefer-hooks-in-order": "warn",
+
+      /**
+       * https://github.com/jest-community/eslint-plugin-jest/blob/main/docs/rules/prefer-hooks-on-top.md
+       */
+      "vitest/prefer-hooks-on-top": "warn",
+
+      /**
+       * https://github.com/jest-community/eslint-plugin-jest/blob/main/docs/rules/prefer-mock-promise-shorthand.md
+       */
+      "vitest/prefer-mock-promise-shorthand": "warn",
+
+      "vitest/prefer-snapshot-hint": ["warn", "multi"],
+      "vitest/prefer-to-be": "warn",
+      "vitest/prefer-to-contain": "warn",
+      "vitest/prefer-to-have-length": "warn",
+      "vitest/valid-describe-callback": "warn",
+      "vitest/valid-expect": "warn",
+      "vitest/valid-expect-in-promise": "warn",
+      "vitest/valid-title": "warn",
+    },
+  },
 );
 
 export default config;
@@ -1169,70 +1236,3 @@ export const react = [
     },
   },
 ];
-
-// TODO:
-// "eslint-plugin-jest": "^27.2.3",
-// also consider
-// https://github.com/ota-meshi/eslint-plugin-astro/
-// https://github.com/ota-meshi/eslint-plugin-regexp
-// https://github.com/vitest-dev/eslint-plugin-vitest
-// and maybe
-// https://perfectionist.dev/rules/sort-imports
-
-// this set of overrides tries to conform to the jest defaults for `testMatch`
-// paths/filenames: https://jestjs.io/docs/configuration#testmatch-arraystring
-// it's admittedly not very configurable at the moment, but in the interests of
-// keeping everything simple and in one file let's keep it like this for now.
-// config.overrides.push({
-//   files: ["**/__tests__/*.{js,jsx,ts,tsx}", "**/*.{spec,test}.{js,jsx,ts,tsx}"],
-//   plugins: [...config.plugins, "jest"],
-//   rules: {
-//     ///////////////////////////////////////////////////////////////////
-//     // eslint-plugin-jest rules.
-//     ///////////////////////////////////////////////////////////////////
-
-//     "jest/consistent-test-it": "warn",
-//     "jest/expect-expect": "warn",
-
-//     /**
-//      * https://github.com/jest-community/eslint-plugin-jest/blob/main/docs/rules/no-alias-methods.md
-//      */
-//     "jest/no-alias-methods": "warn",
-
-//     "jest/no-conditional-expect": "warn",
-//     "jest/no-done-callback": "warn",
-//     "jest/no-identical-title": "warn",
-//     "jest/no-interpolation-in-snapshots": "warn",
-//     "jest/no-mocks-import": "warn",
-//     "jest/no-standalone-expect": "error",
-
-//     /**
-//      * https://github.com/jest-community/eslint-plugin-jest/blob/main/docs/rules/prefer-each.md
-//      */
-//     "jest/prefer-each": "warn",
-
-//     /**
-//      * https://github.com/jest-community/eslint-plugin-jest/blob/main/docs/rules/prefer-hooks-in-order.md
-//      */
-//     "jest/prefer-hooks-in-order": "warn",
-
-//     /**
-//      * https://github.com/jest-community/eslint-plugin-jest/blob/main/docs/rules/prefer-hooks-on-top.md
-//      */
-//     "jest/prefer-hooks-on-top": "warn",
-
-//     /**
-//      * https://github.com/jest-community/eslint-plugin-jest/blob/main/docs/rules/prefer-mock-promise-shorthand.md
-//      */
-//     "jest/prefer-mock-promise-shorthand": "warn",
-
-//     "jest/prefer-snapshot-hint": ["warn", "multi"],
-//     "jest/prefer-to-be": "warn",
-//     "jest/prefer-to-contain": "warn",
-//     "jest/prefer-to-have-length": "warn",
-//     "jest/valid-describe-callback": "warn",
-//     "jest/valid-expect": "warn",
-//     "jest/valid-expect-in-promise": "warn",
-//     "jest/valid-title": "warn",
-//   },
-// });
