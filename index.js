@@ -695,7 +695,18 @@ const config = tseslint.config(
         { allowNever: false },
       ],
 
-      "@typescript-eslint/switch-exhaustiveness-check": "warn",
+      /**
+       * https://typescript-eslint.io/rules/switch-exhaustiveness-check/
+       *
+       * this is fine, but an assert-never exhaustiveness check is usually the
+       * better choice. the latter has better guarantees of surfacing any values
+       * that slip through to the `default` case at runtime, since typescript
+       * isn't always as sound as we hope.
+       *
+       * annoyingly, it also yields errors for `switch (true)`, which can
+       * sometimes be nice for "poor man's pattern matching" statements.
+       */
+      "@typescript-eslint/switch-exhaustiveness-check": "off",
 
       /**
        * https://github.com/typescript-eslint/typescript-eslint/blob/main/packages/eslint-plugin/docs/rules/unbound-method.md
