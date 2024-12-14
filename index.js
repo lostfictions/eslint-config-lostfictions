@@ -1083,7 +1083,15 @@ const config = tseslint.config(
 
       "vitest/no-conditional-expect": "warn",
       "vitest/no-done-callback": "warn",
+
+      /** https://github.com/vitest-dev/eslint-plugin-vitest/blob/main/docs/rules/no-focused-tests.md */
+      "vitest/no-focused-tests": "warn",
+
       "vitest/no-identical-title": "warn",
+
+      /** https://github.com/vitest-dev/eslint-plugin-vitest/blob/main/docs/rules/no-import-node-test.md */
+      "vitest/no-import-node-test": "warn",
+
       "vitest/no-interpolation-in-snapshots": "warn",
       "vitest/no-mocks-import": "warn",
       "vitest/no-standalone-expect": "error",
@@ -1112,6 +1120,10 @@ const config = tseslint.config(
       "vitest/prefer-to-be": "warn",
       "vitest/prefer-to-contain": "warn",
       "vitest/prefer-to-have-length": "warn",
+
+      /** https://github.com/vitest-dev/eslint-plugin-vitest/blob/main/docs/rules/require-local-test-context-for-concurrent-snapshots.md */
+      "vitest/require-local-test-context-for-concurrent-snapshots": "warn",
+
       "vitest/valid-describe-callback": "warn",
       "vitest/valid-expect": "warn",
       "vitest/valid-expect-in-promise": "warn",
