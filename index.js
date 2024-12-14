@@ -9,6 +9,7 @@ import reactHooks from "eslint-plugin-react-hooks";
 import node from "eslint-plugin-n";
 import unicorn from "eslint-plugin-unicorn";
 import comments from "@eslint-community/eslint-plugin-eslint-comments";
+import * as importPlugin from "eslint-plugin-import";
 
 import pkg from "./package.json" with { type: "json" };
 
@@ -20,6 +21,12 @@ const jsFiles = ["**/*.{js,jsx,cjs,mjs,ts,tsx,cts,mts}"];
 const reactConfig =
   /** @type {NonNullable<typeof reactPlugin.configs.flat> } */ (
     reactPlugin.configs.flat
+  );
+
+// same here
+const importConfig =
+  /** @type {NonNullable<typeof importPlugin.flatConfigs> } */ (
+    importPlugin.flatConfigs
   );
 
 const config = tseslint.config(
@@ -46,9 +53,11 @@ const config = tseslint.config(
   ...[
     eslint.configs.recommended,
     tseslint.configs.recommendedTypeChecked,
-    node.configs["flat/recommended-module"],
+    node.configs["flat/recommended"],
     { plugins: { unicorn } },
     { plugins: { comments } },
+    { plugins: { import: importPlugin } },
+    importConfig.typescript,
     prettier,
   ]
     .flat()
@@ -69,6 +78,7 @@ const config = tseslint.config(
     settings: {
       node: { version: ">=18.20.5" },
       react: { version: "detect" },
+      "import/resolver": { typescript: { alwaysTryTypes: true }, node: true },
     },
     rules: {
       ///////////////////////////////////////////////////////////////////
@@ -523,9 +533,12 @@ const config = tseslint.config(
       "@typescript-eslint/no-this-alias": "warn",
       "@typescript-eslint/no-redundant-type-constituents": "warn",
 
-      // TODO: disable for js
-      /** https://typescript-eslint.io/rules/no-require-imports */
-      "@typescript-eslint/no-require-imports": "warn",
+      /**
+       * https://typescript-eslint.io/rules/no-require-imports
+       *
+       * already covered by "import/no-commonjs"
+       */
+      "@typescript-eslint/no-require-imports": "off",
 
       "@typescript-eslint/no-restricted-types": [
         "warn",
@@ -720,8 +733,13 @@ const config = tseslint.config(
       /** https://github.com/eslint-community/eslint-plugin-n/blob/HEAD/docs/rules/no-unsupported-features/node-builtins.md */
       "n/no-unsupported-features/node-builtins": "off",
 
-      /** https://github.com/eslint-community/eslint-plugin-n/blob/master/docs/rules/prefer-node-protocol.md */
-      "n/prefer-node-protocol": "warn",
+      /**
+       * https://github.com/eslint-community/eslint-plugin-n/blob/master/docs/rules/prefer-node-protocol.md
+       *
+       * not a bad idea, but too obtrusive when viewing older code and somewhat
+       * low-value.
+       */
+      "n/prefer-node-protocol": "off",
 
       "n/prefer-promises/fs": "warn",
       "n/prefer-promises/dns": "warn",
@@ -746,8 +764,12 @@ const config = tseslint.config(
       "unicorn/expiring-todo-comments": "warn",
       "unicorn/explicit-length-check": "warn",
 
-      /** https://github.com/sindresorhus/eslint-plugin-unicorn/blob/main/docs/rules/no-anonymous-default-export.md */
-      "unicorn/no-anonymous-default-export": "warn",
+      /**
+       * https://github.com/sindresorhus/eslint-plugin-unicorn/blob/main/docs/rules/no-anonymous-default-export.md
+       *
+       * already covered by "import/no-anonymous-default-export", which is more comprehensive.
+       */
+      "unicorn/no-anonymous-default-export": "off",
 
       "unicorn/no-array-for-each": "warn",
 
@@ -858,6 +880,78 @@ const config = tseslint.config(
       "comments/no-duplicate-disable": "off",
       "comments/no-unused-disable": "off",
       "comments/no-unused-enable": "off",
+
+      ///////////////////////////////////////////////////////////////////
+      // eslint-plugin-import rules.
+      ///////////////////////////////////////////////////////////////////
+
+      /**
+       * https://github.com/import-js/eslint-plugin-import/blob/main/docs/rules/no-anonymous-default-export.md
+       *
+       * anonymous default exports are not only harder to search for, they degrade
+       * typescript's ability to suggest automatic imports.
+       */
+      "import/no-anonymous-default-export": [
+        "warn",
+        {
+          allowArray: false,
+          allowArrowFunction: false,
+          allowAnonymousClass: false,
+          allowAnonymousFunction: false,
+          // allowed by default, and we allow it ourselves since it's useful in
+          // some scenarios (HOCs, etc).
+          allowCallExpression: true,
+          allowLiteral: false,
+          allowNew: false,
+          allowObject: false,
+        },
+      ],
+
+      "import/no-commonjs": "warn",
+
+      /**
+       * https://github.com/import-js/eslint-plugin-import/blob/main/docs/rules/no-duplicates.md
+       */
+      "import/no-duplicates": "warn",
+
+      /**
+       * https://github.com/import-js/eslint-plugin-import/blob/main/docs/rules/no-empty-named-blocks.md
+       */
+      "import/no-empty-named-blocks": "warn",
+
+      // no-unused-modules is potentially useful, but currently generates a
+      // significant number of false positives (for example, exports in module
+      // declaration blocks in .d.ts files). it's also not too rare to have
+      // exports that aren't in the "main" file according to the package.json but
+      // which are still usable by consumers via namespaced imports, eg.
+      // `import x from "my-module/other-file-in-my-module"`.
+      // as far as i can tell eslint-plugin-import doesn't yet have good solutions
+      // for all of these edge cases.
+      //
+      // i recommend enabling this rule manually if you need to track down dead
+      // code.
+      //
+      // "import/no-unused-modules": ["warn", { unusedExports: true }],
+
+      "import/order": [
+        "warn",
+        {
+          groups: [
+            "builtin",
+            "external",
+            "internal",
+            ["parent", "sibling", "index", "unknown"],
+            "object",
+            "type",
+          ],
+        },
+      ],
+    },
+  },
+  {
+    files: ["**/*.config.{js,ts,mjs,mts,cjs,cts}"],
+    rules: {
+      "import/no-anonymous-default-export": "off",
     },
   },
 );
@@ -980,8 +1074,6 @@ export const react = [
 ];
 
 // TODO:
-// "eslint-import-resolver-typescript": "^3.5.5",
-// "eslint-plugin-import": "^2.28.0",
 // "eslint-plugin-jest": "^27.2.3",
 // "eslint-plugin-sonarjs": "^0.19.0",
 // also consider
@@ -992,87 +1084,17 @@ export const react = [
 // https://perfectionist.dev/rules/sort-imports
 
 const oldConfig = {
-  extends: ["plugin:import/typescript"],
-  plugins: ["import", "sonarjs"],
+  plugins: ["sonarjs"],
   // ignore jest snapshots and the eslint config itself by default.
   ignorePatterns: ["*.test.ts.snap", ".eslintrc.js"],
-  reportUnusedDisableDirectives: true,
   rules: {
-    ///////////////////////////////////////////////////////////////////
-    // eslint-plugin-import rules.
-    ///////////////////////////////////////////////////////////////////
-
-    /**
-     * https://github.com/import-js/eslint-plugin-import/blob/main/docs/rules/no-anonymous-default-export.md
-     *
-     * anonymous default exports are not only harder to search for, they degrade
-     * typescript's ability to suggest automatic imports.
-     */
-    "import/no-anonymous-default-export": [
-      "warn",
-      {
-        allowArray: false,
-        allowArrowFunction: false,
-        allowAnonymousClass: false,
-        allowAnonymousFunction: false,
-        // allowed by default, and we allow it ourselves since it's useful in
-        // some scenarios (HOCs, etc).
-        allowCallExpression: true,
-        allowLiteral: false,
-        allowNew: false,
-        allowObject: false,
-      },
-    ],
-
-    "import/no-commonjs": "warn",
-
-    /**
-     * https://github.com/import-js/eslint-plugin-import/blob/main/docs/rules/no-duplicates.md
-     */
-    "import/no-duplicates": "warn",
-
-    /**
-     * https://github.com/import-js/eslint-plugin-import/blob/main/docs/rules/no-empty-named-blocks.md
-     */
-    "import/no-empty-named-blocks": "warn",
-
-    // no-unused-modules is potentially useful, but currently generates a
-    // significant number of false positives (for example, exports in module
-    // declaration blocks in .d.ts files). it's also not too rare to have
-    // exports that aren't in the "main" file according to the package.json but
-    // which are still usable by consumers via namespaced imports, eg.
-    // `import x from "my-module/other-file-in-my-module"`.
-    // as far as i can tell eslint-plugin-import doesn't yet have good solutions
-    // for all of these edge cases.
-    //
-    // i recommend enabling this rule manually if you need to track down dead
-    // code.
-    //
-    // "import/no-unused-modules": ["warn", { unusedExports: true }],
-
-    "import/order": [
-      "warn",
-      {
-        groups: [
-          "builtin",
-          "external",
-          "internal",
-          ["parent", "sibling", "index", "unknown"],
-          "object",
-          "type",
-        ],
-      },
-    ],
-
     /////////////////////////////////////////////////////////////////////
     // eslint-plugin-sonarjs rules.
     /////////////////////////////////////////////////////////////////////
 
     "sonarjs/no-all-duplicated-branches": "warn",
 
-    /**
-     * https://github.com/SonarSource/eslint-plugin-sonarjs/blob/master/docs/rules/no-collection-size-mischeck.md
-     */
+    /** https://github.com/SonarSource/eslint-plugin-sonarjs/blob/master/docs/rules/no-collection-size-mischeck.md */
     "sonarjs/no-collection-size-mischeck": "warn",
 
     "sonarjs/no-element-overwrite": "warn",

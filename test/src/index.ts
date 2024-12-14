@@ -188,6 +188,7 @@ for (let i = 0; i < 10; i++) {
   }
 }
 
+// eslint-disable-next-line @typescript-eslint/no-unsafe-member-access
 (Object.prototype as any)["dog"] = "hmm";
 
 async function hmm() {
@@ -322,6 +323,7 @@ if (prop in xory) {
 // an invalid "describe" in a non-test file should not cause warnings:
 describe("", () => {});
 
+// eslint-disable-next-line @typescript-eslint/switch-exhaustiveness-check
 switch (true) {
   // eslint-disable-next-line eqeqeq
   case cat == "lol":
@@ -382,7 +384,7 @@ if (typeof inconsistent === "undefined") {
 
 const arr2 = [z, ...(foo ? [z, z] : "")];
 
-// eslint-disable-next-line unicorn/no-anonymous-default-export
+// eslint-disable-next-line import/no-anonymous-default-export
 export default () => {};
 
 // eslint-disable-next-line unicorn/no-invalid-fetch-options
