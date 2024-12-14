@@ -389,6 +389,10 @@ export default () => {};
 // eslint-disable-next-line unicorn/no-invalid-fetch-options
 const respnse = await fetch("/", { body: "foo=bar" });
 
+const ss = "hello";
+// eslint-disable-next-line @typescript-eslint/no-unsafe-unary-minus
+const sss = -ss;
+
 const a = false;
 const b = true;
 // eslint-disable-next-line unicorn/no-negation-in-equality-check

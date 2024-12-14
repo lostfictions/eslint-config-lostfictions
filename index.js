@@ -991,10 +991,97 @@ const config = tseslint.config(
       "sonarjs/prefer-while": "warn",
     },
   },
+  // we don't care about some stuff when writing config files.
   {
     files: ["**/*.config.{js,ts,mjs,mts,cjs,cts}"],
     rules: {
       "import/no-anonymous-default-export": "off",
+    },
+  },
+  // tweak some rules for js files.
+  //
+  // note that this config is still designed primarily for typescript and may not
+  // catch errors that a more js-centric config might (for example, with a more
+  // thorough eslint-plugin-import config). this is more for best-effort
+  // compatibility/harm reduction.
+  {
+    files: ["**/*.{js,jsx,cjs,mjs}"],
+    rules: {
+      // `no-undef` might cause a bit of redundant noise if `checkJs` is also on,
+      // but better to be noisy than to miss errors.
+      "no-undef": "error",
+
+      /** https://eslint.org/docs/rules/no-use-before-define */
+      "no-use-before-define": [
+        "error",
+        {
+          // functions are always hoisted; this is safe.
+          functions: false,
+
+          // these lines are a little more dangerous -- it'll squelch warnings for
+          // classes and variables that are defined later in an *upper* scope --
+          // but should still catch use-before-defines for both in the current
+          // scope.
+          classes: false,
+          variables: false,
+
+          // named exports in `export {}` are always safe, even if they contain
+          // references to variables declared later in the code.
+          allowNamedExports: true,
+        },
+      ],
+
+      /**
+       * https://eslint.org/docs/rules/strict
+       *
+       * testing reintroducing this rule -- hopefully if nothing else it
+       * will remind us to set `"type": "module"` in `package.json`.
+       */
+      strict: ["warn", "global"],
+
+      // https://typescript-eslint.io/rules/no-unsafe-argument
+      // https://typescript-eslint.io/rules/no-unsafe-assignment
+      // https://typescript-eslint.io/rules/no-unsafe-call
+      // https://typescript-eslint.io/rules/no-unsafe-member-access
+      // https://typescript-eslint.io/rules/no-unsafe-return
+      //
+      // these rules try to prevent `any` from leaking freely -- but that means
+      // they don't really work in untyped js code.
+      "@typescript-eslint/no-unsafe-argument": "off",
+      "@typescript-eslint/no-unsafe-assignment": "off",
+      "@typescript-eslint/no-unsafe-call": "off",
+      "@typescript-eslint/no-unsafe-member-access": "off",
+      "@typescript-eslint/no-unsafe-return": "off",
+
+      /**
+       * https://typescript-eslint.io/rules/require-array-sort-compare
+       *
+       * when the type of the array can't be determined, this rule will always
+       * yield a warning -- which results a lot of false positives for string
+       * arrays.
+       */
+      "@typescript-eslint/require-array-sort-compare": "off",
+
+      /**
+       * https://typescript-eslint.io/rules/unbound-method
+       *
+       * this is already disabled in the base config, but i hope to re-enable it
+       * someday, if issues like false positives for third-party code are ever
+       * resolved. but it seems to cause even more false positives in js than in
+       * typescript (even with a `tsconfig.json` in strict mode with `checkJs`
+       * on). the upshot is that we probably can't turn it on for plain js files
+       * anytime soon.
+       */
+      "@typescript-eslint/unbound-method": "off",
+
+      /**
+       * https://github.com/import-js/eslint-plugin-import/blob/main/docs/rules/no-commonjs.md
+       *
+       * assume js/jsx files use commonjs (or at least tolerate the use of
+       * `require`). the consequences are less dire than for ts code, where
+       * `require` results in an untyped import by default.
+       */
+      "import/no-commonjs": "off",
     },
   },
 );
@@ -1180,84 +1267,5 @@ export const react = [
 //     "jest/valid-expect": "warn",
 //     "jest/valid-expect-in-promise": "warn",
 //     "jest/valid-title": "warn",
-//   },
-// });
-
-// // tweak some rules for js files.
-// //
-// // note that this config is still designed primarily for typescript and may not
-// // catch errors that a more js-centric config might (for example, with a more
-// // thorough eslint-plugin-import config). this is more for best-effort
-// // compatibility/harm reduction.
-// config.overrides.push({
-//   files: ["**/*.{js,jsx}"],
-//   rules: {
-//     // `no-undef` might cause a bit of redundant noise if `checkJs` is also on,
-//     // but better to be noisy than to miss errors.
-//     "no-undef": "error",
-
-//     /**
-//      * https://eslint.org/docs/rules/no-use-before-define
-//      */
-//     "no-use-before-define": [
-//       "error",
-//       {
-//         // functions are always hoisted; this is safe.
-//         functions: false,
-
-//         // these lines are a little more dangerous -- it'll squelch warnings for
-//         // classes and variables that are defined later in an *upper* scope --
-//         // but should still catch use-before-defines for both in the current
-//         // scope.
-//         classes: false,
-//         variables: false,
-
-//         // named exports in `export {}` are always safe, even if they contain
-//         // references to variables declared later in the code.
-//         allowNamedExports: true,
-//       },
-//     ],
-
-//     // per the documentation for `strict`
-//     // (https://eslint.org/docs/rules/strict), correctly detecting whether 'use
-//     // strict' is necessary require setting eslint's parser options. (it's not
-//     // necessary in es modules, typescript, jsx, or files transformed by babel,
-//     // swc or another transpiler, for example.) as it stands, we don't know
-//     // enough about the context of plain js files to safely warn about adding OR
-//     // removing 'use strict'. maintainers of js files where there would be
-//     // significant benefit to enforcing this should add it in their repo eslint
-//     // config (or an .eslintrc file in a subdirectory where the rule should be
-//     // enforced).
-//     strict: "off",
-
-//     /**
-//      * https://typescript-eslint.io/rules/require-array-sort-compare
-//      *
-//      * when the type of the array can't be determined, this rule will always
-//      * yield a warning -- which results a lot of false positives for string
-//      * arrays.
-//      */
-//     "@typescript-eslint/require-array-sort-compare": "off",
-
-//     /**
-//      * https://typescript-eslint.io/rules/unbound-method
-//      *
-//      * this is already disabled in the base config, but i hope to re-enable it
-//      * someday, if issues like false positives for third-party code are ever
-//      * resolved. but it seems to cause even more false positives in js than in
-//      * typescript (even with a `tsconfig.json` in strict mode with `checkJs`
-//      * on). the upshot is that we probably can't turn it on for plain js files
-//      * anytime soon.
-//      */
-//     "@typescript-eslint/unbound-method": "off",
-
-//     /**
-//      * https://github.com/import-js/eslint-plugin-import/blob/main/docs/rules/no-commonjs.md
-//      *
-//      * assume js/jsx files use commonjs (or at least tolerate the use of
-//      * `require`). the consequences are less dire than for ts code, where
-//      * `require` results in an untyped import by default.
-//      */
-//     "import/no-commonjs": "off",
 //   },
 // });
