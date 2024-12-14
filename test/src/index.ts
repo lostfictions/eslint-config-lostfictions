@@ -144,8 +144,7 @@ if (y && y) {
   console.log("hmm");
 }
 
-// uh weird, this broke around commit 703527b
-// !eslint-disable-next-line sonarjs/no-ignored-return
+// eslint-disable-next-line sonarjs/no-ignored-return
 "something".slice(1, 2);
 
 class Mystery {

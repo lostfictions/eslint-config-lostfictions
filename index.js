@@ -10,6 +10,7 @@ import node from "eslint-plugin-n";
 import unicorn from "eslint-plugin-unicorn";
 import comments from "@eslint-community/eslint-plugin-eslint-comments";
 import * as importPlugin from "eslint-plugin-import";
+import sonarjs from "eslint-plugin-sonarjs";
 
 import pkg from "./package.json" with { type: "json" };
 
@@ -57,6 +58,7 @@ const config = tseslint.config(
     { plugins: { unicorn } },
     { plugins: { comments } },
     { plugins: { import: importPlugin } },
+    { plugins: { sonarjs } },
     importConfig.typescript,
     prettier,
   ]
@@ -909,14 +911,10 @@ const config = tseslint.config(
 
       "import/no-commonjs": "warn",
 
-      /**
-       * https://github.com/import-js/eslint-plugin-import/blob/main/docs/rules/no-duplicates.md
-       */
+      /** https://github.com/import-js/eslint-plugin-import/blob/main/docs/rules/no-duplicates.md */
       "import/no-duplicates": "warn",
 
-      /**
-       * https://github.com/import-js/eslint-plugin-import/blob/main/docs/rules/no-empty-named-blocks.md
-       */
+      /** https://github.com/import-js/eslint-plugin-import/blob/main/docs/rules/no-empty-named-blocks.md */
       "import/no-empty-named-blocks": "warn",
 
       // no-unused-modules is potentially useful, but currently generates a
@@ -946,6 +944,51 @@ const config = tseslint.config(
           ],
         },
       ],
+
+      /////////////////////////////////////////////////////////////////////
+      // eslint-plugin-sonarjs rules.
+      /////////////////////////////////////////////////////////////////////
+
+      "sonarjs/no-all-duplicated-branches": "warn",
+
+      /** https://github.com/SonarSource/eslint-plugin-sonarjs/blob/master/docs/rules/no-collection-size-mischeck.md */
+      "sonarjs/no-collection-size-mischeck": "warn",
+
+      "sonarjs/no-element-overwrite": "warn",
+      "sonarjs/no-empty-collection": "warn",
+      "sonarjs/no-identical-expressions": "warn",
+      "sonarjs/no-ignored-return": "warn",
+      "sonarjs/no-inverted-boolean-check": "warn",
+
+      /**
+       * https://github.com/SonarSource/eslint-plugin-sonarjs/blob/master/docs/rules/no-nested-switch.md
+       *
+       * not hugely useful when using a formatter -- small nested switches haven't
+       * been a problem for readability in my experience. hopefully you can notice
+       * when a nested switch is becoming cumbersome enough to refactor out
+       * without needing a warning.
+       */
+      "sonarjs/no-nested-switch": "off",
+
+      /**
+       * https://github.com/SonarSource/eslint-plugin-sonarjs/blob/master/docs/rules/no-redundant-boolean.md
+       *
+       * already handled by
+       * "@typescript-eslint/no-unnecessary-boolean-literal-compare":
+       * https://typescript-eslint.io/rules/no-unnecessary-boolean-literal-compare/
+       */
+      "sonarjs/no-redundant-boolean": "off",
+
+      /**
+       * https://github.com/SonarSource/eslint-plugin-sonarjs/blob/master/docs/rules/no-redundant-jump.md
+       *
+       * this overlaps with the eslint built-in no-useless-return, but handles
+       * some other cases, like a useless `continue` in a for-of loop.
+       */
+      "sonarjs/no-redundant-jump": "warn",
+
+      "sonarjs/prefer-single-boolean-return": "warn",
+      "sonarjs/prefer-while": "warn",
     },
   },
   {
@@ -1075,66 +1118,12 @@ export const react = [
 
 // TODO:
 // "eslint-plugin-jest": "^27.2.3",
-// "eslint-plugin-sonarjs": "^0.19.0",
 // also consider
 // https://github.com/ota-meshi/eslint-plugin-astro/
 // https://github.com/ota-meshi/eslint-plugin-regexp
 // https://github.com/vitest-dev/eslint-plugin-vitest
 // and maybe
 // https://perfectionist.dev/rules/sort-imports
-
-const oldConfig = {
-  plugins: ["sonarjs"],
-  // ignore jest snapshots and the eslint config itself by default.
-  ignorePatterns: ["*.test.ts.snap", ".eslintrc.js"],
-  rules: {
-    /////////////////////////////////////////////////////////////////////
-    // eslint-plugin-sonarjs rules.
-    /////////////////////////////////////////////////////////////////////
-
-    "sonarjs/no-all-duplicated-branches": "warn",
-
-    /** https://github.com/SonarSource/eslint-plugin-sonarjs/blob/master/docs/rules/no-collection-size-mischeck.md */
-    "sonarjs/no-collection-size-mischeck": "warn",
-
-    "sonarjs/no-element-overwrite": "warn",
-    "sonarjs/no-empty-collection": "warn",
-    "sonarjs/no-identical-expressions": "warn",
-    "sonarjs/no-ignored-return": "warn",
-    "sonarjs/no-inverted-boolean-check": "warn",
-
-    /**
-     * https://github.com/SonarSource/eslint-plugin-sonarjs/blob/master/docs/rules/no-nested-switch.md
-     *
-     * not hugely useful when using a formatter -- small nested switches haven't
-     * been a problem for readability in my experience. hopefully you can notice
-     * when a nested switch is becoming cumbersome enough to refactor out
-     * without needing a warning.
-     */
-    "sonarjs/no-nested-switch": "off",
-
-    /**
-     * https://github.com/SonarSource/eslint-plugin-sonarjs/blob/master/docs/rules/no-redundant-boolean.md
-     *
-     * already handled by
-     * "@typescript-eslint/no-unnecessary-boolean-literal-compare":
-     * https://typescript-eslint.io/rules/no-unnecessary-boolean-literal-compare/
-     */
-    "sonarjs/no-redundant-boolean": "off",
-
-    /**
-     * https://github.com/SonarSource/eslint-plugin-sonarjs/blob/master/docs/rules/no-redundant-jump.md
-     *
-     * this overlaps with the eslint built-in no-useless-return, but handles
-     * some other cases, like a useless `continue` in a for-of loop.
-     */
-    "sonarjs/no-redundant-jump": "warn",
-
-    "sonarjs/prefer-single-boolean-return": "warn",
-    "sonarjs/prefer-while": "warn",
-  },
-  overrides: [],
-};
 
 // this set of overrides tries to conform to the jest defaults for `testMatch`
 // paths/filenames: https://jestjs.io/docs/configuration#testmatch-arraystring
