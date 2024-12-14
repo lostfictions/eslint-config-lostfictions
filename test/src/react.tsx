@@ -10,7 +10,7 @@ let z: object = {};
 
 const r = (n: number) => ({});
 
-// eslint-disable-next-line n/no-process-env
+// eslint-disable-next-line node/no-process-env
 if (process.env["NODE_ENV"] === "development") {
   console.log("works here too");
 }
