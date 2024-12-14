@@ -728,7 +728,7 @@ const config = tseslint.config(
       "node/no-deprecated-api": "warn",
 
       /** https://github.com/eslint-community/eslint-plugin-n/blob/master/docs/rules/no-exports-assign.md */
-      "node/no-exports-assign)": "warn",
+      "node/no-exports-assign": "warn",
 
       /**
        * https://github.com/eslint-community/eslint-plugin-n/blob/master/docs/rules/no-extraneous-import.md
