@@ -22,8 +22,8 @@ import pkg from "./package.json" with { type: "json" };
 
 const docPage = `${pkg.homepage}/tree/v${pkg.version}`;
 
-const jsAndTsFiles = ["**/*.{js,jsx,cjs,mjs,ts,tsx,cts,mts}"];
 const jsFiles = ["**/*.{js,jsx,cjs,mjs}"];
+const jsonFiles = ["**/*.jsonc", "**/*.json", "**/*.json5"];
 
 // for some reason this imports as possibly undefined
 const reactConfig =
@@ -70,9 +70,9 @@ const config = tseslint.config(
     prettier,
   ]
     .flat()
-    .map((c) => ({ files: jsAndTsFiles, ...c })),
+    .map((c) => ({ ignores: jsonFiles, ...c })),
   {
-    files: jsAndTsFiles,
+    ignores: jsonFiles,
     languageOptions: {
       globals: { ...globals.node, ...globals.browser },
       ecmaVersion: 2025,
@@ -1225,9 +1225,9 @@ export const react = [
     { plugins: { "react-hooks": reactHooks } },
   ]
     .flat()
-    .map((c) => ({ files: jsAndTsFiles, ...c })),
+    .map((c) => ({ ignores: jsonFiles, ...c })),
   {
-    files: jsAndTsFiles,
+    ignores: jsonFiles,
     languageOptions: {
       ...reactConfig.recommended.languageOptions,
       globals: {
