@@ -1,0 +1,5 @@
+{
+  "form": "haha",
+  // eslint-disable-next-line json/no-duplicate-keys
+  "form": "hoho"
+}
