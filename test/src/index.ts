@@ -327,7 +327,6 @@ if (prop in xory) {
 // eslint-disable-next-line @typescript-eslint/no-unsafe-call
 describe("", () => {});
 
-// eslint-disable-next-line @typescript-eslint/switch-exhaustiveness-check
 switch (true) {
   // eslint-disable-next-line eqeqeq
   case cat == "lol":
