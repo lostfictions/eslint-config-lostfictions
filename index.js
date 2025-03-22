@@ -588,14 +588,47 @@ const config = tseslint.config(
       /** https://typescript-eslint.io/rules/no-unnecessary-type-parameters/ */
       "@typescript-eslint/no-unnecessary-type-parameters": "warn",
 
+      ///////////////////////////////////////////////////////////////////
+      // no-unsafe-* family. these rules are sometimes useful but
+      // generate a huge number of false positives and add a lot of
+      // friction, so many of them remain disabled.
+      ///////////////////////////////////////////////////////////////////
+
+      // quick stats (2025-03-22):
+      //
+      // rg '@typescript-eslint/no-unsafe' across local codebases
+      //
+      // no-unsafe-argument
+      // - global disables: 1
+      // - file disables: 2
+      // - line disables: 2
+      //
+      // no-unsafe-assignment
+      // - global disables: 6
+      // - file disables: 1
+      // - line disables: 2
+      //
+      // no-unsafe-call
+      // - global disables: 2
+      // - file disables: 1
+      //
+      // no-unsafe-member-access
+      // - global disables: 2
+      // - file disables: 2
+      // - line disables: 1
+      //
+      // no-unsafe-return
+      // - global disables: 3
+      // - line disables: 1
+
       /** https://typescript-eslint.io/rules/no-unsafe-argument */
-      "@typescript-eslint/no-unsafe-argument": "warn",
+      "@typescript-eslint/no-unsafe-argument": "off",
 
       /** https://typescript-eslint.io/rules/no-unsafe-assignment */
-      "@typescript-eslint/no-unsafe-assignment": "warn",
+      "@typescript-eslint/no-unsafe-assignment": "off",
 
       /** https://typescript-eslint.io/rules/no-unsafe-call */
-      "@typescript-eslint/no-unsafe-call": "warn",
+      "@typescript-eslint/no-unsafe-call": "off",
 
       /** https://typescript-eslint.io/rules/no-unsafe-declaration-merging */
       "@typescript-eslint/no-unsafe-declaration-merging": "warn",
@@ -607,10 +640,10 @@ const config = tseslint.config(
       "@typescript-eslint/no-unsafe-function-type": "error",
 
       /** https://typescript-eslint.io/rules/no-unsafe-member-access */
-      "@typescript-eslint/no-unsafe-member-access": "warn",
+      "@typescript-eslint/no-unsafe-member-access": "off",
 
       /** https://typescript-eslint.io/rules/no-unsafe-return */
-      "@typescript-eslint/no-unsafe-return": "warn",
+      "@typescript-eslint/no-unsafe-return": "off",
 
       /** https://typescript-eslint.io/rules/no-unsafe-type-assertion/ */
       "@typescript-eslint/no-unsafe-type-assertion": "off",
