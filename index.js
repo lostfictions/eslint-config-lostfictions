@@ -3,7 +3,7 @@ import globals from "globals";
 import eslint from "@eslint/js";
 import json from "@eslint/json";
 import tseslint from "typescript-eslint";
-import prettier from "eslint-config-prettier";
+import prettier from "eslint-config-prettier/flat";
 import reactPlugin from "eslint-plugin-react";
 import reactHooks from "eslint-plugin-react-hooks";
 import node from "eslint-plugin-n";
@@ -456,7 +456,10 @@ const config = tseslint.config(
         "constructor",
       ],
 
+      /** https://typescript-eslint.io/rules/consistent-type-assertions */
+      // TODO: 2025-03-20: consider arrayLiteralTypeAssertions option
       "@typescript-eslint/consistent-type-assertions": "warn",
+
       "@typescript-eslint/consistent-type-exports": "warn",
       "@typescript-eslint/method-signature-style": "warn",
       /** https://typescript-eslint.io/rules/no-array-delete/ */
@@ -529,6 +532,9 @@ const config = tseslint.config(
       "@typescript-eslint/no-meaningless-void-operator": "warn",
       "@typescript-eslint/no-misused-new": "warn",
       "@typescript-eslint/no-misused-promises": "warn",
+
+      /** https://typescript-eslint.io/rules/no-misused-spread/ */
+      "@typescript-eslint/no-misused-spread": "warn",
 
       /** https://typescript-eslint.io/rules/no-mixed-enums */
       "@typescript-eslint/no-mixed-enums": "error",
@@ -753,7 +759,10 @@ const config = tseslint.config(
       /** https://typescript-eslint.io/rules/unified-signatures/ */
       "@typescript-eslint/unified-signatures": [
         "warn",
-        { ignoreDifferentlyNamedParameters: true },
+        {
+          ignoreDifferentlyNamedParameters: true,
+          ignoreOverloadsWithDifferentJSDoc: true,
+        },
       ],
       /** https://typescript-eslint.io/rules/use-unknown-in-catch-callback-variable/ */
       "@typescript-eslint/use-unknown-in-catch-callback-variable": "warn",
