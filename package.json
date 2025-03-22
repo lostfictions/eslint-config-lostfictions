@@ -37,7 +37,7 @@
     "typescript-eslint": "^8.18.2"
   },
   "devDependencies": {
-    "@types/node": "^18.19.68",
+    "@types/node": "^20.17.25",
     "@types/react": "^19.0.2",
     "eslint": "^9.17.0",
     "eslint-find-rules": "^4.2.0",
@@ -50,5 +50,5 @@
     "eslint": "^9.16.0",
     "typescript": "^5.7.2"
   },
-  "packageManager": "pnpm@9.7.1+sha512.faf344af2d6ca65c4c5c8c2224ea77a81a5e8859cbc4e06b1511ddce2f0151512431dd19e6aff31f2c6a8f5f2aced9bd2273e1fed7dd4de1868984059d2c4247"
+  "packageManager": "pnpm@10.6.5+sha512.cdf928fca20832cd59ec53826492b7dc25dc524d4370b6b4adbf65803d32efaa6c1c88147c0ae4e8d579a6c9eec715757b50d4fa35eea179d868eada4ed043af"
 }
