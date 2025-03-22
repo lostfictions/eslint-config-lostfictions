@@ -9,10 +9,10 @@
 
 import { foo } from "./other.js";
 
-// eslint-disable-next-line import/order, import/no-duplicates, import/no-extraneous-dependencies
-import { rules } from "@typescript-eslint/eslint-plugin";
-// eslint-disable-next-line import/order, import/no-duplicates, import/no-extraneous-dependencies
-import { rules as oi } from "@typescript-eslint/eslint-plugin";
+// eslint-disable-next-line import/order, import/no-duplicates
+import { Config } from "typescript-eslint";
+// eslint-disable-next-line import/order, import/no-duplicates
+import { Config as oi } from "typescript-eslint";
 
 // eslint-disable-next-line import/no-empty-named-blocks
 import {} from "buffer";
@@ -187,7 +187,6 @@ for (let i = 0; i < 10; i++) {
   }
 }
 
-// eslint-disable-next-line @typescript-eslint/no-unsafe-member-access
 (Object.prototype as any)["dog"] = "hmm";
 
 async function hmm() {
@@ -324,7 +323,6 @@ if (prop in xory) {
 // vitest doesn't dump declares into the global namespace like @types/jest does.
 
 // @ts-expect-error ayup
-// eslint-disable-next-line @typescript-eslint/no-unsafe-call
 describe("", () => {});
 
 switch (true) {
@@ -385,6 +383,7 @@ if (typeof inconsistent === "undefined") {
   console.log("ahh");
 }
 
+// eslint-disable-next-line @typescript-eslint/no-misused-spread
 const arr2 = [z, ...(foo ? [z, z] : "")];
 
 // eslint-disable-next-line import/no-anonymous-default-export
