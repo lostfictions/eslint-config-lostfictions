@@ -33,22 +33,22 @@
     "eslint-plugin-react-hooks": "^5.1.0",
     "eslint-plugin-sonarjs": "^3.0.1",
     "eslint-plugin-unicorn": "^56.0.1",
-    "globals": "^16.0.0",
-    "typescript-eslint": "^8.27.0"
+    "globals": "^17.4.0",
+    "typescript-eslint": "^8.56.1"
   },
   "devDependencies": {
-    "@types/node": "^20.17.25",
-    "@types/react": "^19.0.12",
+    "@types/node": "^24.12.0",
+    "@types/react": "^19.2.14",
     "eslint": "^9.23.0",
     "eslint-find-rules": "^5.0.0",
     "npm-run-all": "^4.1.5",
-    "prettier": "^3.5.3",
-    "typescript": "^5.7.2",
-    "vitest": "^3.0.9"
+    "prettier": "^3.8.1",
+    "typescript": "^5.9.3",
+    "vitest": "^4.0.18"
   },
   "peerDependencies": {
     "eslint": "^9.16.0",
     "typescript": "^5.7.2"
   },
-  "packageManager": "pnpm@10.6.5+sha512.cdf928fca20832cd59ec53826492b7dc25dc524d4370b6b4adbf65803d32efaa6c1c88147c0ae4e8d579a6c9eec715757b50d4fa35eea179d868eada4ed043af"
+  "packageManager": "pnpm@10.29.2+sha512.bef43fa759d91fd2da4b319a5a0d13ef7a45bb985a3d7342058470f9d2051a3ba8674e629672654686ef9443ad13a82da2beb9eeb3e0221c87b8154fff9d74b8"
 }

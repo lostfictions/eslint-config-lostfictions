@@ -1,0 +1,13 @@
+minimumReleaseAge: 10080
+
+onlyBuiltDependencies:
+  - esbuild
+
+strictDepBuilds: true
+
+trustPolicy: no-downgrade
+# trustPolicyIgnoreAfter: 10080
+
+blockExoticSubdeps: true
+# minimumReleaseAgeExclude:
+#   - some-dep
