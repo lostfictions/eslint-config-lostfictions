@@ -9,7 +9,7 @@ import reactHooks from "eslint-plugin-react-hooks";
 import node from "eslint-plugin-n";
 import unicorn from "eslint-plugin-unicorn";
 import comments from "@eslint-community/eslint-plugin-eslint-comments";
-import * as importPlugin from "eslint-plugin-import";
+import { flatConfigs as importPlugin } from "eslint-plugin-import";
 import sonarjs from "eslint-plugin-sonarjs";
 import vitest from "@vitest/eslint-plugin";
 
@@ -29,12 +29,6 @@ const jsonFiles = ["**/*.jsonc", "**/*.json", "**/*.json5"];
 const reactConfig =
   /** @type {NonNullable<typeof reactPlugin.configs.flat> } */ (
     reactPlugin.configs.flat
-  );
-
-// same here
-const importConfig =
-  /** @type {NonNullable<typeof importPlugin.flatConfigs> } */ (
-    importPlugin.flatConfigs
   );
 
 const config = tseslint.config(
@@ -64,9 +58,8 @@ const config = tseslint.config(
     { plugins: { node } },
     { plugins: { unicorn } },
     { plugins: { comments } },
-    { plugins: { import: importPlugin } },
     { plugins: { sonarjs } },
-    importConfig.typescript,
+    importPlugin.typescript,
     prettier,
   ]
     .flat()
@@ -1016,6 +1009,16 @@ const config = tseslint.config(
       ///////////////////////////////////////////////////////////////////
 
       /**
+       * https://github.com/import-js/eslint-plugin-import/blob/main/docs/rules/consistent-type-specifier-style.md
+       */
+      "import/consistent-type-specifier-style": ["warn", "prefer-inline"],
+
+      /**
+       * https://github.com/import-js/eslint-plugin-import/blob/main/docs/rules/enforce-node-protocol-usage.md
+       */
+      "import/enforce-node-protocol-usage": ["warn", "always"],
+
+      /**
        * https://github.com/import-js/eslint-plugin-import/blob/main/docs/rules/no-anonymous-default-export.md
        *
        * anonymous default exports are not only harder to search for, they degrade
@@ -1073,6 +1076,8 @@ const config = tseslint.config(
             "object",
             "type",
           ],
+          sortTypesGroup: true,
+          "newlines-between-types": "ignore",
         },
       ],
 

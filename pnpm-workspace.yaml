@@ -2,11 +2,12 @@ minimumReleaseAge: 10080
 
 onlyBuiltDependencies:
   - esbuild
+  - unrs-resolver
 
 strictDepBuilds: true
 
 trustPolicy: no-downgrade
-# trustPolicyIgnoreAfter: 10080
+trustPolicyIgnoreAfter: 10080
 
 blockExoticSubdeps: true
 # minimumReleaseAgeExclude:

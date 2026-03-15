@@ -14,7 +14,7 @@ import { Config } from "typescript-eslint";
 // eslint-disable-next-line import/order, import/no-duplicates
 import { Config as oi } from "typescript-eslint";
 
-// eslint-disable-next-line import/no-empty-named-blocks
+// eslint-disable-next-line import/no-empty-named-blocks, import/enforce-node-protocol-usage
 import {} from "buffer";
 
 // eslint-disable-next-line @typescript-eslint/no-restricted-types
@@ -205,7 +205,7 @@ if (5 === y) {
   console.log("yoda");
 }
 
-// eslint-disable-next-line import/order, no-useless-rename
+// eslint-disable-next-line import/order, no-useless-rename, import/enforce-node-protocol-usage
 import { format as format } from "path";
 
 const obj = {
@@ -232,10 +232,10 @@ const someNum = "0x3847";
 parseInt(someNum, 10);
 
 // eslint-disable-next-line import/no-commonjs
-require("fs");
+require("node:fs");
 
 if (y) {
-  require("fs");
+  require("node:fs");
 }
 
 // eslint-disable-next-line import/no-commonjs
