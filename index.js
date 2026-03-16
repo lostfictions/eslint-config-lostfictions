@@ -25,11 +25,7 @@ const docPage = `${pkg.homepage}/tree/v${pkg.version}`;
 const jsFiles = ["**/*.{js,jsx,cjs,mjs}"];
 const jsonFiles = ["**/*.jsonc", "**/*.json", "**/*.json5"];
 
-// for some reason this imports as possibly undefined
-const reactConfig =
-  /** @type {NonNullable<typeof reactPlugin.configs.flat> } */ (
-    reactPlugin.configs.flat
-  );
+const reactConfig = reactPlugin.configs.flat;
 
 const config = tseslint.config(
   {
@@ -1043,7 +1039,10 @@ const config = tseslint.config(
       "import/no-commonjs": "warn",
 
       /** https://github.com/import-js/eslint-plugin-import/blob/main/docs/rules/no-duplicates.md */
-      "import/no-duplicates": "warn",
+      "import/no-duplicates": [
+        "warn",
+        { considerQueryString: true, "prefer-inline": true },
+      ],
 
       /** https://github.com/import-js/eslint-plugin-import/blob/main/docs/rules/no-empty-named-blocks.md */
       "import/no-empty-named-blocks": "warn",
