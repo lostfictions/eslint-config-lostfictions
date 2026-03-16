@@ -87,7 +87,7 @@ function expect() {
 }
 expect();
 
-// eslint-disable-next-line unicorn/no-instanceof-array
+// eslint-disable-next-line unicorn/no-instanceof-builtins
 const xdd = [0, 1, 2, 4] instanceof Array;
 
 if (xdd) {

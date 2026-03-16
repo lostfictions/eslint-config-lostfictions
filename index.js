@@ -48,9 +48,6 @@ const config = defineConfig(
   },
   // this hard-to-read little dance-about is necessary, since otherwise eslint
   // will attempt to lint json files with these rules and explode.
-  // @ts-expect-error doesn't seem compatible with defineConfig (replaced
-  // tseslint.config, see here:
-  // https://typescript-eslint.io/packages/typescript-eslint/#migrating-to-defineconfig)
   ...[
     eslint.configs.recommended,
     tseslint.configs.recommendedTypeChecked,
@@ -165,6 +162,7 @@ const config = defineConfig(
       "no-param-reassign": "warn",
       "no-promise-executor-return": "warn",
 
+      // @ts-expect-error unsure why this janks out, don't care
       "no-restricted-globals": [
         "warn",
         {
@@ -885,6 +883,11 @@ const config = defineConfig(
       // eslint-plugin-unicorn rules.
       ///////////////////////////////////////////////////////////////////
 
+      /** https://github.com/sindresorhus/eslint-plugin-unicorn/blob/main/docs/rules/consistent-date-clone.md */
+      "unicorn/consistent-date-clone": "warn",
+
+      "unicorn/consistent-destructuring": "warn",
+
       /**
        * https://github.com/sindresorhus/eslint-plugin-unicorn/blob/main/docs/rules/consistent-empty-array-spread.md
        *
@@ -896,10 +899,15 @@ const config = defineConfig(
       "unicorn/consistent-existence-index-check": "warn",
 
       "unicorn/consistent-function-scoping": "warn",
-      "unicorn/consistent-destructuring": "warn",
       "unicorn/error-message": "warn",
       "unicorn/expiring-todo-comments": "warn",
       "unicorn/explicit-length-check": "warn",
+
+      /** https://github.com/sindresorhus/eslint-plugin-unicorn/blob/main/docs/rules/isolated-functions.md */
+      "unicorn/isolated-functions": "warn",
+
+      /** https://github.com/sindresorhus/eslint-plugin-unicorn/blob/main/docs/rules/no-accessor-recursion.md */
+      "unicorn/no-accessor-recursion": "warn",
 
       /**
        * https://github.com/sindresorhus/eslint-plugin-unicorn/blob/main/docs/rules/no-anonymous-default-export.md
@@ -910,10 +918,20 @@ const config = defineConfig(
 
       "unicorn/no-array-for-each": "warn",
 
+      /** https://github.com/sindresorhus/eslint-plugin-unicorn/blob/main/docs/rules/no-array-reverse.md */
+      "unicorn/no-array-reverse": "warn",
+
+      /** https://github.com/sindresorhus/eslint-plugin-unicorn/blob/main/docs/rules/no-array-sort.md */
+      "unicorn/no-array-sort": "warn",
+
       /** https://github.com/sindresorhus/eslint-plugin-unicorn/blob/main/docs/rules/no-await-in-promise-methods.md */
       "unicorn/no-await-in-promise-methods": "warn",
 
-      "unicorn/no-instanceof-array": "warn",
+      /** https://github.com/sindresorhus/eslint-plugin-unicorn/blob/main/docs/rules/no-immediate-mutation.md */
+      "unicorn/no-immediate-mutation": "warn",
+
+      /** https://github.com/sindresorhus/eslint-plugin-unicorn/blob/main/docs/rules/no-instanceof-builtins.md */
+      "unicorn/no-instanceof-builtins": "warn",
 
       /**
        * https://github.com/sindresorhus/eslint-plugin-unicorn/blob/main/docs/rules/no-invalid-fetch-options.md
@@ -925,9 +943,6 @@ const config = defineConfig(
       "unicorn/no-invalid-fetch-options": "warn",
 
       "unicorn/no-invalid-remove-event-listener": "warn",
-
-      /** https://github.com/sindresorhus/eslint-plugin-unicorn/blob/main/docs/rules/no-length-as-slice-end.md */
-      "unicorn/no-length-as-slice-end": "warn",
 
       "unicorn/no-lonely-if": "warn",
 
@@ -953,8 +968,23 @@ const config = defineConfig(
       /** https://github.com/sindresorhus/eslint-plugin-unicorn/blob/main/docs/rules/no-typeof-undefined.md */
       "unicorn/no-typeof-undefined": "warn",
 
+      /** https://github.com/sindresorhus/eslint-plugin-unicorn/blob/main/docs/rules/no-unnecessary-array-flat-depth.md */
+      "unicorn/no-unnecessary-array-flat-depth": "warn",
+
+      /** https://github.com/sindresorhus/eslint-plugin-unicorn/blob/main/docs/rules/no-unnecessary-array-splice-count.md */
+      "unicorn/no-unnecessary-array-splice-count": "warn",
+
       /** https://github.com/sindresorhus/eslint-plugin-unicorn/blob/main/docs/rules/no-unnecessary-polyfills.md */
       "unicorn/no-unnecessary-polyfills": "off",
+
+      /** https://github.com/sindresorhus/eslint-plugin-unicorn/blob/main/docs/rules/no-unnecessary-slice-end.md */
+      "unicorn/no-unnecessary-slice-end": "warn",
+
+      /** https://github.com/sindresorhus/eslint-plugin-unicorn/blob/main/docs/rules/no-useless-collection-argument.md */
+      "unicorn/no-useless-collection-argument": "warn",
+
+      /** https://github.com/sindresorhus/eslint-plugin-unicorn/blob/main/docs/rules/no-useless-error-capture-stack-trace.md */
+      "unicorn/no-useless-error-capture-stack-trace": "warn",
 
       "unicorn/no-useless-fallback-in-spread": "warn",
       "unicorn/no-useless-length-check": "warn",
@@ -968,8 +998,17 @@ const config = defineConfig(
       "unicorn/prefer-array-some": "warn",
       "unicorn/prefer-at": "warn",
 
+      /** https://github.com/sindresorhus/eslint-plugin-unicorn/blob/main/docs/rules/prefer-bigint-literals.md */
+      "unicorn/prefer-bigint-literals": "warn",
+
       /** https://github.com/sindresorhus/eslint-plugin-unicorn/blob/main/docs/rules/prefer-blob-reading-methods.md */
       "unicorn/prefer-blob-reading-methods": "warn",
+
+      /** https://github.com/sindresorhus/eslint-plugin-unicorn/blob/main/docs/rules/prefer-class-fields.md */
+      "unicorn/prefer-class-fields": "warn",
+
+      /** https://github.com/sindresorhus/eslint-plugin-unicorn/blob/main/docs/rules/prefer-classlist-toggle.md */
+      "unicorn/prefer-classlist-toggle": "warn",
 
       "unicorn/prefer-code-point": "warn",
       "unicorn/prefer-date-now": "warn",
@@ -983,6 +1022,9 @@ const config = defineConfig(
        */
       "unicorn/prefer-global-this": "off",
 
+      /** https://github.com/sindresorhus/eslint-plugin-unicorn/blob/main/docs/rules/prefer-import-meta-properties.md */
+      "unicorn/prefer-import-meta-properties": "warn",
+
       "unicorn/prefer-includes": "warn",
 
       /** https://github.com/sindresorhus/eslint-plugin-unicorn/blob/main/docs/rules/prefer-math-min-max.md */
@@ -992,8 +1034,14 @@ const config = defineConfig(
       "unicorn/prefer-negative-index": "warn",
       "unicorn/prefer-regexp-test": "warn",
 
+      /** https://github.com/sindresorhus/eslint-plugin-unicorn/blob/main/docs/rules/prefer-response-static-json.md */
+      "unicorn/prefer-response-static-json": "warn",
+
       /** https://github.com/sindresorhus/eslint-plugin-unicorn/blob/main/docs/rules/prefer-set-size.md */
       "unicorn/prefer-set-size": "warn",
+
+      /** https://github.com/sindresorhus/eslint-plugin-unicorn/blob/main/docs/rules/prefer-single-call.md */
+      "unicorn/prefer-single-call": "warn",
 
       /**
        * https://github.com/sindresorhus/eslint-plugin-unicorn/blob/main/docs/rules/prefer-string-raw.md
@@ -1018,6 +1066,9 @@ const config = defineConfig(
 
       /** https://github.com/sindresorhus/eslint-plugin-unicorn/blob/main/docs/rules/prefer-structured-clone.md */
       "unicorn/prefer-structured-clone": "warn",
+
+      /** https://github.com/sindresorhus/eslint-plugin-unicorn/blob/main/docs/rules/require-module-attributes.md */
+      "unicorn/require-module-attributes": "warn",
 
       ///////////////////////////////////////////////////////////////////
       // eslint-plugin-eslint-comments rules.
