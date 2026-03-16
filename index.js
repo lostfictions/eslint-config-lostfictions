@@ -258,7 +258,6 @@ const config = defineConfig(
       "no-unmodified-loop-condition": "warn",
       "no-unneeded-ternary": "warn",
       "no-unreachable-loop": "warn",
-      "no-unused-private-class-members": "warn",
 
       /** https://eslint.org/docs/latest/rules/no-useless-assignment */
       "no-useless-assignment": "warn",
@@ -364,6 +363,10 @@ const config = defineConfig(
         "error",
         { enforceForJSX: true },
       ],
+
+      /** https://typescript-eslint.io/rules/no-unused-private-class-members */
+      "no-unused-private-class-members": "off",
+      "@typescript-eslint/no-unused-private-class-members": "warn",
 
       "no-unused-vars": "off",
       "@typescript-eslint/no-unused-vars": [
@@ -590,6 +593,10 @@ const config = defineConfig(
       "@typescript-eslint/no-unnecessary-type-arguments": "warn",
       "@typescript-eslint/no-unnecessary-type-assertion": "warn",
       "@typescript-eslint/no-unnecessary-type-constraint": "warn",
+
+      /** https://typescript-eslint.io/rules/no-unnecessary-type-conversion */
+      "@typescript-eslint/no-unnecessary-type-conversion": "warn",
+
       /** https://typescript-eslint.io/rules/no-unnecessary-type-parameters/ */
       "@typescript-eslint/no-unnecessary-type-parameters": "warn",
 
@@ -655,6 +662,9 @@ const config = defineConfig(
 
       /** https://typescript-eslint.io/rules/no-unsafe-unary-minus/ */
       "@typescript-eslint/no-unsafe-unary-minus": "error",
+
+      /** https://typescript-eslint.io/rules/no-useless-default-assignment */
+      "@typescript-eslint/no-useless-default-assignment": "warn",
 
       /** https://typescript-eslint.io/rules/no-wrapper-object-types/ */
       "@typescript-eslint/no-wrapper-object-types": "error",
