@@ -1324,7 +1324,7 @@ export const react = [
     // another dance
     reactConfig.recommended,
     reactConfig["jsx-runtime"],
-    { plugins: { "react-hooks": reactHooks } },
+    reactHooks.configs.flat.recommended,
   ]
     .flat()
     .map((c) => ({ ignores: jsonFiles, ...c })),
