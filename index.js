@@ -1,5 +1,6 @@
 // @ts-check
 import globals from "globals";
+import { defineConfig } from "eslint/config";
 import eslint from "@eslint/js";
 import json from "@eslint/json";
 import tseslint from "typescript-eslint";
@@ -27,7 +28,7 @@ const jsonFiles = ["**/*.jsonc", "**/*.json", "**/*.json5"];
 
 const reactConfig = reactPlugin.configs.flat;
 
-const config = tseslint.config(
+const config = defineConfig(
   {
     files: ["**/*.json"],
     ignores: ["package-lock.json"],
@@ -37,7 +38,6 @@ const config = tseslint.config(
   {
     files: ["**/*.jsonc", ".vscode/*.json", "**/tsconfig.json"],
     language: "json/jsonc",
-    // @ts-expect-error thanks bud
     languageOptions: { allowTrailingCommas: true },
     ...json.configs.recommended,
   },
@@ -48,6 +48,9 @@ const config = tseslint.config(
   },
   // this hard-to-read little dance-about is necessary, since otherwise eslint
   // will attempt to lint json files with these rules and explode.
+  // @ts-expect-error doesn't seem compatible with defineConfig (replaced
+  // tseslint.config, see here:
+  // https://typescript-eslint.io/packages/typescript-eslint/#migrating-to-defineconfig)
   ...[
     eslint.configs.recommended,
     tseslint.configs.recommendedTypeChecked,
@@ -87,6 +90,10 @@ const config = tseslint.config(
       curly: ["warn", "multi-line", "consistent"],
       "default-case": "warn",
       "default-case-last": "warn",
+
+      /** https://eslint.org/docs/latest/rules/default-param-last */
+      "default-param-last": "warn",
+
       eqeqeq: ["error", "always", { null: "ignore" }],
       "grouped-accessor-pairs": "warn",
 
@@ -294,6 +301,9 @@ const config = tseslint.config(
       "prefer-rest-params": "error",
       "prefer-spread": "warn",
       "prefer-template": "warn",
+
+      /** https://eslint.org/docs/latest/rules/preserve-caught-error */
+      "preserve-caught-error": ["warn", { requireCatchParameter: true }],
 
       /**
        * https://eslint.org/docs/rules/radix
@@ -813,8 +823,42 @@ const config = tseslint.config(
       // low-value in most scenarios, could occasionally be useful to enable
       "node/no-process-exit": "off",
 
+      /**
+       * https://github.com/eslint-community/eslint-plugin-n/blob/master/docs/rules/no-top-level-await.md
+       *
+       * potentially useful for publishing, to be enabled case-by-case
+       */
+      "node/no-top-level-await": "off",
+
       /** https://github.com/eslint-community/eslint-plugin-n/blob/HEAD/docs/rules/no-unsupported-features/node-builtins.md */
       "node/no-unsupported-features/node-builtins": "off",
+
+      /** https://github.com/eslint-community/eslint-plugin-n/blob/master/docs/rules/prefer-global/buffer.md */
+      "node/prefer-global/buffer": ["warn", "always"],
+
+      /** https://github.com/eslint-community/eslint-plugin-n/blob/master/docs/rules/prefer-global/console.md */
+      "node/prefer-global/console": ["warn", "always"],
+
+      /** https://github.com/eslint-community/eslint-plugin-n/blob/master/docs/rules/prefer-global/crypto.md */
+      "node/prefer-global/crypto": ["warn", "always"],
+
+      /** https://github.com/eslint-community/eslint-plugin-n/blob/master/docs/rules/prefer-global/process.md */
+      "node/prefer-global/process": ["warn", "always"],
+
+      /** https://github.com/eslint-community/eslint-plugin-n/blob/master/docs/rules/prefer-global/text-decoder.md */
+      "node/prefer-global/text-decoder": ["warn", "always"],
+
+      /** https://github.com/eslint-community/eslint-plugin-n/blob/master/docs/rules/prefer-global/text-encoder.md */
+      "node/prefer-global/text-encoder": ["warn", "always"],
+
+      /** https://github.com/eslint-community/eslint-plugin-n/blob/master/docs/rules/prefer-global/timers.md */
+      "node/prefer-global/timers": ["warn", "always"],
+
+      /** https://github.com/eslint-community/eslint-plugin-n/blob/master/docs/rules/prefer-global/url.md */
+      "node/prefer-global/url": ["warn", "always"],
+
+      /** https://github.com/eslint-community/eslint-plugin-n/blob/master/docs/rules/prefer-global/url-search-params.md */
+      "node/prefer-global/url-search-params": ["warn", "always"],
 
       /**
        * https://github.com/eslint-community/eslint-plugin-n/blob/master/docs/rules/prefer-node-protocol.md
@@ -822,7 +866,7 @@ const config = tseslint.config(
        * not a bad idea, but too obtrusive when viewing older code and somewhat
        * low-value.
        */
-      "node/prefer-node-protocol": "off",
+      "node/prefer-node-protocol": "warn",
 
       "node/prefer-promises/fs": "warn",
       "node/prefer-promises/dns": "warn",
@@ -1004,15 +1048,15 @@ const config = tseslint.config(
       // eslint-plugin-import rules.
       ///////////////////////////////////////////////////////////////////
 
-      /**
-       * https://github.com/import-js/eslint-plugin-import/blob/main/docs/rules/consistent-type-specifier-style.md
-       */
+      /** https://github.com/import-js/eslint-plugin-import/blob/main/docs/rules/consistent-type-specifier-style.md */
       "import/consistent-type-specifier-style": ["warn", "prefer-inline"],
 
       /**
        * https://github.com/import-js/eslint-plugin-import/blob/main/docs/rules/enforce-node-protocol-usage.md
+       *
+       * already enforced by n/prefer-node-protocol
        */
-      "import/enforce-node-protocol-usage": ["warn", "always"],
+      "import/enforce-node-protocol-usage": "off",
 
       /**
        * https://github.com/import-js/eslint-plugin-import/blob/main/docs/rules/no-anonymous-default-export.md
@@ -1204,9 +1248,10 @@ const config = tseslint.config(
       "vitest/consistent-test-it": "warn",
       "vitest/expect-expect": "warn",
 
-      /**
-       * https://github.com/jest-community/eslint-plugin-jest/blob/main/docs/rules/no-alias-methods.md
-       */
+      /** https://github.com/vitest-dev/eslint-plugin-vitest/blob/main/docs/rules/hoisted-apis-on-top.md */
+      "vitest/hoisted-apis-on-top": "warn",
+
+      /** https://github.com/jest-community/eslint-plugin-jest/blob/main/docs/rules/no-alias-methods.md */
       "vitest/no-alias-methods": "warn",
 
       "vitest/no-conditional-expect": "warn",
@@ -1224,30 +1269,28 @@ const config = tseslint.config(
       "vitest/no-mocks-import": "warn",
       "vitest/no-standalone-expect": "error",
 
-      /**
-       * https://github.com/jest-community/eslint-plugin-jest/blob/main/docs/rules/prefer-each.md
-       */
+      /** https://github.com/jest-community/eslint-plugin-jest/blob/main/docs/rules/prefer-each.md */
       "vitest/prefer-each": "warn",
 
-      /**
-       * https://github.com/jest-community/eslint-plugin-jest/blob/main/docs/rules/prefer-hooks-in-order.md
-       */
+      /** https://github.com/vitest-dev/eslint-plugin-vitest/blob/main/docs/rules/prefer-expect-type-of.md */
+      "vitest/prefer-expect-type-of": "warn",
+
+      /** https://github.com/jest-community/eslint-plugin-jest/blob/main/docs/rules/prefer-hooks-in-order.md */
       "vitest/prefer-hooks-in-order": "warn",
 
-      /**
-       * https://github.com/jest-community/eslint-plugin-jest/blob/main/docs/rules/prefer-hooks-on-top.md
-       */
+      /** https://github.com/jest-community/eslint-plugin-jest/blob/main/docs/rules/prefer-hooks-on-top.md */
       "vitest/prefer-hooks-on-top": "warn",
 
-      /**
-       * https://github.com/jest-community/eslint-plugin-jest/blob/main/docs/rules/prefer-mock-promise-shorthand.md
-       */
+      /** https://github.com/jest-community/eslint-plugin-jest/blob/main/docs/rules/prefer-mock-promise-shorthand.md */
       "vitest/prefer-mock-promise-shorthand": "warn",
 
       "vitest/prefer-snapshot-hint": ["warn", "multi"],
       "vitest/prefer-to-be": "warn",
       "vitest/prefer-to-contain": "warn",
       "vitest/prefer-to-have-length": "warn",
+
+      /** https://github.com/vitest-dev/eslint-plugin-vitest/blob/main/docs/rules/require-awaited-expect-poll.md */
+      "vitest/require-awaited-expect-poll": "warn",
 
       /** https://github.com/vitest-dev/eslint-plugin-vitest/blob/main/docs/rules/require-local-test-context-for-concurrent-snapshots.md */
       "vitest/require-local-test-context-for-concurrent-snapshots": "warn",
@@ -1256,6 +1299,9 @@ const config = tseslint.config(
       "vitest/valid-expect": "warn",
       "vitest/valid-expect-in-promise": "warn",
       "vitest/valid-title": "warn",
+
+      /** https://github.com/vitest-dev/eslint-plugin-vitest/blob/main/docs/rules/warn-todo.md */
+      "vitest/warn-todo": "warn",
     },
   },
 );

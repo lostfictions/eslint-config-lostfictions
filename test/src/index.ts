@@ -7,6 +7,9 @@
 // so let's at least disable no-unused-vars.
 /* eslint-disable @typescript-eslint/no-unused-vars */
 
+// eslint-disable-next-line node/prefer-global/url-search-params
+import { URLSearchParams } from "node:url";
+
 import { foo } from "./other.js";
 
 // eslint-disable-next-line import/order, import/no-duplicates
@@ -14,7 +17,7 @@ import { Config } from "typescript-eslint";
 // eslint-disable-next-line import/order, import/no-duplicates
 import { Config as oi } from "typescript-eslint";
 
-// eslint-disable-next-line import/no-empty-named-blocks, import/enforce-node-protocol-usage
+// eslint-disable-next-line import/no-empty-named-blocks, node/prefer-node-protocol
 import {} from "buffer";
 
 // eslint-disable-next-line @typescript-eslint/no-restricted-types
@@ -205,7 +208,7 @@ if (5 === y) {
   console.log("yoda");
 }
 
-// eslint-disable-next-line import/order, no-useless-rename, import/enforce-node-protocol-usage
+// eslint-disable-next-line import/order, no-useless-rename, node/prefer-node-protocol
 import { format as format } from "path";
 
 const obj = {
@@ -405,4 +408,9 @@ if (!a === b) {
 /* eslint-disable unicorn/no-negation-in-equality-check */
 if (!a === b) {
   // cool
+}
+
+// eslint-disable-next-line default-param-last
+function butt(alala = 9, c: number) {
+  // oh weird
 }
