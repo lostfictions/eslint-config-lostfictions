@@ -1316,7 +1316,6 @@ const config = defineConfig(
       "vitest/no-alias-methods": "warn",
 
       "vitest/no-conditional-expect": "warn",
-      "vitest/no-done-callback": "warn",
 
       /** https://github.com/vitest-dev/eslint-plugin-vitest/blob/main/docs/rules/no-focused-tests.md */
       "vitest/no-focused-tests": "warn",
