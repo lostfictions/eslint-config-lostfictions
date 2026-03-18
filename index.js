@@ -1312,8 +1312,14 @@ const config = defineConfig(
       /** https://github.com/jest-community/eslint-plugin-jest/blob/main/docs/rules/prefer-each.md */
       "vitest/prefer-each": "warn",
 
-      /** https://github.com/vitest-dev/eslint-plugin-vitest/blob/main/docs/rules/prefer-expect-type-of.md */
-      "vitest/prefer-expect-type-of": "warn",
+      /**
+       * https://github.com/vitest-dev/eslint-plugin-vitest/blob/main/docs/rules/prefer-expect-type-of.md
+       *
+       * uh contrary to what the rule's documentation suggest these are afaict
+       * NOT semantically equal (unless i'm missing something one is runtime,
+       * one is build-time) and definitely not autofixable lol
+       */
+      "vitest/prefer-expect-type-of": "off",
 
       /** https://github.com/jest-community/eslint-plugin-jest/blob/main/docs/rules/prefer-hooks-in-order.md */
       "vitest/prefer-hooks-in-order": "warn",
