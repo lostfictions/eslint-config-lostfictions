@@ -1109,8 +1109,14 @@ const config = defineConfig(
       // eslint-plugin-import rules.
       ///////////////////////////////////////////////////////////////////
 
-      /** https://github.com/import-js/eslint-plugin-import/blob/main/docs/rules/consistent-type-specifier-style.md */
-      "import/consistent-type-specifier-style": ["warn", "prefer-inline"],
+      /**
+       * https://github.com/import-js/eslint-plugin-import/blob/main/docs/rules/consistent-type-specifier-style.md
+       *
+       * not a big benefit -- if we have both normal and type imports in the
+       * same file `import/no-duplicates` already enforces that we merge
+       * imports.
+       */
+      "import/consistent-type-specifier-style": "off",
 
       /**
        * https://github.com/import-js/eslint-plugin-import/blob/main/docs/rules/enforce-node-protocol-usage.md
