@@ -2,7 +2,7 @@
 import globals from "globals";
 import { defineConfig } from "eslint/config";
 import eslint from "@eslint/js";
-import json from "@eslint/json";
+import jsonPlugin from "@eslint/json";
 import tseslint from "typescript-eslint";
 import prettier from "eslint-config-prettier/flat";
 import reactPlugin from "eslint-plugin-react";
@@ -24,44 +24,19 @@ import pkg from "./package.json" with { type: "json" };
 const docPage = `${pkg.homepage}/tree/v${pkg.version}`;
 
 const jsFiles = ["**/*.{js,jsx,cjs,mjs}"];
-const jsonFiles = ["**/*.jsonc", "**/*.json", "**/*.json5"];
 
-const reactConfig = reactPlugin.configs.flat;
+const reactPluginConfig = reactPlugin.configs.flat;
 
 const config = defineConfig(
+  eslint.configs.recommended,
+  tseslint.configs.recommendedTypeChecked,
+  { plugins: { node } },
+  { plugins: { unicorn } },
+  { plugins: { comments } },
+  { plugins: { sonarjs } },
+  importPlugin.typescript,
+  prettier,
   {
-    files: ["**/*.json"],
-    ignores: ["package-lock.json"],
-    language: "json/json",
-    ...json.configs.recommended,
-  },
-  {
-    files: ["**/*.jsonc", ".vscode/*.json", "**/tsconfig.json"],
-    language: "json/jsonc",
-    languageOptions: { allowTrailingCommas: true },
-    ...json.configs.recommended,
-  },
-  {
-    files: ["**/*.json5"],
-    language: "json/json5",
-    ...json.configs.recommended,
-  },
-  // this hard-to-read little dance-about is necessary, since otherwise eslint
-  // will attempt to lint json files with these rules and explode.
-  ...[
-    eslint.configs.recommended,
-    tseslint.configs.recommendedTypeChecked,
-    { plugins: { node } },
-    { plugins: { unicorn } },
-    { plugins: { comments } },
-    { plugins: { sonarjs } },
-    importPlugin.typescript,
-    prettier,
-  ]
-    .flat()
-    .map((c) => ({ ignores: jsonFiles, ...c })),
-  {
-    ignores: jsonFiles,
     languageOptions: {
       globals: { ...globals.node, ...globals.browser },
       ecmaVersion: 2025,
@@ -1372,22 +1347,14 @@ const config = defineConfig(
   },
 );
 
-export default config;
-
-export const react = [
+const reactConfig = defineConfig([
   ...config,
-  ...[
-    // another dance
-    reactConfig.recommended,
-    reactConfig["jsx-runtime"],
-    reactHooks.configs.flat.recommended,
-  ]
-    .flat()
-    .map((c) => ({ ignores: jsonFiles, ...c })),
+  reactPluginConfig.recommended,
+  reactPluginConfig["jsx-runtime"],
+  reactHooks.configs.flat.recommended,
   {
-    ignores: jsonFiles,
     languageOptions: {
-      ...reactConfig.recommended.languageOptions,
+      ...reactPluginConfig.recommended.languageOptions,
       globals: {
         ...globals.node,
         ...globals.serviceworker,
@@ -1487,4 +1454,29 @@ export const react = [
       "react-hooks/rules-of-hooks": "error",
     },
   },
-];
+]);
+
+export const json = defineConfig(
+  {
+    files: ["**/*.json"],
+    ignores: ["**/package-lock.json"],
+    language: "json/json",
+    ...jsonPlugin.configs.recommended,
+  },
+  {
+    files: ["**/*.jsonc", ".vscode/*.json", "**/tsconfig.json"],
+    language: "json/jsonc",
+    languageOptions: { allowTrailingCommas: true },
+    ...jsonPlugin.configs.recommended,
+  },
+  {
+    files: ["**/*.json5"],
+    language: "json/json5",
+    ...jsonPlugin.configs.recommended,
+  },
+);
+
+const defaultConfig = [...config, ...json];
+export default defaultConfig;
+
+export const react = [...reactConfig, ...json];
