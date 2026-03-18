@@ -2,7 +2,6 @@
 import globals from "globals";
 import { defineConfig } from "eslint/config";
 import eslint from "@eslint/js";
-import jsonPlugin from "@eslint/json";
 import tseslint from "typescript-eslint";
 import prettier from "eslint-config-prettier/flat";
 import reactPlugin from "eslint-plugin-react";
@@ -1347,7 +1346,9 @@ const config = defineConfig(
   },
 );
 
-const reactConfig = defineConfig([
+export default config;
+
+export const react = defineConfig([
   ...config,
   reactPluginConfig.recommended,
   reactPluginConfig["jsx-runtime"],
@@ -1455,28 +1456,3 @@ const reactConfig = defineConfig([
     },
   },
 ]);
-
-export const json = defineConfig(
-  {
-    files: ["**/*.json"],
-    ignores: ["**/package-lock.json"],
-    language: "json/json",
-    ...jsonPlugin.configs.recommended,
-  },
-  {
-    files: ["**/*.jsonc", ".vscode/*.json", "**/tsconfig.json"],
-    language: "json/jsonc",
-    languageOptions: { allowTrailingCommas: true },
-    ...jsonPlugin.configs.recommended,
-  },
-  {
-    files: ["**/*.json5"],
-    language: "json/json5",
-    ...jsonPlugin.configs.recommended,
-  },
-);
-
-const defaultConfig = [...config, ...json];
-export default defaultConfig;
-
-export const react = [...reactConfig, ...json];

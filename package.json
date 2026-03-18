@@ -13,10 +13,10 @@
     "unused": "eslint-find-rules --flatConfig -un ./index.js",
     "deprecated": "ESLINT_CONFIG_PRETTIER_NO_DEPRECATED=true eslint-find-rules --flatConfig -dn ./index.js",
     "test": "run-p -cl test:*",
-    "test:configs": "eslint --color --max-warnings=0 '*.{js,jsx,cjs,mjs,ts,tsx,cts,mts,json,json5,jsonc}'",
-    "test:fixtures": "TIMING=1 eslint --color --max-warnings=0 -c test/eslint.config.mjs 'test/**/*.{js,jsx,cjs,mjs,ts,tsx,cts,mts,json,json5,jsonc}'",
-    "test:prettier": "prettier -l '**/*.{js,jsx,cjs,mjs,ts,tsx,cts,mts,json,json5,jsonc}'",
-    "prettier": "prettier --write '**/*.{js,jsx,cjs,mjs,ts,tsx,cts,mts,json,json5,jsonc}'",
+    "test:configs": "eslint --color --max-warnings=0 '*.{js,jsx,cjs,mjs,ts,tsx,cts,mts}'",
+    "test:fixtures": "TIMING=1 eslint --color --max-warnings=0 -c test/eslint.config.mjs 'test/**/*.{js,jsx,cjs,mjs,ts,tsx,cts,mts}'",
+    "test:prettier": "prettier -l '**/*.{js,jsx,cjs,mjs,ts,tsx,cts,mts}'",
+    "prettier": "prettier --write '**/*.{js,jsx,cjs,mjs,ts,tsx,cts,mts}'",
     "prepublishOnly": "run-s test"
   },
   "dependencies": {
